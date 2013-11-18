@@ -108,6 +108,7 @@ INSTALLED_APPS = (
     'produccion_cafe_finca',
     'roya',
     'lugar',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
