@@ -477,7 +477,7 @@ class TemasSociales(models.Model):
         verbose_name_plural = 'Temas Sociales'
 
     def __unicode__(self):
-        pass
+        return self.nombre
 
 class CapacitacionesSociales(models.Model):
     tipo = models.ForeignKey(TemasSociales)
