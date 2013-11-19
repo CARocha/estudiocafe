@@ -271,7 +271,6 @@ admin.site.register(Organizacion)
 #1.2
 admin.site.register(SocioOrganizacion)
 admin.site.register(Beneficios)
-admin.site.register(Credito)
 admin.site.register(DeQuien)
 #1.3
 admin.site.register(ViveFamilia)
