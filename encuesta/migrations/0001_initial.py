@@ -71,12 +71,12 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'encuesta', ['Beneficios'])
 
-        # Adding model 'Credito'
-        db.create_table(u'encuesta_credito', (
+        # Adding model 'CreditoE'
+        db.create_table(u'encuesta_creditoe', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('nombre', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
-        db.send_create_signal(u'encuesta', ['Credito'])
+        db.send_create_signal(u'encuesta', ['CreditoE'])
 
         # Adding model 'DeQuien'
         db.create_table(u'encuesta_dequien', (
@@ -113,9 +113,9 @@ class Migration(SchemaMigration):
         db.create_table(u'encuesta_quienfinancia_tiene_credito', (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('quienfinancia', models.ForeignKey(orm[u'encuesta.quienfinancia'], null=False)),
-            ('credito', models.ForeignKey(orm[u'encuesta.credito'], null=False))
+            ('creditoe', models.ForeignKey(orm[u'encuesta.creditoe'], null=False))
         ))
-        db.create_unique(u'encuesta_quienfinancia_tiene_credito', ['quienfinancia_id', 'credito_id'])
+        db.create_unique(u'encuesta_quienfinancia_tiene_credito', ['quienfinancia_id', 'creditoe_id'])
 
         # Adding M2M table for field de_quien on 'QuienFinancia'
         db.create_table(u'encuesta_quienfinancia_de_quien', (
@@ -301,8 +301,8 @@ class Migration(SchemaMigration):
         # Deleting model 'Beneficios'
         db.delete_table(u'encuesta_beneficios')
 
-        # Deleting model 'Credito'
-        db.delete_table(u'encuesta_credito')
+        # Deleting model 'CreditoE'
+        db.delete_table(u'encuesta_creditoe')
 
         # Deleting model 'DeQuien'
         db.delete_table(u'encuesta_dequien')
@@ -414,8 +414,8 @@ class Migration(SchemaMigration):
             'temporales_hombres': ('django.db.models.fields.IntegerField', [], {}),
             'temporales_mujeres': ('django.db.models.fields.IntegerField', [], {})
         },
-        u'encuesta.credito': {
-            'Meta': {'object_name': 'Credito'},
+        u'encuesta.creditoe': {
+            'Meta': {'object_name': 'CreditoE'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         },
@@ -481,7 +481,7 @@ class Migration(SchemaMigration):
             'encuesta': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['encuesta.Encuesta']"}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'socio': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'socios'", 'symmetrical': 'False', 'to': u"orm['encuesta.SocioOrganizacion']"}),
-            'tiene_credito': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'credito'", 'symmetrical': 'False', 'to': u"orm['encuesta.Credito']"})
+            'tiene_credito': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'credito'", 'symmetrical': 'False', 'to': u"orm['encuesta.CreditoE']"})
         },
         u'encuesta.recolector': {
             'Meta': {'object_name': 'Recolector'},

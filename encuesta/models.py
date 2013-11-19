@@ -100,7 +100,7 @@ class Beneficios(models.Model):
     def __unicode__(self):
         return self.nombre
 
-class Credito(models.Model):
+class CreditoE(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
@@ -124,7 +124,7 @@ class QuienFinancia(models.Model):
     socio = models.ManyToManyField(SocioOrganizacion, related_name="socios")
     desde = models.IntegerField(choices=CHOICE_DESDE)
     beneficio_ser_socio = models.ManyToManyField(Beneficios, related_name="beneficiario_socio")
-    tiene_credito = models.ManyToManyField(Credito, related_name="credito")
+    tiene_credito = models.ManyToManyField(CreditoE, related_name="credito")
     de_quien = models.ManyToManyField(DeQuien, related_name="quien")
 
     encuesta = models.ForeignKey(Encuesta)
