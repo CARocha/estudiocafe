@@ -132,8 +132,8 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'encuesta', ['ViveFamilia'])
 
-        # Adding model 'Composicio'
-        db.create_table(u'encuesta_composicio', (
+        # Adding model 'Composicion'
+        db.create_table(u'encuesta_composicion', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('adultos', self.gf('django.db.models.fields.IntegerField')()),
             ('adultas', self.gf('django.db.models.fields.IntegerField')()),
@@ -153,7 +153,7 @@ class Migration(SchemaMigration):
             ('educacion_maxima_mujeres', self.gf('django.db.models.fields.IntegerField')()),
             ('encuesta', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['encuesta.Encuesta'])),
         ))
-        db.send_create_signal(u'encuesta', ['Composicio'])
+        db.send_create_signal(u'encuesta', ['Composicion'])
 
         # Adding model 'EnergiaFinca'
         db.create_table(u'encuesta_energiafinca', (
@@ -325,8 +325,8 @@ class Migration(SchemaMigration):
         # Deleting model 'ViveFamilia'
         db.delete_table(u'encuesta_vivefamilia')
 
-        # Deleting model 'Composicio'
-        db.delete_table(u'encuesta_composicio')
+        # Deleting model 'Composicion'
+        db.delete_table(u'encuesta_composicion')
 
         # Deleting model 'EnergiaFinca'
         db.delete_table(u'encuesta_energiafinca')
@@ -393,8 +393,8 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'nombre': ('django.db.models.fields.CharField', [], {'max_length': '200'})
         },
-        u'encuesta.composicio': {
-            'Meta': {'object_name': 'Composicio'},
+        u'encuesta.composicion': {
+            'Meta': {'object_name': 'Composicion'},
             'adultas': ('django.db.models.fields.IntegerField', [], {}),
             'adultos': ('django.db.models.fields.IntegerField', [], {}),
             'educacion_dueno': ('django.db.models.fields.IntegerField', [], {}),

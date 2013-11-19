@@ -11,7 +11,7 @@ class QuienFinanciaInline(admin.TabularInline):
     max_num = 1
 
 class ComposicioInline(admin.TabularInline):
-    model = Composicio
+    model = Composicion
     extra = 1
     max_num = 1
 

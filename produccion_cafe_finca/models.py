@@ -10,8 +10,7 @@ class EstadoActual(models.Model):
     nombre = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = 'EstadoActual'
-        verbose_name_plural = 'EstadoActuals'
+        verbose_name_plural = 'Estado Actual'
 
     def __unicode__(self):
         return self.nombre
@@ -26,7 +25,6 @@ class AreaCafe(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '3.1 Área de café'
         verbose_name_plural = '3.1 Área de café'
 
     def __unicode__(self):
@@ -76,8 +74,7 @@ class ResistenteRoya(models.Model):
     nombre = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = 'Resistente Roya'
-        verbose_name_plural = 'Resistente Royas'
+        verbose_name_plural = 'Resistente Roya'
 
     def __unicode__(self):
         return self.nombre
@@ -140,8 +137,7 @@ class ProduccionVivero(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-       verbose_name = '3.3 La  producción de vivero y su disponibilidad a los productores'
-       verbose_name_plural = '3.3 La  producción de vivero y su disponibilidad a los productores'
+       verbose_name_plural = '3.3 La  producción de vivero'
 
     def __unicode__(self):
        pass
@@ -184,7 +180,6 @@ class ManejoCafetales(models.Model):
 
 
     class Meta:
-        verbose_name = '3.4 Manejo de los cafetales'
         verbose_name_plural = '3.4 Manejo de los cafetales'
 
     def __unicode__(self):
@@ -214,7 +209,6 @@ class MesesManejoCafe(models.Model):
 
 
     class Meta:
-        verbose_name = '3.4-2 Meses Manejo de los cafetales'
         verbose_name_plural = '3.4-2 Meses Manejo de los cafetales'
 
     def __unicode__(self):
@@ -223,8 +217,8 @@ class MesesManejoCafe(models.Model):
 #3.5
 class TiposInsumos(models.Model):
     nombre = models.CharField(max_length=100)
+
     class Meta:
-        verbose_name = 'Tipos Insumo'
         verbose_name_plural = 'Tipos Insumos'
 
     def __unicode__(self):
@@ -251,7 +245,6 @@ class UsoInsumos(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '3.5 Uso de insumos (2013-14)'
         verbose_name_plural = '3.5 Uso de insumos (2013-14)'
 
     def __unicode__(self):
@@ -260,6 +253,7 @@ class UsoInsumos(models.Model):
 #3.6
 class Opciones(models.Model):
     nombre = models.CharField(max_length=200)
+
     class Meta:
         verbose_name = 'Opciones'
         verbose_name_plural = 'Opcioness'
@@ -281,7 +275,6 @@ class UsoOpcionesAgroecologica(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '3.6 Uso de opciones agroecológicos en los cafetale'
         verbose_name_plural = '3.6 Uso de opciones agroecológicos en los cafetale'
 
     def __unicode__(self):
@@ -333,8 +326,8 @@ CHOICES_OREAN = (
     )
 class BeneficioSeco(models.Model):
     nombre = models.CharField(max_length=200)
+
     class Meta:
-        verbose_name = 'Beneficio Seco'
         verbose_name_plural = 'Beneficio Secos'
 
     def __unicode__(self):
@@ -342,8 +335,8 @@ class BeneficioSeco(models.Model):
 
 class CalidadCafe(models.Model):
     nombre = models.CharField(max_length=200)
+
     class Meta:
-        verbose_name = 'Calidad Cafe '
         verbose_name_plural = 'Calidad Cafe'
 
     def __unicode__(self):
@@ -379,7 +372,6 @@ class Beneficiado(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '3.7 Beneficiado'
         verbose_name_plural = '3.7 Beneficiado'
 
     def __unicode__(self):
@@ -405,7 +397,6 @@ class Comercializacion(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '3.7 La comercialización'
         verbose_name_plural = '3.7 La comercialización'
 
     def __unicode__(self):
@@ -438,7 +429,6 @@ class Credito(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '3.8 Crédito para producción de café'
         verbose_name_plural = '3.8 Crédito para producción de café'
 
     def __unicode__(self):

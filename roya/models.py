@@ -7,8 +7,8 @@ from encuesta.models import Encuesta
 # 5.1
 class Impactos(models.Model):
     nombre = models.CharField(max_length=150)
+
     class Meta:
-        verbose_name = 'Impactos'
         verbose_name_plural = 'Impactoss'
 
     def __unicode__(self):
@@ -23,7 +23,6 @@ class ImpactoRoya(models.Model):
     encuesta = models.ForeignKey(Encuesta)
     
     class Meta:
-        verbose_name = '5.1 Impacto de la roya en la finca'
         verbose_name_plural = '5.1 Impacto de la roya en la finca'
 
     def __unicode__(self):
@@ -174,8 +173,8 @@ class Combatir(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'Combatir'
-        verbose_name_plural = 'Combatirs'
+       
+        verbose_name_plural = 'Combatir'
 
     def __unicode__(self):
         return self.nombre
@@ -186,7 +185,6 @@ class Oriento(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '5.3 ¿ Quién le orientó sobre como combatir la roya?'
         verbose_name_plural = '5.3 ¿ Quién le orientó sobre como combatir la roya?'
 
     def __unicode__(self):
@@ -210,7 +208,7 @@ class NuevosProductos(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name_plural = '5.4 ¿Que nuevos productos usan ahora para combatir la roya del café que no se utilizaban anteriormente?'
+        verbose_name_plural = '5.4 ¿Que nuevos productos usan ahora para combatir la roya?'
 
     def __unicode__(self):
         pass
@@ -361,7 +359,6 @@ class Igual(models.Model):
     nombre = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = 'Igual'
         verbose_name_plural = 'Igual'
 
     def __unicode__(self):
@@ -371,7 +368,6 @@ class Mas(models.Model):
     nombre = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = 'Mas'
         verbose_name_plural = 'Mas'
 
     def __unicode__(self):
@@ -381,7 +377,6 @@ class Menos(models.Model):
     nombre = models.CharField(max_length=100)
 
     class Meta:
-        verbose_name = 'Menos'
         verbose_name_plural = 'Menos'
 
     def __unicode__(self):
@@ -478,7 +473,6 @@ class TemasSociales(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'Temas Sociales'
         verbose_name_plural = 'Temas Sociales'
 
     def __unicode__(self):

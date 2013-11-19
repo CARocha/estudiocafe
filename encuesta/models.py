@@ -70,7 +70,7 @@ class Encuesta(models.Model):
 
 
     class Meta:
-        verbose_name_plural = '1.1 Información general de la finca y del productor o la productora'
+        verbose_name_plural = '1.1 Información general '
 
     def __unicode__(self):
         return self.nombre.nombre
@@ -130,8 +130,7 @@ class QuienFinancia(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '1.2 Organización a que pertenece y  quien lo financia'
-        verbose_name_plural = '1.2 Organización a que pertenece y  quien lo financia'
+        verbose_name_plural = '1.2 Organización'
 
     def __unicode__(self):
         return 
@@ -140,8 +139,8 @@ class QuienFinancia(models.Model):
 class ViveFamilia(models.Model):
     nombre = models.CharField(max_length=200)
     class Meta:
-        verbose_name = 'ViveFamilia'
-        verbose_name_plural = 'ViveFamilias'
+       
+        verbose_name_plural = 'Vive Familias'
 
     def __unicode__(self):
         return self.nombre
@@ -155,7 +154,7 @@ CHOICE_EDUCACION = (
             (6, 'Univ'),
     )
 
-class Composicio(models.Model):
+class Composicion(models.Model):
     adultos = models.IntegerField('adultos varones')
     adultas = models.IntegerField('adultas mujeres')
     jovenes_varones = models.IntegerField()
@@ -179,7 +178,7 @@ class Composicio(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '1.3 Composición del grupo familiar'
+       
         verbose_name_plural = '1.3 Composición del grupo familiar'
 
     def __unicode__(self):
@@ -225,7 +224,6 @@ class ServiciosBasicos(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '1.4 Servicios básicos en la finca'
         verbose_name_plural = '1.4 Servicios básicos en la finca'
 
     def __unicode__(self):
@@ -258,7 +256,6 @@ class Tenecia(models.Model):
     encuesta = models.ForeignKey(Encuesta)
     
     class Meta:
-        verbose_name = '1.5 Tenencia de la tierra'
         verbose_name_plural = '1.5 Tenencia de la tierras'
 
     def __unicode__(self):
@@ -285,7 +282,6 @@ class NecesidadAlimento(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'Necesidad Alimento'
         verbose_name_plural = 'Necesidad Alimentos'
 
     def __unicode__(self):
@@ -295,7 +291,6 @@ class Meses(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'Meses del año'
         verbose_name_plural = 'Meses del año'
 
     def __unicode__(self):
@@ -305,7 +300,6 @@ class TiemposCrisis(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'Tiempos de crisis'
         verbose_name_plural = 'Tiempo de crisis'
 
     def __unicode__(self):
@@ -321,16 +315,13 @@ class Seguridad(models.Model):
     meses_dificiles = models.ManyToManyField(Meses, related_name="dificiles",
         verbose_name=u'¿Cuáles son los meses más difíciles para la alimentación de la familia o la finca?')
     soluciones_crisis = models.ManyToManyField(TiemposCrisis, related_name="crisis",
-        verbose_name=u'¿Qué soluciones y practicas implementa en los tiempos de crisis o escasez de alimentos?')
+                    verbose_name=u'¿Qué soluciones y practicas implementa en los tiempos de crisis o escasez de alimentos?')
     
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name = '1.6 Seguridad alimentaria de la familia (en caso de micros) o los trabajadores de la finca'
-        verbose_name_plural = '1.6 Seguridad alimentaria de la familia (en caso de micros) o los trabajadores de la finca'
+       
+        verbose_name_plural = '1.6 Seguridad alimentaria de la familia'
 
     def __unicode__(self):
         pass
- 
- #2 El sistema de producción en la finca
- #2.1
