@@ -459,6 +459,7 @@ class CapacitacionesTecnicas(models.Model):
     gratis = models.IntegerField(choices=CHOICES_GRATIS)
     metodologia = models.ManyToManyField(Metodologia, related_name="metodologia",
                                     verbose_name=u'¿Qué metodología utilizarón?')
+    nivel = models.IntegerField(choices=CHOICES_NIVEL_CONOCIMIENTO, null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -486,6 +487,7 @@ class CapacitacionesSociales(models.Model):
     metodologia = models.ManyToManyField(Metodologia, 
                                         related_name="capacitacion_metodologia",
                                         verbose_name=u'¿Qué metodología utilizarón?')
+    nivel = models.IntegerField(choices=CHOICES_NIVEL_CONOCIMIENTO, null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
