@@ -16,7 +16,8 @@ class Uso(models.Model):
 class UsoTierra(models.Model):
     ''' Uso de tierra
     '''
-    tierra = models.ForeignKey(Uso, verbose_name="Uso de Tierra", null=True, blank=True)
+    tierra = models.ForeignKey(Uso, verbose_name="Uso de Tierra", 
+        null=True, blank=True)
     area = models.FloatField('Área en Mz', null=True, blank=True)
     encuesta = models.ForeignKey(Encuesta)
     
@@ -90,7 +91,7 @@ class AnimalesFinca(models.Model):
 
 class ProductoFinca(models.Model):
     cultivo = models.ForeignKey(Productos, null=True, blank=True)
-    area = models.FloatField('Area en Mz')
+    area = models.FloatField('Area en Mz',null=True, blank=True)
     total_produccion = models.FloatField('Total producion por año', null=True, blank=True)
     consumo = models.FloatField('Consumo por año', null=True, blank=True)
     venta = models.FloatField('Venta por año', null=True, blank=True)
@@ -106,7 +107,7 @@ class ProductoFinca(models.Model):
 
 class ProductoPatio(models.Model):
     cultivo = models.ForeignKey(ProductosPatio, null=True, blank=True)
-    cantidad = models.FloatField('Cantidad de plantas')
+    cantidad = models.FloatField('Cantidad de plantas',null=True, blank=True)
     total_produccion = models.FloatField('Total producion por año', null=True, blank=True)
     consumo = models.FloatField('Consumo por año', null=True, blank=True)
     venta = models.FloatField('Venta por año', null=True, blank=True)
@@ -165,10 +166,14 @@ class IngresoFamiliar(models.Model):
     ''' Modelo Ingreso familiar. venta de rubros
     '''
     rubro = models.ForeignKey(Rubros)
-    cantidad = models.FloatField('Cantidad vendida en el año pasado',null=True, blank=True)
-    precio = models.FloatField('Precio de venta por unidad(C$ por unidad)',null=True, blank=True)
-    quien_vendio = models.IntegerField('¿A quien vendio?', choices=CHOICE_VENDIO,null=True, blank=True)
-    maneja_negocio = models.IntegerField('¿Quién maneja el negocio', choices=CHOICE_MANEJA,null=True, blank=True)
+    cantidad = models.FloatField('Cantidad vendida en el año pasado',
+        null=True, blank=True)
+    precio = models.FloatField('Precio de venta por unidad(C$ por unidad)',
+        null=True, blank=True)
+    quien_vendio = models.IntegerField('¿A quien vendio?', choices=CHOICE_VENDIO,
+        null=True, blank=True)
+    maneja_negocio = models.IntegerField('¿Quién maneja el negocio', choices=CHOICE_MANEJA,
+        null=True, blank=True)
     
     encuesta = models.ForeignKey(Encuesta)
     

@@ -16,9 +16,9 @@ class Impactos(models.Model):
 
 class ImpactoRoya(models.Model):
     impacto = models.ForeignKey(Impactos)
-    doce = models.FloatField('2011-12')
-    trece = models.FloatField('2012-13')
-    catorce = models.FloatField('2013-14')
+    doce = models.FloatField('2011-12',null=True, blank=True)
+    trece = models.FloatField('2012-13',null=True, blank=True)
+    catorce = models.FloatField('2013-14',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
     
@@ -40,11 +40,15 @@ class TipoCafetos(models.Model):
 
 class PodaCafetos(models.Model):
     tipo_2012 = models.ForeignKey(TipoCafetos, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12')
+                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoCafetos, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14')
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?')
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?')
+                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            null=True, blank=True)
+    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',
+        null=True, blank=True)
+    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -55,8 +59,8 @@ class PodaCafetos(models.Model):
         pass
 
 class RecepoCafetos(models.Model):
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?')
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?')
+    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
+    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -77,11 +81,13 @@ class TipoVariedad(models.Model):
 
 class RenovacionCafetales(models.Model):
     tipo_2012 = models.ForeignKey(TipoVariedad, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12')
+                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoVariedad, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14')
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?')
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?')
+                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            null=True, blank=True)
+    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
+    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -102,11 +108,13 @@ class TipoSombra(models.Model):
 
 class ManejoSombra(models.Model):
     tipo_2012 = models.ForeignKey(TipoSombra, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12')
+                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoSombra, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14')
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?')
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?')
+                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            null=True, blank=True)
+    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
+    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -127,11 +135,15 @@ class Fertilizacion(models.Model):
 
 class ManejoFertilizacion(models.Model):
     tipo_2012 = models.ForeignKey(Fertilizacion, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12')
+                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            null=True, blank=True)
     tipo_2014 = models.ForeignKey(Fertilizacion, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14')
-    mz_2012 = models.FloatField('¿Cantidad de plantas 2011-12?')
-    mz_2014 = models.FloatField('¿Cantidad de plantas  2013-14?')
+                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            null=True, blank=True)
+    mz_2012 = models.FloatField('¿Cantidad de plantas 2011-12?',
+        null=True, blank=True)
+    mz_2014 = models.FloatField('¿Cantidad de plantas  2013-14?',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -152,13 +164,19 @@ class TipoAplicacionFungicida(models.Model):
 
 class AplicacionFungicida(models.Model):
     tipo_2012 = models.ForeignKey(TipoAplicacionFungicida, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12')
+                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoAplicacionFungicida, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14')
-    mz_2012 = models.FloatField('¿Cuántas aplicaciones? 2011-12?')
-    mz_2014 = models.FloatField('¿Cuántas aplicaciones?  2013-14?')
-    dosis_2012 = models.FloatField('¿Qué dosis? 2011-12?')
-    dosis_2014 = models.FloatField('¿Qué dosis?  2013-14?')
+                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            null=True, blank=True)
+    mz_2012 = models.FloatField('¿Cuántas aplicaciones? 2011-12?',
+        null=True, blank=True)
+    mz_2014 = models.FloatField('¿Cuántas aplicaciones?  2013-14?',
+        null=True, blank=True)
+    dosis_2012 = models.FloatField('¿Qué dosis? 2011-12?',
+        null=True, blank=True)
+    dosis_2014 = models.FloatField('¿Qué dosis?  2013-14?',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -202,8 +220,8 @@ class Productos(models.Model):
 
 class NuevosProductos(models.Model):
     producto = models.ForeignKey(Productos)
-    frecuencia = models.FloatField('Frecuencia de aplicación')
-    cantidad = models.FloatField('Cantidad por manzana')
+    frecuencia = models.FloatField('Frecuencia de aplicación',null=True, blank=True)
+    cantidad = models.FloatField('Cantidad por manzana',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -225,8 +243,8 @@ class AdelanteTipoCafetos(models.Model):
 
 class AdelantePodaCafetos(models.Model):
     tipo_2016 = models.ForeignKey(AdelanteTipoCafetos, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo?  2014-16')
-    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?')
+                            verbose_name=u'¿Qué tipo?  2014-16',null=True, blank=True)
+    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -237,7 +255,7 @@ class AdelantePodaCafetos(models.Model):
         pass
 
 class AdelanteRecepoCafetos(models.Model):
-    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?')
+    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -258,8 +276,8 @@ class AdelanteTipoVariedad(models.Model):
 
 class AdelanteRenovacionCafetales(models.Model):
     tipo_2016 = models.ForeignKey(AdelanteTipoVariedad, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? 2014-16')
-    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?')
+                            verbose_name=u'¿Qué tipo? 2014-16',null=True, blank=True)
+    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
    
 
     encuesta = models.ForeignKey(Encuesta)
@@ -281,8 +299,10 @@ class AdelanteTipoSombra(models.Model):
 
 class AdelanteManejoSombra(models.Model):
     tipo_2016 = models.ForeignKey(TipoSombra, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12')
-    mz_2016 = models.FloatField('¿Cuántas mz 2011-12?')
+                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            null=True, blank=True)
+    mz_2016 = models.FloatField('¿Cuántas mz 2011-12?',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -303,8 +323,8 @@ class AdelanteFertilizacion(models.Model):
 
 class AdelanteManejoFertilizacion(models.Model):
     tipo_2016 = models.ForeignKey(Fertilizacion, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? 2014-16')
-    mz_2016 = models.FloatField('¿Cantidad de plantas 2014-16?')
+                            verbose_name=u'¿Qué tipo? 2014-16',null=True, blank=True)
+    mz_2016 = models.FloatField('¿Cantidad de plantas 2014-16?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -325,9 +345,10 @@ class AdelanteTipoAplicacionFungicida(models.Model):
 
 class AdelanteAplicacionFungicida(models.Model):
     tipo_2016 = models.ForeignKey(TipoAplicacionFungicida, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? 2014-16')
-    mz_2016 = models.FloatField('¿Cuántas aplicaciones? 2014-16?')
-    dosis_2016 = models.FloatField('¿Qué dosis? 2014-16?')
+                            verbose_name=u'¿Qué tipo? 2014-16',
+                            null=True, blank=True)
+    mz_2016 = models.FloatField('¿Cuántas aplicaciones? 2014-16?',null=True, blank=True)
+    dosis_2016 = models.FloatField('¿Qué dosis? 2014-16?',null=True, blank=True)
     
     encuesta = models.ForeignKey(Encuesta)
 
@@ -392,17 +413,26 @@ class Variedades(models.Model):
         return self.nombre
 
 class NivelFinca(models.Model):
-    area = models.IntegerField('Area de cafe ', choices=CHOICES_NIVEL)
-    variedades = models.IntegerField('Variedades de café', choices=CHOICES_VARIEDAD)
+    area = models.IntegerField('Area de cafe ', choices=CHOICES_NIVEL,
+        null=True, blank=True)
+    variedades = models.IntegerField('Variedades de café', choices=CHOICES_VARIEDAD,
+        null=True, blank=True)
     cuales = models.ManyToManyField(Variedades, related_name="cuales",
-                                verbose_name=u'Cuales serán las otras variedades')
-    produccion = models.IntegerField('La producción de café', choices=CHOICES_NIVEL)
-    igual = models.ForeignKey(Igual, verbose_name=u'Porqué igual')
-    mas = models.ForeignKey(Mas, verbose_name=u'Porqué más')
-    menos = models.ForeignKey(Menos, verbose_name=u'Porqué menos')
+                                verbose_name=u'Cuales serán las otras variedades',
+                                null=True, blank=True)
+    produccion = models.IntegerField('La producción de café', choices=CHOICES_NIVEL,
+        null=True, blank=True)
+    igual = models.ForeignKey(Igual, verbose_name=u'Porqué igual',
+        null=True, blank=True)
+    mas = models.ForeignKey(Mas, verbose_name=u'Porqué más',
+        null=True, blank=True)
+    menos = models.ForeignKey(Menos, verbose_name=u'Porqué menos',
+        null=True, blank=True)
     otros_productos = models.IntegerField('Habrá otros productos que repondrá el café o se cultivará junto al café', 
-                                                                choices=CHOICES_FINCA)
-    respuesta = models.TextField('Si la respuesta es si, cuales y porque', null=True, blank=True)
+                                                                choices=CHOICES_FINCA,
+                                                                null=True, blank=True)
+    respuesta = models.TextField('Si la respuesta es si, cuales y porque', 
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -454,11 +484,12 @@ class Metodologia(models.Model):
 
 class CapacitacionesTecnicas(models.Model):
     tipo = models.ForeignKey(TipoCapacitaciones)
-    cuantas = models.IntegerField('2013¿Cuántas veces?')
-    profesor = models.ForeignKey(Capacitor)
-    gratis = models.IntegerField(choices=CHOICES_GRATIS)
+    cuantas = models.IntegerField('2013¿Cuántas veces?',null=True, blank=True)
+    profesor = models.ForeignKey(Capacitor,null=True, blank=True)
+    gratis = models.IntegerField(choices=CHOICES_GRATIS,null=True, blank=True)
     metodologia = models.ManyToManyField(Metodologia, related_name="metodologia",
-                                    verbose_name=u'¿Qué metodología utilizarón?')
+                                    verbose_name=u'¿Qué metodología utilizarón?',
+                                    null=True, blank=True)
     nivel = models.IntegerField(choices=CHOICES_NIVEL_CONOCIMIENTO, null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
@@ -481,13 +512,15 @@ class TemasSociales(models.Model):
 
 class CapacitacionesSociales(models.Model):
     tipo = models.ForeignKey(TemasSociales)
-    cuantas = models.IntegerField('2013¿Cuántas veces?')
-    profesor = models.ForeignKey(Capacitor)
-    gratis = models.IntegerField(choices=CHOICES_GRATIS)
+    cuantas = models.IntegerField('2013¿Cuántas veces?',null=True, blank=True)
+    profesor = models.ForeignKey(Capacitor,null=True, blank=True)
+    gratis = models.IntegerField(choices=CHOICES_GRATIS,null=True, blank=True)
     metodologia = models.ManyToManyField(Metodologia, 
                                         related_name="capacitacion_metodologia",
-                                        verbose_name=u'¿Qué metodología utilizarón?')
-    nivel = models.IntegerField(choices=CHOICES_NIVEL_CONOCIMIENTO, null=True, blank=True)
+                                        verbose_name=u'¿Qué metodología utilizarón?',
+                                        null=True, blank=True)
+    nivel = models.IntegerField(choices=CHOICES_NIVEL_CONOCIMIENTO, 
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -500,8 +533,9 @@ class CapacitacionesSociales(models.Model):
 #5.8
 class SiLeGusta(models.Model):
     metodologia = models.ManyToManyField(Metodologia, related_name="si_metodologia",
-                                verbose_name=u'¿Qué metodología de capacitación le gusto más a usted?')
-    porque = models.TextField()
+                                verbose_name=u'¿Qué metodología de capacitación le gusto más a usted?',
+                                null=True, blank=True)
+    porque = models.TextField(null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -513,8 +547,9 @@ class SiLeGusta(models.Model):
 
 class NoLeGusta(models.Model):
     metodologia = models.ManyToManyField(Metodologia, related_name="no_metodologia",
-                                verbose_name=u' Qué metodología de capacitación le gusto menos a usted?')
-    porque = models.TextField()
+                                verbose_name=u' Qué metodología de capacitación le gusto menos a usted?',
+                                null=True, blank=True)
+    porque = models.TextField(null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -574,20 +609,30 @@ class TipoFungicida(models.Model):
 
 class DetalleIncidenciaRoya(models.Model):
     plantio = models.ForeignKey(Plantio)
-    area = models.FloatField('Area en MZ')
-    planta = models.IntegerField('Tipo de plantas', choices=CHOICES_TIPOS_PLANTA)
-    edad = models.FloatField('Edad en años')
-    variedad = models.IntegerField('Variedades Predominante', choices=CHOICES_VARIEDAD_PROD)
-    sombra = models.IntegerField('Tipo de Sombra', choices=CHOICES_TIPO_SOMBRA)
-    nivel = models.FloatField('Nivel de sombra%')
+    area = models.FloatField('Area en MZ',null=True, blank=True)
+    planta = models.IntegerField('Tipo de plantas', choices=CHOICES_TIPOS_PLANTA,
+        null=True, blank=True)
+    edad = models.FloatField('Edad en años',null=True, blank=True)
+    variedad = models.IntegerField('Variedades Predominante', 
+        choices=CHOICES_VARIEDAD_PROD,
+        null=True, blank=True)
+    sombra = models.IntegerField('Tipo de Sombra', choices=CHOICES_TIPO_SOMBRA,
+        null=True, blank=True)
+    nivel = models.FloatField('Nivel de sombra%',null=True, blank=True)
     fertilizacion = models.ManyToManyField(TipoFertilizacion, related_name="fertilizante",
-                                    verbose_name=u'Tipo de fertilización')
-    dosis = models.FloatField('Dosis de fertilizaciónOnza/ pl QLibras/ pl O')
+                                    verbose_name=u'Tipo de fertilización',
+                                    null=True, blank=True)
+    dosis = models.FloatField('Dosis de fertilizaciónOnza/ pl QLibras/ pl O',
+        null=True, blank=True)
     fungicidas = models.ManyToManyField(TipoFungicida, related_name="fungicida",
-                                        verbose_name=u'Tipo de fungicidas')
-    aplicaciones = models.FloatField('Número de aplicaciones por año')
-    afectadas = models.FloatField('% de plantas afectadas con Roya')
-    hojas = models.FloatField('% de hojas afectadas con Roya')
+                                        verbose_name=u'Tipo de fungicidas',
+                                        null=True, blank=True)
+    aplicaciones = models.FloatField('Número de aplicaciones por año',
+        null=True, blank=True)
+    afectadas = models.FloatField('% de plantas afectadas con Roya',
+        null=True, blank=True)
+    hojas = models.FloatField('% de hojas afectadas con Roya',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 

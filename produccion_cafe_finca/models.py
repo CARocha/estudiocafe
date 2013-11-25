@@ -17,10 +17,10 @@ class EstadoActual(models.Model):
     
 class AreaCafe(models.Model):
     estado = models.ForeignKey(EstadoActual)
-    once = models.FloatField('2010-2011')
-    doce = models.FloatField('2011-12')
-    trece = models.FloatField('2012-13')
-    catorse = models.FloatField('2013-14')
+    once = models.FloatField('2010-2011',null=True, blank=True)
+    doce = models.FloatField('2011-12',null=True, blank=True)
+    trece = models.FloatField('2012-13',null=True, blank=True)
+    catorse = models.FloatField('2013-14',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -55,11 +55,16 @@ class Variedades(models.Model):
 class VariedadEdadRoya(models.Model):
     nombre_plantio = models.ForeignKey(Plantio)
     area = models.FloatField('Area Mz')
-    variedades = models.ManyToManyField(Variedades, related_name="variedades")
-    produccion_2012 = models.FloatField('Producción 2011-12 qq perg/mz')
-    produccion_2013 = models.FloatField('Producción 2012-13 qq perg/mz')
-    produccion_2014 = models.FloatField('Estiamdo produccion 2013-14 qq perg/mz')
-    nivel_roya = models.FloatField('Nivel de roya 2013-14 basado en la impresión plantas afectadas')
+    variedades = models.ManyToManyField(Variedades, related_name="variedades",
+        null=True, blank=True)
+    produccion_2012 = models.FloatField('Producción 2011-12 qq perg/mz',
+        null=True, blank=True)
+    produccion_2013 = models.FloatField('Producción 2012-13 qq perg/mz',
+        null=True, blank=True)
+    produccion_2014 = models.FloatField('Estiamdo produccion 2013-14 qq perg/mz',
+        null=True, blank=True)
+    nivel_roya = models.FloatField('Nivel de roya 2013-14 basado en la impresión plantas afectadas',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
     
@@ -109,30 +114,42 @@ class Criterios(models.Model):
 
 class ProduccionVivero(models.Model):
     vivero_finca = models.IntegerField('¿Actualmente tiene vivero de café en la finca?',
-                                                                choices=CHOICE_SI_NO)
-    plantas_vivero = models.FloatField('¿Cuántas plantas hay en el vivero?')
-    plantas_finca = models.FloatField('¿Cuántas plantas para sembrar en la finca?')
-    plantas_vender = models.FloatField('¿Cuántas plantas para vender en la finca?')
-    plantas_injertadas = models.FloatField('¿Cuántas plantas son injertadas?')
-    edad_planta = models.FloatField('¿Cuál es la edad de las plantas de vivero? en meses')
+                                                                choices=CHOICE_SI_NO,
+                                                                null=True, blank=True)
+    plantas_vivero = models.FloatField('¿Cuántas plantas hay en el vivero?',
+        null=True, blank=True)
+    plantas_finca = models.FloatField('¿Cuántas plantas para sembrar en la finca?',
+        null=True, blank=True)
+    plantas_vender = models.FloatField('¿Cuántas plantas para vender en la finca?',
+        null=True, blank=True)
+    plantas_injertadas = models.FloatField('¿Cuántas plantas son injertadas?',
+        null=True, blank=True)
+    edad_planta = models.FloatField('¿Cuál es la edad de las plantas de vivero? en meses',
+        null=True, blank=True)
     variedad = models.ManyToManyField(Variedades, related_name="variedad", 
-                                      verbose_name=u'¿Qué  variedades hay en el vivero?')
+                                      verbose_name=u'¿Qué  variedades hay en el vivero?',
+                                      null=True, blank=True)
     resistente_roya = models.ManyToManyField(ResistenteRoya, related_name="resistente", 
-                                                    verbose_name=u'¿Cuáles son resistentes a roya? ¿Cuántas de ellas tienen? ')
+                                            verbose_name=u'¿Cuáles son resistentes a roya? ¿Cuántas de ellas tienen? ',
+                                            null=True, blank=True)
     consigue_semilla = models.ManyToManyField(Semilla, related_name="semilla",
-                                            verbose_name=u'¿Actualmente EN DONDE consiguen las semillas o plantas?')
+                                            verbose_name=u'¿Actualmente EN DONDE consiguen las semillas o plantas?',
+                                            null=True, blank=True)
     disponible = models.ManyToManyField(Variedades, related_name="disponible",
-                                            verbose_name=u'¿Qué variedades están disponibles para la siembra en estos lugares?')
-    costo_planta_caturra = models.FloatField('Seleccion CATURRA')
-    costo_planta_catimore = models.FloatField('Lineas de CATIMORES')
-    costo_planta_hibridas = models.FloatField('Hibridas')
-    pagar_caturra = models.FloatField()
-    pagar_catimore = models.FloatField()
-    pagar_hibrida = models.FloatField()
+                                            verbose_name=u'¿Qué variedades están disponibles para la siembra en estos lugares?',
+                                            null=True, blank=True)
+    costo_planta_caturra = models.FloatField('Seleccion CATURRA',null=True, blank=True)
+    costo_planta_catimore = models.FloatField('Lineas de CATIMORES',null=True, blank=True)
+    costo_planta_hibridas = models.FloatField('Hibridas',null=True, blank=True)
+    pagar_caturra = models.FloatField(null=True, blank=True)
+    pagar_catimore = models.FloatField(null=True, blank=True)
+    pagar_hibrida = models.FloatField(null=True, blank=True)
     decide = models.ManyToManyField(DecideSembrar, related_name="decide" ,
-                                    verbose_name=u'¿Cómo decide sobre que variedad a sembrar?')
+                                    verbose_name=u'¿Cómo decide sobre que variedad a sembrar?',
+                                    null=True, blank=True)
     criterio = models.ManyToManyField(Criterios, related_name="criterio",
-                        verbose_name=u'¿Qué criterio es más importante para usted cuando usted selecciona una variedad?')           
+                        verbose_name=u'¿Qué criterio es más importante para usted cuando usted selecciona una variedad?',
+                        null=True, blank=True)           
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -162,19 +179,26 @@ class Manejos(models.Model):
 class ManejoCafetales(models.Model):
     fecha = models.IntegerField('Años', choices=CHOICES_ANIOS)
     manejo_cafeto = models.ManyToManyField(Manejos, related_name="cafeto",
-                                        verbose_name=u'Manejo de tejido o poda de cafetos')
+                                        verbose_name=u'Manejo de tejido o poda de cafetos',
+                                        null=True, blank=True)
     manejo_sombra = models.ManyToManyField(Manejos, related_name="sombra",
-                                        verbose_name=u'Manejo o poda de sombra')
+                                        verbose_name=u'Manejo o poda de sombra',
+                                        null=True, blank=True)
     fertilizante_suelo = models.ManyToManyField(Manejos, related_name="suelo",
-                                                verbose_name=u'Aplicación de fertilizantes en el suelo')
+                                                verbose_name=u'Aplicación de fertilizantes en el suelo',
+                                                null=True, blank=True)
     fertilizante_foliares = models.ManyToManyField(Manejos, related_name="foliares",
-                                                    verbose_name=u'Aplicación de  fertilizantes foliares')
+                                                    verbose_name=u'Aplicación de  fertilizantes foliares',
+                                                    null=True, blank=True)
     fungicidas = models.ManyToManyField(Manejos, related_name="fungicida",
-                                        verbose_name=u'Aplicación de Fungicidas')
+                                        verbose_name=u'Aplicación de Fungicidas',
+                                        null=True, blank=True)
     insecticidas = models.ManyToManyField(Manejos, related_name="insecticida",
-                                        verbose_name=u'Aplicaciones de insecticidas')
+                                        verbose_name=u'Aplicaciones de insecticidas',
+                                        null=True, blank=True)
     nematicidas = models.ManyToManyField(Manejos, related_name="nematicidas",
-                                        verbose_name=u'Aplicaciones de nematicidas')
+                                        verbose_name=u'Aplicaciones de nematicidas',
+                                        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -190,21 +214,29 @@ CHOICES_ANIOS_otro = (
     )
 
 class MesesManejoCafe(models.Model):
-    fecha = models.IntegerField('Años', choices=CHOICES_ANIOS_otro)
+    fecha = models.IntegerField('Años', choices=CHOICES_ANIOS_otro,
+        null=True, blank=True)
     mes_manejo_cafeto = models.ManyToManyField(Meses, related_name="manejo_cefeto",
-                                            verbose_name=u'Manejo de tejido o poda de cafetos')
+                                            verbose_name=u'Manejo de tejido o poda de cafetos',
+                                            null=True, blank=True)
     mes_manejo_sombra = models.ManyToManyField(Meses, related_name="manejo_sombra", 
-                                            verbose_name=u'Manejo o poda de sombra')
+                                            verbose_name=u'Manejo o poda de sombra',
+                                            null=True, blank=True)
     mes_fertilizante_suelo = models.ManyToManyField(Meses, related_name="fertilizante_suelo",
-                                                    verbose_name=u'Aplicación de fertilizantes en el suelo')
+                                                    verbose_name=u'Aplicación de fertilizantes en el suelo',
+                                                    null=True, blank=True)
     mes_fertilizante_foliares = models.ManyToManyField(Meses, related_name="fertilizante_foliares",
-                                                verbose_name=u'Aplicación de  fertilizantes foliares')
+                                                verbose_name=u'Aplicación de  fertilizantes foliares',
+                                                null=True, blank=True)
     mes_fungicidas = models.ManyToManyField(Meses, related_name="mes_fungicidas",
-                                            verbose_name=u'Aplicación de Fungicidas')
+                                            verbose_name=u'Aplicación de Fungicidas',
+                                            null=True, blank=True)
     mes_insecticidas = models.ManyToManyField(Meses, related_name="mes_insecticida",
-                                            verbose_name=u'Aplicaciones de insecticidas')
+                                            verbose_name=u'Aplicaciones de insecticidas',
+                                            null=True, blank=True)
     mes_nematicidas = models.ManyToManyField(Meses, related_name="mes_nematicidas",
-                                            verbose_name=u'Aplicaciones de nematicidas')
+                                            verbose_name=u'Aplicaciones de nematicidas',
+                                            null=True, blank=True)
     encuesta = models.ForeignKey(Encuesta)
 
 
@@ -237,10 +269,11 @@ class NombreTipos(models.Model):
 class UsoInsumos(models.Model):
     tipo = models.ForeignKey(TiposInsumos)
     nombre = models.ForeignKey(NombreTipos)
-    aplicaciones = models.FloatField('Número de aplicaciones')
-    cantidad = models.FloatField('Cantidad por mz Lts, Lb, Kg')
+    aplicaciones = models.FloatField('Número de aplicaciones',null=True, blank=True)
+    cantidad = models.FloatField('Cantidad por mz Lts, Lb, Kg',null=True, blank=True)
     momento = models.ManyToManyField(Meses, related_name="momento",
-                                    verbose_name=u'Momento de aplicación')
+                                    verbose_name=u'Momento de aplicación',
+                                    null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -269,8 +302,9 @@ CHOICES_NIVEL = (
     )
 
 class UsoOpcionesAgroecologica(models.Model):
-    opcion = models.ForeignKey(Opciones)
-    nivel = models.IntegerField('Nivel de uso en la finca', choices=CHOICES_NIVEL)
+    opcion = models.ForeignKey(Opciones,null=True, blank=True)
+    nivel = models.IntegerField('Nivel de uso en la finca', choices=CHOICES_NIVEL,
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -344,30 +378,44 @@ class CalidadCafe(models.Model):
 
 class Beneficiado(models.Model):
     cortes = models.IntegerField('¿Cómo realizaron los cortes?', 
-                        choices=CHOICES_CORTE)
+                        choices=CHOICES_CORTE,
+                        null=True, blank=True)
     separan = models.IntegerField('¿Separan sobre maduros y granos negros?',
-                         choices=CHOICES_SI_NO_BENEFICIARIO)
+                         choices=CHOICES_SI_NO_BENEFICIARIO,
+                         null=True, blank=True)
     despulpan_fermentan = models.IntegerField('¿Dónde despulpan y fermentan el café?', 
-                        choices=CHOICES_DESPULPAN_FERMENTAN)
+                        choices=CHOICES_DESPULPAN_FERMENTAN,
+                        null=True, blank=True)
     estado = models.IntegerField('¿Cómo es el estado de su beneficio húmedo?', 
-                        choices=CHOICES_ESTADO_HUMEDO)
+                        choices=CHOICES_ESTADO_HUMEDO,
+                        null=True, blank=True)
     calibran = models.IntegerField('¿Cada cuanto calibran la maquina para despulpar café?', 
-                        choices=CHOICES_CALIBRAN)
+                        choices=CHOICES_CALIBRAN,
+                        null=True, blank=True)
     revisan = models.IntegerField('¿Cada cuánto revisan la camisa y pechero?', 
-                        choices=CHOICES_CALIBRAN)
+                        choices=CHOICES_CALIBRAN,
+                        null=True, blank=True)
     despulpar = models.IntegerField('¿ De dónde saca el agua para despulpar y lavar?', 
-                        choices=CHOICES_DESPULPAR)
-    fermentan = models.IntegerField('¿Dónde fermentan el café?', choices=CHOICES_FERMENTAN)
+                        choices=CHOICES_DESPULPAR,
+                        null=True, blank=True)
+    fermentan = models.IntegerField('¿Dónde fermentan el café?', 
+                                    choices=CHOICES_FERMENTAN,
+                                    null=True, blank=True)
     orean = models.IntegerField('¿Dónde orean el café?', choices=CHOICES_OREAN)
     beneficiado_seco = models.ForeignKey(BeneficioSeco, 
-                            verbose_name=u'¿ Donde se realizan el beneficiado seco?')
+                            verbose_name=u'¿ Donde se realizan el beneficiado seco?',
+                            null=True, blank=True)
     calidad = models.IntegerField('¿Conoce la calidad de la taza de su café?', 
-                                choices=CHOICE_SI_NO)
+                                choices=CHOICE_SI_NO,
+                                null=True, blank=True)
     determina_calidad = models.ForeignKey(CalidadCafe, 
-                            verbose_name=u'¿Quién determino la calidad de la taza de su café')
+                            verbose_name=u'¿Quién determino la calidad de la taza de su café',
+                            null=True, blank=True)
     precio = models.IntegerField('¿Reciben un sobre precio para su café?', 
-                                choices=CHOICE_SI_NO)
-    cuanto = models.FloatField('¿Cuánto por qq oro?')
+                                choices=CHOICE_SI_NO,
+                                null=True, blank=True
+                                )
+    cuanto = models.FloatField('¿Cuánto por qq oro?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -386,13 +434,20 @@ CHOICES_ANIOS_comercializacion = (
 
 class Comercializacion(models.Model):
     fecha = models.IntegerField('Años', choices=CHOICES_ANIOS_comercializacion)
-    p_total = models.FloatField('Producción total de café qq pergamino')
-    i_venta_cafe = models.FloatField('Intermediarios: Venta de café qq pergamino')
-    i_precio = models.FloatField('Intermediarios: Precio pagado en C$ por qq pergamino')
-    c_venta = models.FloatField('Cooperativa o Assoc: Venta de café qq pergamino')
-    c_precio = models.FloatField('Cooperativa o Assoc: Precio pagado en C$ por qq pergamino')
-    e_venta = models.FloatField('Empresa exportadora: Venta a las empresas acopiadoras')
-    e_precio = models.FloatField('Empresa exportadora: Precio en C$ por qq pergamino')
+    p_total = models.FloatField('Producción total de café qq pergamino',
+        null=True, blank=True)
+    i_venta_cafe = models.FloatField('Intermediarios: Venta de café qq pergamino',
+        null=True, blank=True)
+    i_precio = models.FloatField('Intermediarios: Precio pagado en C$ por qq pergamino',
+        null=True, blank=True)
+    c_venta = models.FloatField('Cooperativa o Assoc: Venta de café qq pergamino',
+        null=True, blank=True)
+    c_precio = models.FloatField('Cooperativa o Assoc: Precio pagado en C$ por qq pergamino',
+        null=True, blank=True)
+    e_venta = models.FloatField('Empresa exportadora: Venta a las empresas acopiadoras',
+        null=True, blank=True)
+    e_precio = models.FloatField('Empresa exportadora: Precio en C$ por qq pergamino',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -418,13 +473,21 @@ CHOICES_ANIOS_FACILIDAD = (
 
 class Credito(models.Model):
     fecha = models.IntegerField('Años', choices=CHOICES_ANIOS_CREDITO)
-    monto = models.FloatField('Monto de crédito corto plazo')
-    cobertura = models.FloatField('% de cobertura de la necesidad')
-    credito_mediano = models.FloatField('Monto de crédito de mediano plazo')
-    necesidad = models.FloatField('% cobertura de la necesidad')
-    credito_largo = models.FloatField('Monto de crédito de largo plazo')
-    cobertura_necesidad = models.FloatField('% cobertura de la necesidad')
-    facilidad = models.IntegerField('Facilidad de pago', choices=CHOICES_ANIOS_FACILIDAD)
+    monto = models.FloatField('Monto de crédito corto plazo',
+        null=True, blank=True)
+    cobertura = models.FloatField('% de cobertura de la necesidad',
+        null=True, blank=True)
+    credito_mediano = models.FloatField('Monto de crédito de mediano plazo',
+        null=True, blank=True)
+    necesidad = models.FloatField('% cobertura de la necesidad',
+        null=True, blank=True)
+    credito_largo = models.FloatField('Monto de crédito de largo plazo',
+        null=True, blank=True)
+    cobertura_necesidad = models.FloatField('% cobertura de la necesidad',
+        null=True, blank=True)
+    facilidad = models.IntegerField('Facilidad de pago', 
+        choices=CHOICES_ANIOS_FACILIDAD,
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 

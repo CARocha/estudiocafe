@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'roya',
     'lugar',
     'south',
+    'geoposition',
 )
 
 # A sample logging configuration. The only tangible logging

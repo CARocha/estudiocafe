@@ -2,10 +2,12 @@
 
 from django.db import models
 from lugar.models import Comunidad, Municipio, Departamento, Pais
+from geoposition.fields import GeopositionField
 
 # Create your models here.
 class Entrevistado(models.Model):
     nombre = models.CharField(max_length=200)
+    fecha_nacimiento = models.DateField()
 
     class Meta:
         verbose_name = 'Entrevistado'
@@ -16,6 +18,7 @@ class Entrevistado(models.Model):
 
 class DuenoFinca(models.Model):
     nombre = models.CharField(max_length=200)
+    fecha_nacimiento = models.DateField()
 
     class Meta:
         verbose_name = 'Dueño Finca'
@@ -63,10 +66,9 @@ class Encuesta(models.Model):
     departamento = models.ForeignKey(Departamento)
     municipio = models.ForeignKey(Municipio)
     comunidad = models.ForeignKey(Comunidad)
-    longitud = models.FloatField(null=True, blank=True)
-    latitud = models.FloatField(null=True, blank=True)
-    altitud = models.CharField(max_length=50, null=True, blank=True)
-    beneficiario = models.ForeignKey(Organizacion)
+    position = position = GeopositionField(null=True, blank=True)
+    altitud = models.CharField('altitud promedio',max_length=50, null=True, blank=True)
+    beneficiarios = models.ManyToManyField(Organizacion, null=True, blank=True)
 
 
     class Meta:
@@ -122,10 +124,15 @@ class DeQuien(models.Model):
     
 class QuienFinancia(models.Model):
     socio = models.ManyToManyField(SocioOrganizacion, related_name="socios")
-    desde = models.IntegerField(choices=CHOICE_DESDE)
-    beneficio_ser_socio = models.ManyToManyField(Beneficios, related_name="beneficiario_socio")
-    tiene_credito = models.ManyToManyField(CreditoE, related_name="credito")
-    de_quien = models.ManyToManyField(DeQuien, related_name="quien")
+    desde = models.IntegerField(choices=CHOICE_DESDE, null=True, blank=True)
+    beneficio_ser_socio = models.ManyToManyField(Beneficios, 
+                                        related_name="beneficiario_socio",
+                                        null=True, blank=True)
+    tiene_credito = models.ManyToManyField(CreditoE, 
+                                        related_name="credito",
+                                        null=True, blank=True)
+    de_quien = models.ManyToManyField(DeQuien, related_name="quien",
+                                    null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -155,25 +162,25 @@ CHOICE_EDUCACION = (
     )
 
 class Composicion(models.Model):
-    adultos = models.IntegerField('adultos varones')
-    adultas = models.IntegerField('adultas mujeres')
-    jovenes_varones = models.IntegerField()
-    jovenes_mujeres = models.IntegerField()
-    ninos = models.IntegerField('niños')
-    ninas = models.IntegerField('niñas')
-    permanente_hombres = models.IntegerField()
-    permanente_mujeres = models.IntegerField()
-    temporales_hombres = models.IntegerField()
-    temporales_mujeres = models.IntegerField()
-    tecnico_hombres = models.IntegerField()
-    tecnico_mujeres = models.IntegerField()
-    relacion_finca_vivienda = models.ForeignKey(ViveFamilia)
+    adultos = models.IntegerField('adultos varones', null=True, blank=True)
+    adultas = models.IntegerField('adultas mujeres', null=True, blank=True)
+    jovenes_varones = models.IntegerField(null=True, blank=True)
+    jovenes_mujeres = models.IntegerField(null=True, blank=True)
+    ninos = models.IntegerField('niños', null=True, blank=True)
+    ninas = models.IntegerField('niñas', null=True, blank=True)
+    permanente_hombres = models.IntegerField(null=True, blank=True)
+    permanente_mujeres = models.IntegerField(null=True, blank=True)
+    temporales_hombres = models.IntegerField(null=True, blank=True)
+    temporales_mujeres = models.IntegerField(null=True, blank=True)
+    tecnico_hombres = models.IntegerField(null=True, blank=True)
+    tecnico_mujeres = models.IntegerField(null=True, blank=True)
+    relacion_finca_vivienda = models.ForeignKey(ViveFamilia,null=True, blank=True)
     educacion_dueno = models.IntegerField('Nivel de educación de dueño de la finca?', 
-                                        choices=CHOICE_EDUCACION)
+                                        choices=CHOICE_EDUCACION,null=True, blank=True)
     educacion_maxima_hombre = models.IntegerField('Nivel máximo de hombres de la finca?',
-                                        choices=CHOICE_EDUCACION)
+                                        choices=CHOICE_EDUCACION,null=True, blank=True)
     educacion_maxima_mujeres = models.IntegerField('Nivel máximo de las mujeres de la finca?',
-                                        choices=CHOICE_EDUCACION)
+                                        choices=CHOICE_EDUCACION,null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -216,10 +223,14 @@ class AguaFinca(models.Model):
         return self.nombre
     
 class ServiciosBasicos(models.Model):
-    electricidad = models.ManyToManyField(EnergiaFinca, related_name="electricidad")
-    combustible = models.ManyToManyField(Combustible, related_name="combustible")
-    agua_trabajo_finca = models.ManyToManyField(AguaFinca, related_name="trabaja")
-    agua_consumo_humano = models.ManyToManyField(AguaFinca, related_name="consumo")
+    electricidad = models.ManyToManyField(EnergiaFinca, related_name="electricidad",
+                                        null=True, blank=True)
+    combustible = models.ManyToManyField(Combustible, related_name="combustible",
+                                        null=True, blank=True)
+    agua_trabajo_finca = models.ManyToManyField(AguaFinca, related_name="trabaja",
+                                        null=True, blank=True)
+    agua_consumo_humano = models.ManyToManyField(AguaFinca, related_name="consumo",
+                                        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -307,15 +318,18 @@ class TiemposCrisis(models.Model):
     
 class Seguridad(models.Model):
     compra_alimento = models.IntegerField('¿Qué parte de alimentos básicos que consume la familia o la en la finca se compra?',
-                                                                            choices=CHOICE_ALIMENTOS_COMPRA)
+                                                                            choices=CHOICE_ALIMENTOS_COMPRA,null=True, blank=True)
     cubrir_necesidades = models.IntegerField('¿Siente que en algunos años no ha podido cubrir las necesidades básicas de alimentación de la familia o la finca? ',
-                                            choices=CHOICE_SI_NO)
+                                            choices=CHOICE_SI_NO,null=True, blank=True)
     porque_no_cubre = models.ManyToManyField(NecesidadAlimento,related_name="cubre",
-        verbose_name=u'¿Porque motivo no se ha podido cubrir las necesidades de alimentos de la familia o la finca?')
+        verbose_name=u'¿Porque motivo no se ha podido cubrir las necesidades de alimentos de la familia o la finca?',
+        null=True, blank=True)
     meses_dificiles = models.ManyToManyField(Meses, related_name="dificiles",
-        verbose_name=u'¿Cuáles son los meses más difíciles para la alimentación de la familia o la finca?')
+        verbose_name=u'¿Cuáles son los meses más difíciles para la alimentación de la familia o la finca?',
+        null=True, blank=True)
     soluciones_crisis = models.ManyToManyField(TiemposCrisis, related_name="crisis",
-                    verbose_name=u'¿Qué soluciones y practicas implementa en los tiempos de crisis o escasez de alimentos?')
+                    verbose_name=u'¿Qué soluciones y practicas implementa en los tiempos de crisis o escasez de alimentos?',
+                    null=True, blank=True)
     
     encuesta = models.ForeignKey(Encuesta)
 

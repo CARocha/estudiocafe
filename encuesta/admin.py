@@ -247,8 +247,8 @@ class DetalleIncidenciaRoyaInline(admin.TabularInline):
 
 class EncuestaAdmin(admin.ModelAdmin):
     inlines = [QuienFinanciaInline,ComposicioInline,ServiciosBasicosInline,TeneciaInline,SeguridadInline,
-                    UsoTierraInline,ReforestacionInline,AnimalesFincaInline,ProductoFincaInline,ProductoPatioInline,
-                    IngresoFamiliarInline,OtrosIngresosInline,AreaCafeInline,VariedadEdadRoyaInline,
+                    UsoTierraInline,ReforestacionInline,
+                    AreaCafeInline,VariedadEdadRoyaInline,
                     ProduccionViveroInline,ManejoCafetalesInline,MesesManejoCafeInline,UsoInsumosInline,
                     UsoOpcionesAgroecologicaInline,BeneficiadoInline,ComercializacionInline,CreditoInline,
                     ElClimaInline,SueloFertilidadInline,LasPlagasInline,OtroRiesgosInline,MitigacionInline,

@@ -27,7 +27,7 @@ class TipoYear(models.Model):
 
 class ElClima(models.Model):
     clima = models.ForeignKey(TipoClima)
-    fecha = models.ManyToManyField(TipoYear, related_name="fecha")
+    fecha = models.ManyToManyField(TipoYear, related_name="fecha",null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
     
@@ -102,26 +102,51 @@ CHOICES_CAFETALES_DEGRADADOS = (
     )
 
 class SueloFertilidad(models.Model):
-    textura = models.IntegerField('¿Cuál es el tipo de textura del suelo?', choices=CHOICES_TEXTURA)
-    profundidad = models.IntegerField('¿Cuál es la profundidad de suelo?', choices=CHOICES_PROFUNDIDAD)
+    textura = models.IntegerField('¿Cuál es el tipo de textura del suelo?', 
+        choices=CHOICES_TEXTURA,
+        null=True, blank=True)
+    profundidad = models.IntegerField('¿Cuál es la profundidad de suelo?', 
+        choices=CHOICES_PROFUNDIDAD,
+        null=True, blank=True)
     presencia = models.IntegerField('¿Cómo es la presencia de lombrices en el suelo?', 
-                                                        choices=CHOICES_PRESENCIA)
+                                                        choices=CHOICES_PRESENCIA,
+                                                        null=True, blank=True)
     abundancia = models.IntegerField('¿Cómo es la abundancia de los raíces en los primeros 6 pulgadas de suelo?', 
-                                                        choices=CHOICES_PRESENCIA)
-    pendiente = models.IntegerField('¿Cuál es el pendiente del terreno?', choices=CHOICES_PENDIENTE)
-    drenaje = models.IntegerField('¿Cómo es el drenaje del suelo?', choices=CHOICES_DRENAJE)
-    materia_organica = models.IntegerField('¿Cómo es el contenido de materia orgánica?', choices=CHOICES_PRESENCIA)
-    preparan = models.IntegerField('¿Cómo preparan el terreno para la siembra?', choices=CHOICES_PREPARAN)
-    fertilidad = models.IntegerField('¿Realiza análisis de fertilidad de suelos?', choices=CHOICE_SI_NO)
-    foliar = models.IntegerField('¿Realiza análisis de foliar?', choices=CHOICE_SI_NO)
-    fertilizacion = models.IntegerField('¿Qué tipo de fertilización realiza?', choices=CHOICES_FERTILIZACION)
-    conservacion = models.IntegerField('¿Realiza práctica de conservación de suelo?', choices=CHOICE_SI_NO)
+                                                        choices=CHOICES_PRESENCIA,
+                                                        null=True, blank=True)
+    pendiente = models.IntegerField('¿Cuál es el pendiente del terreno?', 
+        choices=CHOICES_PENDIENTE,
+        null=True, blank=True)
+    drenaje = models.IntegerField('¿Cómo es el drenaje del suelo?', 
+        choices=CHOICES_DRENAJE,
+        null=True, blank=True)
+    materia_organica = models.IntegerField('¿Cómo es el contenido de materia orgánica?', 
+        choices=CHOICES_PRESENCIA,
+        null=True, blank=True)
+    preparan = models.IntegerField('¿Cómo preparan el terreno para la siembra?', 
+        choices=CHOICES_PREPARAN,
+        null=True, blank=True)
+    fertilidad = models.IntegerField('¿Realiza análisis de fertilidad de suelos?', 
+        choices=CHOICE_SI_NO,
+        null=True, blank=True)
+    foliar = models.IntegerField('¿Realiza análisis de foliar?', 
+        choices=CHOICE_SI_NO,
+        null=True, blank=True)
+    fertilizacion = models.IntegerField('¿Qué tipo de fertilización realiza?', 
+        choices=CHOICES_FERTILIZACION,
+        null=True, blank=True)
+    conservacion = models.IntegerField('¿Realiza práctica de conservación de suelo?', 
+        choices=CHOICE_SI_NO,
+        null=True, blank=True)
     obra_conservacion = models.IntegerField('¿Qué tipo de obra para conservación de suelo REALIZA?', 
-                                                        choices=CHOICES_OBRA_CONSERVACION)
+                                                        choices=CHOICES_OBRA_CONSERVACION,
+                                                        null=True, blank=True)
     fertil = models.IntegerField('¿Considera el suelo de los cafetales fértil?', 
-                                                        choices=CHOICES_SUELO_FERTIL)
+                                                        choices=CHOICES_SUELO_FERTIL,
+                                                        null=True, blank=True)
     degrados = models.IntegerField('¿Considera el suelo de los cafetales degrados y sin vida?', 
-                                                        choices=CHOICES_CAFETALES_DEGRADADOS)
+                                                        choices=CHOICES_CAFETALES_DEGRADADOS,
+                                                        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -149,11 +174,15 @@ class Plagas(models.Model):
         return self.nombre
     
 class LasPlagas(models.Model):
-    fecha = models.IntegerField('Años')
-    gallo = models.ManyToManyField(Plagas, related_name="gallo", verbose_name=u'Ojo de gallo')
-    roya = models.ManyToManyField(Plagas, related_name="roya", verbose_name=u'La Roya')
-    hierro = models.ManyToManyField(Plagas, related_name="hierro", verbose_name=u'Mancha de hierro')
-    antracnosis = models.ManyToManyField(Plagas, related_name="antracnosis", verbose_name=u'Antracnosis')
+    fecha = models.IntegerField('Años',null=True, blank=True)
+    gallo = models.ManyToManyField(Plagas, related_name="gallo", 
+        verbose_name=u'Ojo de gallo',null=True, blank=True)
+    roya = models.ManyToManyField(Plagas, related_name="roya", 
+        verbose_name=u'La Roya',null=True, blank=True)
+    hierro = models.ManyToManyField(Plagas, related_name="hierro", 
+        verbose_name=u'Mancha de hierro',null=True, blank=True)
+    antracnosis = models.ManyToManyField(Plagas, related_name="antracnosis", 
+        verbose_name=u'Antracnosis',null=True, blank=True)
     broca = models.ManyToManyField(Plagas, related_name="broca", verbose_name=u'Broca del fruto')
     nematodos = models.ManyToManyField(Plagas, related_name="nematodos", verbose_name=u'Nematodos')
 
