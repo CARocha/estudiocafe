@@ -85,6 +85,11 @@ class ManejoCafetalesInline(admin.TabularInline):
     extra = 1
     max_num = None
 
+class ManejoTejidosInline(admin.TabularInline):
+    model = ManejoTejidos
+    extra = 1
+    max_num = 1
+
 class MesesManejoCafeInline(admin.TabularInline):
     model = MesesManejoCafe
     extra = 1
@@ -185,35 +190,35 @@ class NuevosProductosInline(admin.TabularInline):
     extra = 1
     max_num = None
 
-class AdelantePodaCafetosInline(admin.TabularInline):
-    model = AdelantePodaCafetos
-    extra = 1
-    max_num = 1
+# class AdelantePodaCafetosInline(admin.TabularInline):
+#     model = AdelantePodaCafetos
+#     extra = 1
+#     max_num = 1
 
-class AdelanteRecepoCafetosInline(admin.TabularInline):
-    model = AdelanteRecepoCafetos
-    extra = 1
-    max_num = 1
+# class AdelanteRecepoCafetosInline(admin.TabularInline):
+#     model = AdelanteRecepoCafetos
+#     extra = 1
+#     max_num = 1
 
-class AdelanteRenovacionCafetalesInline(admin.TabularInline):
-    model = AdelanteRenovacionCafetales
-    extra = 1
-    max_num = 1
+# class AdelanteRenovacionCafetalesInline(admin.TabularInline):
+#     model = AdelanteRenovacionCafetales
+#     extra = 1
+#     max_num = 1
 
-class AdelanteManejoSombraInline(admin.TabularInline):
-    model = AdelanteManejoSombra
-    extra = 1
-    max_num = 1
+# class AdelanteManejoSombraInline(admin.TabularInline):
+#     model = AdelanteManejoSombra
+#     extra = 1
+#     max_num = 1
 
-class AdelanteManejoFertilizacionInline(admin.TabularInline):
-    model = AdelanteManejoFertilizacion
-    extra = 1
-    max_num = 1
+# class AdelanteManejoFertilizacionInline(admin.TabularInline):
+#     model = AdelanteManejoFertilizacion
+#     extra = 1
+#     max_num = 1
 
-class AdelanteAplicacionFungicidaInline(admin.TabularInline):
-    model = AdelanteAplicacionFungicida
-    extra = 1
-    max_num = 1
+# class AdelanteAplicacionFungicidaInline(admin.TabularInline):
+#     model = AdelanteAplicacionFungicida
+#     extra = 1
+#     max_num = 1
 
 class NivelFincaInline(admin.TabularInline):
     model = NivelFinca
@@ -245,21 +250,26 @@ class DetalleIncidenciaRoyaInline(admin.TabularInline):
     extra = 1
     max_num = None
 
+class FotosInline(admin.TabularInline):
+    model = Fotos
+    extra = 1
+    max_num = None
+
 class EncuestaAdmin(admin.ModelAdmin):
     inlines = [QuienFinanciaInline,ComposicioInline,ServiciosBasicosInline,TeneciaInline,SeguridadInline,
                     UsoTierraInline,ReforestacionInline,
                     AreaCafeInline,VariedadEdadRoyaInline,
-                    ProduccionViveroInline,ManejoCafetalesInline,MesesManejoCafeInline,UsoInsumosInline,
+                    ProduccionViveroInline,ManejoCafetalesInline,ManejoTejidosInline,MesesManejoCafeInline,UsoInsumosInline,
                     UsoOpcionesAgroecologicaInline,BeneficiadoInline,ComercializacionInline,CreditoInline,
                     ElClimaInline,SueloFertilidadInline,LasPlagasInline,OtroRiesgosInline,MitigacionInline,
                     ImpactoRoyaInline,PodaCafetosInline,RecepoCafetosInline,RenovacionCafetalesInline,
                     ManejoSombraInline,ManejoFertilizacionInline,AplicacionFungicidaInline,OrientoInline,
-                    NuevosProductosInline,AdelantePodaCafetosInline,AdelanteRecepoCafetosInline,
-                    AdelanteRenovacionCafetalesInline,AdelanteManejoSombraInline,AdelanteManejoFertilizacionInline,
-                    AdelanteAplicacionFungicidaInline,NivelFincaInline,CapacitacionesTecnicasInline,
-                    CapacitacionesSocialesInline,SiLeGustaInline,NoLeGustaInline,DetalleIncidenciaRoyaInline]
+                    NuevosProductosInline,
+                    NivelFincaInline,CapacitacionesTecnicasInline,
+                    CapacitacionesSocialesInline,SiLeGustaInline,NoLeGustaInline,DetalleIncidenciaRoyaInline,
+                    FotosInline]
 
-    list_display = ('nombre','dueno','sexo','beneficiario')
+    list_display = ('nombre','dueno','sexo',)
     search_fields = ['nombre']
     date_hierarchy = 'fecha'
 

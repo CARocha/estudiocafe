@@ -1,0 +1,337 @@
+{% extends "basenueva.html"%}
+{% load i18n %}
+{% block extra_header %}
+<script type="text/javascript" src="{{STATIC_URL}}js/highcharts.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/exporting.js"></script>
+<script type="text/javascript">
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container',
+         defaultSeriesType: 'pie',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '{% trans "Hombres y Mujeres" %}'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               //color: Highcharts.theme.textColor || '#000000',
+               //connectorColor: Highcharts.theme.textColor || '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+               }
+            },
+            showInLegend: true
+         }
+      },
+       series: [{
+         data: [
+            ['{% trans "Hombres" %}',  {{por_hombres}}],
+            ['{% trans "Mujeres" %}',   {{por_mujeres}}],
+            
+         ]
+      }]
+   });
+});
+
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container1',
+         defaultSeriesType: 'pie',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '{% trans "Números de personas entrevistadas" %}'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               //color: Highcharts.theme.textColor || '#000000',
+               //connectorColor: Highcharts.theme.textColor || '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+               }
+            },
+            showInLegend: true
+         }
+      },
+       series: [{data: [{% for value in escolaridad %}
+                    ['{{value.0}}',
+                    {{value.2}}],
+                {% endfor %}]
+                
+                }]
+   });
+});
+
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container2',
+         defaultSeriesType: 'pie',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '{% trans "Departamentos encuestados" %}'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               //color: Highcharts.theme.textColor || '#000000',
+               //connectorColor: Highcharts.theme.textColor || '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+               }
+            },
+            showInLegend: true
+         }
+      },
+       series: [{data: [{% for value in depart %}
+                    ['{{value.0}}',
+                    {{value.2}}],
+                {% endfor %}]
+                
+                }]
+   });
+});
+
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container3',
+         defaultSeriesType: 'pie',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '{% trans "Municipios encuestados" %}'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               //color: Highcharts.theme.textColor || '#000000',
+               //connectorColor: Highcharts.theme.textColor || '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+               }
+            },
+            showInLegend: true
+         }
+      },
+       series: [{data: [{% for value in munis %}
+                    ['{{value.0}}',
+                    {{value.2}}],
+                {% endfor %}]
+                
+                }]
+   });
+});
+
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container4',
+         defaultSeriesType: 'pie',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '{% trans "Grupos Etnicos" %}'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               //color: Highcharts.theme.textColor || '#000000',
+               //connectorColor: Highcharts.theme.textColor || '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +'%';
+               }
+            },
+            showInLegend: true
+         }
+      },
+       series: [{data: [{% for value in grupo %}
+                    ['{{value.0}}',
+                    {{value.2}}],
+                {% endfor %}]
+                
+                }]
+   });
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<br>
+<center><h1>{% blocktrans %}Datos Generales de las {{numero}} Familias encuestadas{%endblocktrans%}</h1></center>
+</br>
+<div class="subindicador">{% trans "Hombre y mujeres" %}</div>
+<table style="width:100%;" >
+        <thead>
+            <tr>
+                <th>{% trans "Categoria" %}</th>
+                <th>{% trans "Frecuencia" %}</th>
+                <th>{% trans "Porcentajes" %}</th>
+            </tr>
+        </thead>
+       <tr>
+		    <td>{% trans "Hombres" %}</td>
+            <td>{{hombres}}</td>
+            <td>{{ por_hombres }}</td>
+        </tr>   
+        <tr>
+		    <td>{% trans "Mujeres" %}</td>
+            <td>{{mujeres}}</td>
+            <td>{{ por_mujeres }}</td>
+        </tr>   
+    </table>
+    <div class="clean"></div>
+    <div id="container"></div>
+<div class="subindicador">{% blocktrans %}Distribución de edades en {{numero}} Familias entrevistadas{%endblocktrans%}</div>
+<table style="width:100%;">
+        <thead>
+            <tr>
+                <th>{% trans "sexo" %}</th>
+                <th>{% trans "numeros" %}</th>
+                <th>{% trans "Porcentaje" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for fila in escolaridad%}
+            <tr>
+                {%for celda in fila %}
+                <td>{{celda}}</td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+            <tr>
+                <td>Total</td>
+                <td>{{total}}</td>
+                <td>100%</td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="container1"></div>
+<br></br>
+<div class="subindicador">{% trans "Departamentos entrevistados" %}</div>
+<table style="width:100%;">
+        <thead>
+            <tr>
+                <th>{% trans "Departamentos" %}</th>
+                <th>{% trans "numeros" %}</th>
+                <th>{% trans "Porcentaje" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for fila in depart%}
+            <tr>
+                {%for celda in fila %}
+                <td>{{celda}}</td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <div id="container2"></div>
+ 
+<br></br>
+<div class="subindicador">{% trans "Municipio entrevistados" %}</div>
+<table style="width:100%;">
+        <thead>
+            <tr>
+                <th>{% trans "Municipios" %}</th>
+                <th>{% trans "numeros" %}</th>
+                <th>{% trans "Porcentaje" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for fila in munis%}
+            <tr>
+                {%for celda in fila %}
+                <td>{{celda}}</td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <div id="container3"></div>
+<br></br>
+<div class="subindicador">{% trans "Grupos Étnicos" %}</div>
+<table style="width:100%;">
+        <thead>
+            <tr>
+                <th>{% trans "Grupo" %}</th>
+                <th>{% trans "numeros" %}</th>
+                <th>{% trans "Porcentaje (%)" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for fila in grupo%}
+            <tr>
+                {%for celda in fila %}
+                <td>{{celda}}</td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <div id="container4"></div>
+<br></br>
+
+{% endblock %}

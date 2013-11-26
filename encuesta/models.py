@@ -10,7 +10,6 @@ class Entrevistado(models.Model):
     fecha_nacimiento = models.DateField()
 
     class Meta:
-        verbose_name = 'Entrevistado'
         verbose_name_plural = 'Entrevistados'
 
     def __unicode__(self):
@@ -21,7 +20,6 @@ class DuenoFinca(models.Model):
     fecha_nacimiento = models.DateField()
 
     class Meta:
-        verbose_name = 'Dueño Finca'
         verbose_name_plural = 'Dueños Fincas'
 
     def __unicode__(self):
@@ -31,7 +29,6 @@ class Organizacion(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name = 'Organizacion'
         verbose_name_plural = 'Organizaciones'
 
     def __unicode__(self):

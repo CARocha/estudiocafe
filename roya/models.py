@@ -2,6 +2,8 @@
 
 from django.db import models
 from encuesta.models import Encuesta
+from sorl.thumbnail import ImageField
+from estudiocafe.utils import get_file_path
 
 # Create your models here.
 # 5.1
@@ -40,15 +42,15 @@ class TipoCafetos(models.Model):
 
 class PodaCafetos(models.Model):
     tipo_2012 = models.ForeignKey(TipoCafetos, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            verbose_name=u'¿Qué tipo? Antes de crisis ',
                             null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoCafetos, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            verbose_name=u'¿Qué tipo? Después de crisis ',
                             null=True, blank=True)
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',
-        null=True, blank=True)
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',
-        null=True, blank=True)
+    #mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',
+     #   null=True, blank=True)
+    #mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',
+      #  null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -58,9 +60,22 @@ class PodaCafetos(models.Model):
     def __unicode__(self):
         pass
 
+class VariedadRecepo(models.Model):
+    nombre = models.CharField(max_length=200)
+
+    class Meta:
+        verbose_name_plural = 'Variedad recepos'
+
+    def __unicode__(self):
+        return self.nombre
+
 class RecepoCafetos(models.Model):
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
+    variedad_2012 = models.ForeignKey(VariedadRecepo, related_name='recepo_2012',
+        verbose_name=u'Que variedad ante de crisis',
+        null=True, blank=True)
+    variedad_2014 = models.ForeignKey(VariedadRecepo, related_name='recepo_2014',
+        verbose_name=u'Que variedad despues de crisis',
+        null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -81,13 +96,13 @@ class TipoVariedad(models.Model):
 
 class RenovacionCafetales(models.Model):
     tipo_2012 = models.ForeignKey(TipoVariedad, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            verbose_name=u'¿Qué tipo? Antes de crisis',
                             null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoVariedad, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            verbose_name=u'¿Qué tipo? Después de crisis',
                             null=True, blank=True)
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
+    #mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
+    #mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -108,13 +123,13 @@ class TipoSombra(models.Model):
 
 class ManejoSombra(models.Model):
     tipo_2012 = models.ForeignKey(TipoSombra, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            verbose_name=u'¿Que tipo de regulacion antes ',
                             null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoSombra, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            verbose_name=u'Que tipo de regulacion despues ',
                             null=True, blank=True)
-    mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
-    mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
+    #mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
+    #mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -135,14 +150,14 @@ class Fertilizacion(models.Model):
 
 class ManejoFertilizacion(models.Model):
     tipo_2012 = models.ForeignKey(Fertilizacion, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+                            verbose_name=u'¿Qué tipo? Antes de crisis',
                             null=True, blank=True)
     tipo_2014 = models.ForeignKey(Fertilizacion, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis 2013-14',
+                            verbose_name=u'¿Qué tipo? Después de crisis ',
                             null=True, blank=True)
-    mz_2012 = models.FloatField('¿Cantidad de plantas 2011-12?',
+    mz_2012 = models.FloatField('¿Cantidad de plantas  antes de crisis?',
         null=True, blank=True)
-    mz_2014 = models.FloatField('¿Cantidad de plantas  2013-14?',
+    mz_2014 = models.FloatField('¿Cantidad de plantas  despues de crisis?',
         null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
@@ -232,131 +247,131 @@ class NuevosProductos(models.Model):
         pass
 
 #5.5
-class AdelanteTipoCafetos(models.Model):
-    nombre = models.CharField(max_length=200)
+# class AdelanteTipoCafetos(models.Model):
+#     nombre = models.CharField(max_length=200)
 
-    class Meta:
-        verbose_name_plural = 'Tipo Cafetos'
+#     class Meta:
+#         verbose_name_plural = 'Tipo Cafetos'
 
-    def __unicode__(self):
-        return self.nombre
+#     def __unicode__(self):
+#         return self.nombre
 
-class AdelantePodaCafetos(models.Model):
-    tipo_2016 = models.ForeignKey(AdelanteTipoCafetos, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo?  2014-16',null=True, blank=True)
-    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
+# class AdelantePodaCafetos(models.Model):
+#     tipo_2016 = models.ForeignKey(AdelanteTipoCafetos, related_name="adelante_tipo_2016", 
+#                             verbose_name=u'¿Qué tipo?  2014-16',null=True, blank=True)
+#     mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
 
-    encuesta = models.ForeignKey(Encuesta)
+#     encuesta = models.ForeignKey(Encuesta)
 
-    class Meta:
-        verbose_name_plural = '5.5-a Manejo: Poda de cafetos'
+#     class Meta:
+#         verbose_name_plural = '5.5-a Manejo: Poda de cafetos'
 
-    def __unicode__(self):
-        pass
+#     def __unicode__(self):
+#         pass
 
-class AdelanteRecepoCafetos(models.Model):
-    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
+# class AdelanteRecepoCafetos(models.Model):
+#     mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
 
-    encuesta = models.ForeignKey(Encuesta)
+#     encuesta = models.ForeignKey(Encuesta)
 
-    class Meta:
-        verbose_name_plural = '5.5-b Manejo: Recepo de cafetos'
+#     class Meta:
+#         verbose_name_plural = '5.5-b Manejo: Recepo de cafetos'
 
-    def __unicode__(self):
-        pass
+#     def __unicode__(self):
+#         pass
 
-class AdelanteTipoVariedad(models.Model):
-    nombre = models.CharField(max_length=200)
+# class AdelanteTipoVariedad(models.Model):
+#     nombre = models.CharField(max_length=200)
 
-    class Meta:
-        verbose_name_plural = 'Variedades de Renovación'
+#     class Meta:
+#         verbose_name_plural = 'Variedades de Renovación'
 
-    def __unicode__(self):
-        return self.nombre
+#     def __unicode__(self):
+#         return self.nombre
 
-class AdelanteRenovacionCafetales(models.Model):
-    tipo_2016 = models.ForeignKey(AdelanteTipoVariedad, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? 2014-16',null=True, blank=True)
-    mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
+# class AdelanteRenovacionCafetales(models.Model):
+#     tipo_2016 = models.ForeignKey(AdelanteTipoVariedad, related_name="adelante_tipo_2016", 
+#                             verbose_name=u'¿Qué tipo? 2014-16',null=True, blank=True)
+#     mz_2016 = models.FloatField('¿Cuántas mz 2014-16?',null=True, blank=True)
    
 
-    encuesta = models.ForeignKey(Encuesta)
+#     encuesta = models.ForeignKey(Encuesta)
 
-    class Meta:
-        verbose_name_plural = '5.5-c Renovación de cafetales'
+#     class Meta:
+#         verbose_name_plural = '5.5-c Renovación de cafetales'
 
-    def __unicode__(self):
-        pass
+#     def __unicode__(self):
+#         pass
 
-class AdelanteTipoSombra(models.Model):
-    nombre = models.CharField(max_length=200)
+# class AdelanteTipoSombra(models.Model):
+#     nombre = models.CharField(max_length=200)
 
-    class Meta:
-        verbose_name_plural = 'Tipos de sombra'
+#     class Meta:
+#         verbose_name_plural = 'Tipos de sombra'
 
-    def __unicode__(self):
-        return self.nombre
+#     def __unicode__(self):
+#         return self.nombre
 
-class AdelanteManejoSombra(models.Model):
-    tipo_2016 = models.ForeignKey(TipoSombra, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
-                            null=True, blank=True)
-    mz_2016 = models.FloatField('¿Cuántas mz 2011-12?',
-        null=True, blank=True)
+# class AdelanteManejoSombra(models.Model):
+#     tipo_2016 = models.ForeignKey(TipoSombra, related_name="adelante_tipo_2016", 
+#                             verbose_name=u'¿Qué tipo? Antes de crisis 2011-12',
+#                             null=True, blank=True)
+#     mz_2016 = models.FloatField('¿Cuántas mz 2011-12?',
+#         null=True, blank=True)
 
-    encuesta = models.ForeignKey(Encuesta)
+#     encuesta = models.ForeignKey(Encuesta)
 
-    class Meta:
-        verbose_name_plural = '5.5-d Manejo de sombra'
+#     class Meta:
+#         verbose_name_plural = '5.5-d Manejo de sombra'
 
-    def __unicode__(self):
-        pass
+#     def __unicode__(self):
+#         pass
 
-class AdelanteFertilizacion(models.Model):
-    nombre = models.CharField(max_length=200)
+# class AdelanteFertilizacion(models.Model):
+#     nombre = models.CharField(max_length=200)
 
-    class Meta:
-        verbose_name_plural = 'Tipos Fertilización'
+#     class Meta:
+#         verbose_name_plural = 'Tipos Fertilización'
 
-    def __unicode__(self):
-        return self.nombre
+#     def __unicode__(self):
+#         return self.nombre
 
-class AdelanteManejoFertilizacion(models.Model):
-    tipo_2016 = models.ForeignKey(Fertilizacion, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? 2014-16',null=True, blank=True)
-    mz_2016 = models.FloatField('¿Cantidad de plantas 2014-16?',null=True, blank=True)
+# class AdelanteManejoFertilizacion(models.Model):
+#     tipo_2016 = models.ForeignKey(Fertilizacion, related_name="adelante_tipo_2016", 
+#                             verbose_name=u'¿Qué tipo? 2014-16',null=True, blank=True)
+#     mz_2016 = models.FloatField('¿Cantidad de plantas 2014-16?',null=True, blank=True)
 
-    encuesta = models.ForeignKey(Encuesta)
+#     encuesta = models.ForeignKey(Encuesta)
 
-    class Meta:
-        verbose_name_plural = '5.5-e Fertilización'
+#     class Meta:
+#         verbose_name_plural = '5.5-e Fertilización'
 
-    def __unicode__(self):
-        pass
+#     def __unicode__(self):
+#         pass
 
-class AdelanteTipoAplicacionFungicida(models.Model):
-    nombre = models.CharField(max_length=200)
+# class AdelanteTipoAplicacionFungicida(models.Model):
+#     nombre = models.CharField(max_length=200)
 
-    class Meta:
-        verbose_name_plural = 'Tipos aplicación fungicidas'
+#     class Meta:
+#         verbose_name_plural = 'Tipos aplicación fungicidas'
 
-    def __unicode__(self):
-        return self.nombre
+#     def __unicode__(self):
+#         return self.nombre
 
-class AdelanteAplicacionFungicida(models.Model):
-    tipo_2016 = models.ForeignKey(TipoAplicacionFungicida, related_name="adelante_tipo_2016", 
-                            verbose_name=u'¿Qué tipo? 2014-16',
-                            null=True, blank=True)
-    mz_2016 = models.FloatField('¿Cuántas aplicaciones? 2014-16?',null=True, blank=True)
-    dosis_2016 = models.FloatField('¿Qué dosis? 2014-16?',null=True, blank=True)
+# class AdelanteAplicacionFungicida(models.Model):
+#     tipo_2016 = models.ForeignKey(TipoAplicacionFungicida, related_name="adelante_tipo_2016", 
+#                             verbose_name=u'¿Qué tipo? 2014-16',
+#                             null=True, blank=True)
+#     mz_2016 = models.FloatField('¿Cuántas aplicaciones? 2014-16?',null=True, blank=True)
+#     dosis_2016 = models.FloatField('¿Qué dosis? 2014-16?',null=True, blank=True)
     
-    encuesta = models.ForeignKey(Encuesta)
+#     encuesta = models.ForeignKey(Encuesta)
 
-    class Meta:
-        verbose_name_plural = '5.5-f Aplicación de fungicida'
+#     class Meta:
+#         verbose_name_plural = '5.5-f Aplicación de fungicida'
 
-    def __unicode__(self):
-        pass
+#     def __unicode__(self):
+#         pass
 
 #5.6
 CHOICES_NIVEL = (
@@ -633,6 +648,7 @@ class DetalleIncidenciaRoya(models.Model):
         null=True, blank=True)
     hojas = models.FloatField('% de hojas afectadas con Roya',
         null=True, blank=True)
+    postula = models.FloatField('32. Número de pústula por hoja')
 
     encuesta = models.ForeignKey(Encuesta)
 
@@ -641,3 +657,16 @@ class DetalleIncidenciaRoya(models.Model):
 
     def __unicode__(self):
         pass
+
+class Fotos(models.Model):
+    titulo = models.CharField('titulo de la foto', max_length=200)
+    imagen = ImageField(upload_to=get_file_path, blank=True, null=True)
+
+    encuesta = models.ForeignKey(Encuesta)
+
+    fileDir = 'fotos/'
+
+    def __unicode__(self):
+            return self.titulo
+    class Meta:
+            verbose_name_plural = "Fotos de la finca"

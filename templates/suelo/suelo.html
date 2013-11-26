@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Monitoreo - Suelo" %}{% endblock %}
+{% block barra %}
+<div class="selectos_seleccion titulo">
+	{% trans "Suelo" %}
+</div>
+<div class="indicadores">
+	{% include "nav_suelo.html" %}
+</div>
+{% endblock %}
+

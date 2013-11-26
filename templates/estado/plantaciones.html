@@ -1,0 +1,212 @@
+{% extends "basenueva.html" %}
+{% load i18n %}
+{%block extra_header%}
+<script type="text/javascript">
+$(document).ready(function () {
+    //Esconde todas las divs , muestra la primera tag con su div
+    $('.escondete').hide();
+    $('#tablatab1').show();
+    $('#1').addClass('activa');
+
+    // cuando click en una tab enconde todas y muestra la deseada
+    $('.tab').click(function(){
+        $('.tab').each(function(){
+            $(this).removeClass("activa");
+        });
+        $(this).addClass('activa');
+        $(".escondete").hide();
+        var id = $(this).attr("id");
+        $('#tablatab'+id).show();
+        return false;
+    });
+});
+</script>
+{%endblock%}
+{% block barra %}
+<div class="indicadores">
+    <div id="contenedor_igual">
+        <a href="#" class="tab" id="1" >{% trans "Tamaño de plantaciones" %}</a>
+        <a href="#" class="tab"  id="2">{% trans "Producción" %}</a>
+        <a href="#" class="tab" id="3" >{% trans "Costos" %}</a>
+    </div>
+</div>
+{% endblock %}
+{%block content%}
+{% include "filtros.html" %}
+<div class="contenido fulltabla">
+
+<div id="tablatab1" class="escondete">
+<div class="subindicador">{% trans "Tamaño de las plantaciones" %}
+        {%if LANGUAGE_CODE == 'es' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Exportar</a>
+    {%endif%}
+    {%if LANGUAGE_CODE == 'en' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Export</a>
+    {%endif%}
+    </div>
+    <div id="modalidad">
+    <table style="width:100%;">
+     <thead>
+        <tr>
+            <th></th>
+            <th colspan="2">{% trans "¿Cuántos tienen?" %}</th>
+            <th colspan="2">{% trans "Área" %}</th>
+            <th colspan="2">{% trans "Número de plantas" %}</th>
+            <th colspan="2">{% trans "Número de plantas injertadas" %}</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>{% trans "Frecuencia" %}</th>
+            <th>%</th>
+            <th>Total</th>
+            <th>{% trans "Promedio" %}</th>
+            <th>Total</th>
+            <th>{% trans "Promedio" %}</th>
+            <th>Total</th>
+            <th>{% trans "Promedio" %}</th>
+        </tr>
+     </thead>
+        <tr>
+            <td>{% trans "Viveros" %}</td>
+            {%for dato in vivero%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Plantas en desarrollo menos 1 año" %}</td>
+            {%for dato in planta_menos%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Plantas en desarrollo más 1 año" %}</td>
+            {%for dato in planta_mas%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Plantas en producción" %}</td>
+            {%for dato in planta_produccion%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Plantas élite de cacao" %}</td>
+            {%for dato in planta_elite%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+    </table>
+    </div>
+</div>
+<div id="tablatab2" class="escondete">
+    {{lista_produccion}}
+<div class="subindicador">{% trans "Producción" %}
+    {%if LANGUAGE_CODE == 'es' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad2'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Exportar</a>
+    {%endif%}
+    {%if LANGUAGE_CODE == 'en' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad2'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Export</a>
+    {%endif%}
+    </div>
+    <table id="modalidad2" style="width:100%;">
+     <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "Frecuencia" %}</th>
+            <th>%</th>
+            <th>{% trans "Producción total(qq seco)" %}</th>
+            <th>{% trans "Promedio(qq seco)" %}</th>
+            <th>{% trans "% producción" %}</th>
+        </tr>
+     </thead>
+        <tr>
+            <td>total</td>
+            {%for dato in lista_total%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Sin fermentar" %}</td>
+            {%for dato in lista_sin_fermentar%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Fermentado convencional" %}</td>
+            {%for dato in lista_fermentado%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Fermentado organico" %}</td>
+            {%for dato in lista_organico%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+    </table><br>
+        <table>
+        <thead>
+        <tr>
+            <th>{% trans "Productividad (qq/mz) " %}</th>
+            <th>{{productividad}}</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div id="tablatab3" class="escondete">
+<div class="subindicador">{% trans "Costo de producción" %}
+    {%if LANGUAGE_CODE == 'es' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad3'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Exportar</a>
+    {%endif%}
+    {%if LANGUAGE_CODE == 'en' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad3'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Export</a>
+    {%endif%}
+    </div>
+    <table id="modalidad3"style="width:100%;">
+     <thead>
+        <tr>
+            <th></th>
+            <th>{% trans "Frecuencia" %}</th>
+            <th>Total</th>
+            <th>{% trans "Promedio" %}</th>
+        </tr>
+     </thead>
+        <tr>
+            <td>{% trans "Gasto anual de cacao" %}</td>
+            {%for dato in costo_area%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "Gasto anual finca" %}</td>
+            {%for dato in costo_finca%}
+            <td>{{dato}}</td>
+            {%endfor%}
+        </tr>
+        <tr>
+            <td>{% trans "% de Gasto de cacao" %}</td>
+            <td>---</td>
+            <td>{{porcentaje_cacao}}</td>
+            <td>---</td>
+        </tr>
+    </table>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>{% trans "Costo de mantenimiento cacao/mz" %} </th>
+            <th> {{mantenimiento_cacao}}</th>
+        </tr>
+        <tr>
+            <th>{% trans "Costo de mantenimiento qq" %}</th>
+            <th> {{mantenimiento_qq}}</th>
+        </tr>
+        </thead>
+    </table>
+<br></br>
+</div>
+</div>
+<div class="clean"></div>
+
+{%endblock%}

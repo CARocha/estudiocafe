@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'lugar',
     'south',
     'geoposition',
+    'sorl.thumbnail',
 )
 
 # A sample logging configuration. The only tangible logging

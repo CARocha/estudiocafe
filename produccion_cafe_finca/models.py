@@ -55,6 +55,7 @@ class Variedades(models.Model):
 class VariedadEdadRoya(models.Model):
     nombre_plantio = models.ForeignKey(Plantio)
     area = models.FloatField('Area Mz')
+    edad = models.FloatField()
     variedades = models.ManyToManyField(Variedades, related_name="variedades",
         null=True, blank=True)
     produccion_2012 = models.FloatField('Producción 2011-12 qq perg/mz',
@@ -111,8 +112,19 @@ class Criterios(models.Model):
     def __unicode__(self):
         return self.nombre
 
+class VariedadPredominante(models.Model):
+    nombre = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = "Variedades predominantes"
+
 
 class ProduccionVivero(models.Model):
+    variedad_predomindante = models.ManyToManyField(VariedadPredominante, 
+                                                                    verbose_name=u'Variedades predominantes')
     vivero_finca = models.IntegerField('¿Actualmente tiene vivero de café en la finca?',
                                                                 choices=CHOICE_SI_NO,
                                                                 null=True, blank=True)
@@ -138,9 +150,9 @@ class ProduccionVivero(models.Model):
     disponible = models.ManyToManyField(Variedades, related_name="disponible",
                                             verbose_name=u'¿Qué variedades están disponibles para la siembra en estos lugares?',
                                             null=True, blank=True)
-    costo_planta_caturra = models.FloatField('Seleccion CATURRA',null=True, blank=True)
-    costo_planta_catimore = models.FloatField('Lineas de CATIMORES',null=True, blank=True)
-    costo_planta_hibridas = models.FloatField('Hibridas',null=True, blank=True)
+    #costo_planta_caturra = models.FloatField('Seleccion CATURRA',null=True, blank=True)
+    #costo_planta_catimore = models.FloatField('Lineas de CATIMORES',null=True, blank=True)
+    #costo_planta_hibridas = models.FloatField('Hibridas',null=True, blank=True)
     pagar_caturra = models.FloatField(null=True, blank=True)
     pagar_catimore = models.FloatField(null=True, blank=True)
     pagar_hibrida = models.FloatField(null=True, blank=True)
@@ -181,6 +193,9 @@ class ManejoCafetales(models.Model):
     manejo_cafeto = models.ManyToManyField(Manejos, related_name="cafeto",
                                         verbose_name=u'Manejo de tejido o poda de cafetos',
                                         null=True, blank=True)
+    manejo_maleza = models.ManyToManyField(Manejos, related_name="maleza",
+                                        verbose_name=u'Manejo o poda de sombra',
+                                        null=True, blank=True)
     manejo_sombra = models.ManyToManyField(Manejos, related_name="sombra",
                                         verbose_name=u'Manejo o poda de sombra',
                                         null=True, blank=True)
@@ -209,6 +224,27 @@ class ManejoCafetales(models.Model):
     def __unicode__(self):
         pass
 
+class TipoTejido(models.Model):
+    nombre = models.CharField(max_length=200)
+
+    class Meta:
+        
+        verbose_name_plural = 'Tipo Tejidos'
+
+    def __unicode__(self):
+        return self.nombre
+    
+class ManejoTejidos(models.Model):
+    tejido = models.ManyToManyField(TipoTejido)
+
+    encuesta = models.ForeignKey(Encuesta)
+
+    class Meta:
+        verbose_name_plural = 'Manejo de Tejidoss'
+
+    def __unicode__(self):
+        pass
+    
 CHOICES_ANIOS_otro = (
             (4, 'Mes que realizan'),
     )
@@ -266,11 +302,18 @@ class NombreTipos(models.Model):
     def __unicode__(self):
         return self.nombre
 
+CHOICE_UNIDAD = (
+        (1,'Lts'),
+        (2,'Lb'),
+        (3,'Kg'),
+    )
+
 class UsoInsumos(models.Model):
     tipo = models.ForeignKey(TiposInsumos)
     nombre = models.ForeignKey(NombreTipos)
     aplicaciones = models.FloatField('Número de aplicaciones',null=True, blank=True)
     cantidad = models.FloatField('Cantidad por mz Lts, Lb, Kg',null=True, blank=True)
+    unidad = models.IntegerField(choices=CHOICE_UNIDAD,null=True, blank=True)
     momento = models.ManyToManyField(Meses, related_name="momento",
                                     verbose_name=u'Momento de aplicación',
                                     null=True, blank=True)
@@ -357,6 +400,7 @@ CHOICES_OREAN = (
             (2, 'Patio sobre plástico'),
             (3, 'Zarandas'),
             (4, 'Túneles'),
+            (5, 'Entregan mojada'),
     )
 class BeneficioSeco(models.Model):
     nombre = models.CharField(max_length=200)

@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+{% load i18n %}
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{{STATIC_URL}}css/acicafoc.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/highcharts.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/exporting_patched.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/grafico.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/table.exporting.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}js/jquery.cookie.js"></script>
+<title>{% trans "Sistema de Monitoreo ACICAFOC"%} | {%block title%}{%endblock%}</title>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("ul.menu_body li:even").addClass("alt");
+        $('img.menu_head').click(function () {
+        $('ul.menu_body').slideToggle('medium');
+        });
+        $('ul.menu_body li a').mouseover(function () {
+        $(this).animate({ fontSize: "12px", paddingLeft: "20px" }, 50 );
+        });
+        $('ul.menu_body li a').mouseout(function () {
+        $(this).animate({ fontSize: "12px", paddingLeft: "10px" }, 50 );
+        });
+    });
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        alto = $(".contenido").height();
+        $('.sidebar').height(alto);
+        $('#filtroslaterales').height(alto);
+    });
+</script>
+    {%block extra_header%}{%endblock%}
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-34222001-1']);
+          _gaq.push(['_trackPageview']);
+
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
+        </script>
+</head>
+
+{% load i18n %}
+
+<body>
+<div class="wrapper">
+    <div class="main">
+        <div id="header">
+            <div id="logo">
+                {%if LANGUAGE_CODE == 'es' %}
+                <a href="/"><img src="{{STATIC_URL}}img/logo.jpg"></a>
+                {%endif%}
+                {%if LANGUAGE_CODE == 'en' %}
+                <a href="/"><img src="{{STATIC_URL}}img/logo2.png"></a>
+                {%endif%}
+                
+            </div>
+            <div id="cooperantes">
+                <a href="#"><img src="{{STATIC_URL}}img/logoacicafoc.jpg"></a>
+                <a href="#"><img src="{{STATIC_URL}}img/banderajapon.jpg"></a>
+                <a href="http://web.worldbank.org/WBSITE/EXTERNAL/EXTABOUTUS/ORGANIZATION/CFPEXT/EXTTRUFUN/EXTMAINPRO/EXTJSDF/0,,contentMDK:20961576~menuPK:2803658~pagePK:64168427~piPK:64168435~theSitePK:2663400,00.html"><img src="{{STATIC_URL}}img/japon.jpg"></a>
+                <a href="http://www.bancomundial.org/"><img src="{{STATIC_URL}}img/banco.jpg"></a>
+
+            </div>
+            <div class="clean"></div>
+        </div>
+        <div id="menu">
+            <div id="cambiar-indicador" class="left">
+                <img id="home" src="{{STATIC_URL}}img/home.png" class="menu_head" />
+                <ul class="menu_body">
+                    <li><a href="/"><img src="{{STATIC_URL}}img/homemini.png">{% trans "INICIO" %}</a></li>
+                    {%if request.session.fecha%}
+                    <li><a href="/index?shva=1"><img src="{{STATIC_URL}}img/cambiarmini.png">{% trans "CAMBIAR INDICADOR" %} </a></li>
+                    {%endif%}
+                    <li><a href="/index/"><img src="{{STATIC_URL}}img/nuevamini.png">{% trans "NUEVA CONSULTA" %}</a></li>
+                </ul>
+            </div>
+            <div class="idioma">
+                <div class="btn-group">
+    
+                {%if LANGUAGE_CODE == 'es' %}
+                <a class='btn btn-warning btn-mini active' href="/lang/es"><img src="{{STATIC_URL}}img/es.png"> Español  </a>
+                <a href="/lang/en" class="btn btn-warning btn-mini "> <img src="{{STATIC_URL}}img/en.png"> English  </a>
+                {%endif%}
+                {%if LANGUAGE_CODE == 'en' %}
+                <a class='btn btn-warning btn-mini' href="/lang/es"><img src="{{STATIC_URL}}img/es.png"> Español  </a>
+                <a href="/lang/en" class="btn btn-warning btn-mini active "> <img src="{{STATIC_URL}}img/en.png"> English  </a>
+                {%endif%}
+                </div>
+            </div>
+            {%block barra%}{%endblock%}
+            <div class="clean"></div>
+        </div>
+        {%block content%}
+        {%endblock%}
+    </div>  
+</div>
+<div class="footer">
+    <div style="margin-left:15px;">
+        {% trans "Sistema de Monitoreo" %} <b>ACICAFOC</b><br>
+        {% trans "Desarrollado en Nicaragua" %}, {% trans "bajo plataforma" %} <a href="http://djangoproject.com">Django</a>
+    </div>
+</div>
+</body>
+</html>

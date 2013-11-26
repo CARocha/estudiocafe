@@ -262,11 +262,11 @@ CHOICES_CERTIFICACION = (
             (3, 'RFA'), 
             (4, 'UTZ'),
             (5, 'CP'),
+            (6, 'No aplica'),
     )
 CHOICES_RECONOCIDA_MONITOREADA= (
             (1, 'Si'),
             (2, 'No'),
-            (3, 'Puntaje SCAA'),
     )
 CHOICES_INFRAESTRUCTURA= (
             (1, 'Si Buena calidad'),
@@ -281,7 +281,17 @@ CHOICES_ELABORAR_PLANES = (
             (5, 'Cooperativa'),
             (6, 'Asociación'),
             (7, 'Banco o Micro-finanza'),
+            (8, 'No aplica'),
     )
+
+class FaltaRecurso(models.Model):
+    nombre = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = "Falta Rercursos"
 
 class Mitigacion(models.Model):
     monitoreo_plagas = models.IntegerField('¿Realiza monitoreo de plagas y enfermedades?', 
@@ -294,8 +304,7 @@ class Mitigacion(models.Model):
                                                                 choices=CHOICES_MONITOREO_REGISTRO)
     recursos = models.IntegerField('¿Cuenta con suficiente recursos para manejo de finca?', 
                                                                 choices=CHOICE_SI_NO)
-    falta_recursos = models.IntegerField('¿Para que cosas hace falta los recursos?', 
-                                                                choices=CHOICES_FALTA_RECURSOS)
+    falta_recurso = models.ManyToManyField(FaltaRecurso, verbose_name=u'¿Para que cosas hace falta los recursos?')
     almacenamiento = models.IntegerField('¿Cuenta con obras para almacenamiento de agua?', 
                                                                 choices=CHOICE_SI_NO)
     forma_organizada = models.IntegerField('¿Vende su Café en forma organizada a través de una asociación o cooperativa o grupo o Empresa?', 
@@ -305,6 +314,7 @@ class Mitigacion(models.Model):
     tipo_certificado = models.IntegerField('¿Qué tipo de certificación?', choices=CHOICES_CERTIFICACION)
     reconocida = models.IntegerField('¿La calidad de su café en reconocida y monitoreada?', 
                                                                 choices=CHOICES_RECONOCIDA_MONITOREADA)
+    puntaje = models.FloatField('Puntaje de la calidad SCAA')
     infraestructura = models.IntegerField('¿Dispone infraestructura para beneficio húmedo  y almacenamiento de cosecha?', 
                                                                 choices=CHOICES_INFRAESTRUCTURA)
     plan_manejo = models.IntegerField('¿Cuenta con plan de manejo de la finca?', choices=CHOICE_SI_NO)
@@ -322,5 +332,4 @@ class Mitigacion(models.Model):
         verbose_name_plural = '4.5 Mitigación de los riesgos '
 
     def __unicode__(self):
-        pass
-    
+        pass  

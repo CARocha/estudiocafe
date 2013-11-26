@@ -1,0 +1,148 @@
+{% extends "basenueva.html"%}
+{%load unslugify %}
+{% load i18n %}
+{% block barra %}
+<div class="indicadores">
+	{% include "nav_suelo.html" %}
+</div>
+{% endblock %}
+
+{% block extra_header %}
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".manejo").addClass("activa");
+    });
+</script>
+<script type="text/javascript">
+
+    //si activo es 0 el html interno esta vacio
+    //caso si activo es otro num sustituir grafico
+    //si activo es el mismo id, esconder grafico
+    var activo = 0;
+    $.ajaxSetup({ cache: false });
+    function click_callback(id){
+        $.getJSON('/grafo/manejosuelo/' + id, function(data) {
+            if (activo!= id){
+                $("#grafo").html('<img src="' + data.url + '" />');
+                activo = id;
+            }else{
+                $("#grafo").html('');
+                activo = 0;
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+    $('.grafo').click(function(){
+        $('.grafo').each(function(){
+            $(this).removeClass('grafohover');
+        });
+        $(this).addClass('grafohover');
+    });
+});
+</script>
+{%endblock%}
+{% block content %}
+{% include "filtros.html" %}
+<div class="sidebar">
+        <div class="subindicador">{% trans "Gráficos" %}</a></div>
+        <a href="#" id="grafico1" onCLick="click_callback('analisis')"class="grafo">{% trans "Realiza analisis" %}</a>
+        <a href="#" id="grafico2" onCLick="click_callback('practica')"class="grafo">{% trans "Realiza practica" %}</a>
+   <div id="grafo"></div>
+</div>
+
+<div class="contenido mediatabla">
+    <div class="subindicador">{% trans "¿Cómo preparan sus terrenos?" %}
+  {%if LANGUAGE_CODE == 'es' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Exportar</a>
+    {%endif%}
+    {%if LANGUAGE_CODE == 'en' %}
+        <a href="#" class="btn btn-mini exportar guardarXLS" onclick="exportarXLS('modalidad'); return false;"><img src="{{STATIC_URL}}img/excel.png"> Export</a>
+    {%endif%}
+    </div>
+    <div id="modalidad">
+    <table style="width:100%;">
+
+        <thead>
+            <tr>
+                <th>{% trans "Terrenos" %}</th>
+                <th>{% trans "Número" %}</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in tabla_terreno.items%}
+            <tr>
+                <td>{{key|unslugify}}</td>
+                <td>{{value.preparan|floatformat}}</td>
+                <td>{{value.por_preparan|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+    <div class="subindicador">{% trans "¿Qué tipo de traccion utiliza para la preparación del suelo?" %}</div>
+
+    <table style="width:100%;">
+
+        <thead>
+            <tr>
+                <th>{% trans "Tipo Tracción" %}</th>
+                <th>{% trans "Número" %}</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in tabla_traccion.items%}
+            <tr>
+                <td>{{key|unslugify}}</td>
+                <td>{{value.traccion|floatformat}}</td>
+                <td>{{value.por_traccion|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <div class="subindicador">{% trans "¿Qué tipo de fertilización realiza?" %}</div>
+    <table style="width:100%;">
+        <thead>
+            <tr>
+                <th>{% trans "Tipos de Fertilización" %}</th>
+                <th>{% trans "Número" %}</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in tabla_fertilizacion.items%}
+            <tr>
+                <td>{{key|unslugify}}</td>
+                <td>{{value.fertilizacion|floatformat}}</td>
+                <td>{{value.por_fertilizacion|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <div class="subindicador">{% trans "¿Qué tipo de obra de conservación de suelo?" %}</div>
+    <table style="width:100%;">
+        <thead>
+            <tr>
+                <th>{% trans "Tipos de obras" %}</th>
+                <th>{% trans "Número" %}</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in tabla_obra.items%}
+            <tr>
+                <td>{{key|unslugify}}</td>
+                <td>{{value.obra|floatformat}}</td>
+                <td>{{value.por_obra|floatformat}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+
+</div>
+</div>
+<div class="clean"></div>
+{% endblock %}
