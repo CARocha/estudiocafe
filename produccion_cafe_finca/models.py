@@ -240,7 +240,7 @@ class ManejoTejidos(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name_plural = 'Manejo de Tejidoss'
+        verbose_name_plural = 'Manejo de Tejidos'
 
     def __unicode__(self):
         pass
