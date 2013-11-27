@@ -194,7 +194,7 @@ class ManejoCafetales(models.Model):
                                         verbose_name=u'Manejo de tejido o poda de cafetos',
                                         null=True, blank=True)
     manejo_maleza = models.ManyToManyField(Manejos, related_name="maleza",
-                                        verbose_name=u'Manejo o poda de sombra',
+                                        verbose_name=u'Manejo de maleza',
                                         null=True, blank=True)
     manejo_sombra = models.ManyToManyField(Manejos, related_name="sombra",
                                         verbose_name=u'Manejo o poda de sombra',
@@ -258,6 +258,9 @@ class MesesManejoCafe(models.Model):
     mes_manejo_sombra = models.ManyToManyField(Meses, related_name="manejo_sombra", 
                                             verbose_name=u'Manejo o poda de sombra',
                                             null=True, blank=True)
+    mes_manejo_maleza = models.ManyToManyField(Meses, related_name="manejo_maleza", 
+                                            verbose_name=u'Manejo maleza',
+                                            null=True, blank=True)
     mes_fertilizante_suelo = models.ManyToManyField(Meses, related_name="fertilizante_suelo",
                                                     verbose_name=u'Aplicación de fertilizantes en el suelo',
                                                     null=True, blank=True)
@@ -303,9 +306,10 @@ class NombreTipos(models.Model):
         return self.nombre
 
 CHOICE_UNIDAD = (
-        (1,'Lts'),
-        (2,'Lb'),
-        (3,'Kg'),
+        (1,'ml/mz'),
+        (2,'lt/mz'),
+        (3,'kg/mz'),
+        (4,'15. onz/pl'),
     )
 
 class UsoInsumos(models.Model):

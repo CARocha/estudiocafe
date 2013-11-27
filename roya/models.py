@@ -71,10 +71,10 @@ class VariedadRecepo(models.Model):
 
 class RecepoCafetos(models.Model):
     variedad_2012 = models.ForeignKey(VariedadRecepo, related_name='recepo_2012',
-        verbose_name=u'Que variedad ante de crisis',
+        verbose_name=u'Que tipo ante de crisis',
         null=True, blank=True)
     variedad_2014 = models.ForeignKey(VariedadRecepo, related_name='recepo_2014',
-        verbose_name=u'Que variedad despues de crisis',
+        verbose_name=u'Que tipo despues de crisis',
         null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
@@ -96,10 +96,10 @@ class TipoVariedad(models.Model):
 
 class RenovacionCafetales(models.Model):
     tipo_2012 = models.ForeignKey(TipoVariedad, related_name="tipo_2012", 
-                            verbose_name=u'¿Qué tipo? Antes de crisis',
+                            verbose_name=u'Que variedad ante de crisis',
                             null=True, blank=True)
     tipo_2014 = models.ForeignKey(TipoVariedad, related_name="tipo_2014", 
-                            verbose_name=u'¿Qué tipo? Después de crisis',
+                            verbose_name=u'¿Que variedad despues de crisis',
                             null=True, blank=True)
     #mz_2012 = models.FloatField('¿Cuántas mz 2011-12?',null=True, blank=True)
     #mz_2014 = models.FloatField('¿Cuántas mz 2013-14?',null=True, blank=True)
@@ -233,8 +233,16 @@ class Productos(models.Model):
     def __unicode__(self):
         return self.nombre
 
+CHOICE_UNIDAD = (
+        (1,'ml/mz'),
+        (2,'lt/mz'),
+        (3,'kg/mz'),
+        (4,'15. onz/pl'),
+    )
+
 class NuevosProductos(models.Model):
     producto = models.ForeignKey(Productos)
+    unidad = models.IntegerField(choices=CHOICE_UNIDAD,null=True, blank=True)
     frecuencia = models.FloatField('Frecuencia de aplicación',null=True, blank=True)
     cantidad = models.FloatField('Cantidad por manzana',null=True, blank=True)
 

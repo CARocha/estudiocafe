@@ -72,6 +72,7 @@ class AreaCafeInline(admin.TabularInline):
 
 class VariedadEdadRoyaInline(admin.TabularInline):
     model = VariedadEdadRoya
+    fields = ('nombre_plantio','area','edad','variedades','produccion_2014','nivel_roya')
     extra = 1
     max_num = None
 
@@ -117,6 +118,7 @@ class ComercializacionInline(admin.TabularInline):
 
 class CreditoInline(admin.TabularInline):
     model = Credito
+    fields = ('fecha','monto','credito_mediano','credito_largo','facilidad')
     extra = 1
     max_num = None
 
