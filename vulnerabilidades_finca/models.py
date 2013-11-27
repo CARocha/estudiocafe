@@ -295,35 +295,35 @@ class FaltaRecurso(models.Model):
 
 class Mitigacion(models.Model):
     monitoreo_plagas = models.IntegerField('¿Realiza monitoreo de plagas y enfermedades?', 
-                                                                choices=CHOICE_SI_NO)
+                                                                choices=CHOICE_SI_NO,null=True, blank=True)
     cada_cuanto = models.IntegerField('¿Cada cuanto realiza monitoreo de plagas y enfermedades?', 
-                                                                choices=CHOICES_MONITOREO)
+                                                                choices=CHOICES_MONITOREO,null=True, blank=True)
     como_realiza = models.IntegerField('¿Cómo realiza monitoreo de plagas y enfermedades?', 
-                                                                choices=CHOICES_MONITOREO_PLAGAS)
+                                                                choices=CHOICES_MONITOREO_PLAGAS,null=True, blank=True)
     registro_monitoreo = models.IntegerField('¿Si lleva registro de  monitoreo de plagas y enfermedades?', 
-                                                                choices=CHOICES_MONITOREO_REGISTRO)
+                                                                choices=CHOICES_MONITOREO_REGISTRO,null=True, blank=True)
     recursos = models.IntegerField('¿Cuenta con suficiente recursos para manejo de finca?', 
-                                                                choices=CHOICE_SI_NO)
+                                                                choices=CHOICE_SI_NO,null=True, blank=True)
     falta_recurso = models.ManyToManyField(FaltaRecurso, verbose_name=u'¿Para que cosas hace falta los recursos?')
     almacenamiento = models.IntegerField('¿Cuenta con obras para almacenamiento de agua?', 
-                                                                choices=CHOICE_SI_NO)
+                                                                choices=CHOICE_SI_NO,null=True, blank=True)
     forma_organizada = models.IntegerField('¿Vende su Café en forma organizada a través de una asociación o cooperativa o grupo o Empresa?', 
-                                                                choices=CHOICE_SI_NO)
-    contrato = models.IntegerField('¿Cuenta con un contrato para la venta de café?', choices=CHOICE_SI_NO)
-    certificado = models.IntegerField('¿Esta certificado los cafetales?', choices=CHOICE_SI_NO)
-    tipo_certificado = models.IntegerField('¿Qué tipo de certificación?', choices=CHOICES_CERTIFICACION)
+                                                                choices=CHOICE_SI_NO,null=True, blank=True)
+    contrato = models.IntegerField('¿Cuenta con un contrato para la venta de café?', choices=CHOICE_SI_NO,null=True, blank=True)
+    certificado = models.IntegerField('¿Esta certificado los cafetales?', choices=CHOICE_SI_NO,null=True, blank=True)
+    tipo_certificado = models.IntegerField('¿Qué tipo de certificación?', choices=CHOICES_CERTIFICACION,null=True, blank=True)
     reconocida = models.IntegerField('¿La calidad de su café en reconocida y monitoreada?', 
-                                                                choices=CHOICES_RECONOCIDA_MONITOREADA)
-    puntaje = models.FloatField('Puntaje de la calidad SCAA')
+                                                                choices=CHOICES_RECONOCIDA_MONITOREADA,null=True, blank=True)
+    puntaje = models.FloatField('Puntaje de la calidad SCAA',null=True, blank=True)
     infraestructura = models.IntegerField('¿Dispone infraestructura para beneficio húmedo  y almacenamiento de cosecha?', 
-                                                                choices=CHOICES_INFRAESTRUCTURA)
-    plan_manejo = models.IntegerField('¿Cuenta con plan de manejo de la finca?', choices=CHOICE_SI_NO)
+                                                                choices=CHOICES_INFRAESTRUCTURA,null=True, blank=True)
+    plan_manejo = models.IntegerField('¿Cuenta con plan de manejo de la finca?', choices=CHOICE_SI_NO,null=True, blank=True)
     plan_negocio = models.IntegerField('¿Cuenta con un plan de negocio para el cultivo de café?', 
-                                                                choices=CHOICE_SI_NO)
+                                                                choices=CHOICE_SI_NO,null=True, blank=True)
     plan_inversion = models.IntegerField('¿Cuenta con un plan de inversión para el cultivo de café?',
-                                                                choices=CHOICE_SI_NO)
+                                                                choices=CHOICE_SI_NO,null=True, blank=True)
     elaborar = models.IntegerField('¿Quién apoyo para elaborar estos planes?', 
-                                                                choices=CHOICES_ELABORAR_PLANES)
+                                                                choices=CHOICES_ELABORAR_PLANES,null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 

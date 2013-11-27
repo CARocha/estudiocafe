@@ -309,7 +309,7 @@ CHOICE_UNIDAD = (
         (1,'ml/mz'),
         (2,'lt/mz'),
         (3,'kg/mz'),
-        (4,'15. onz/pl'),
+        (4,'onz/pl'),
     )
 
 class UsoInsumos(models.Model):
