@@ -293,6 +293,24 @@ class FaltaRecurso(models.Model):
     class Meta:
         verbose_name_plural = "Falta Rercursos"
 
+class TiposCertificados(models.Model):
+    nombre = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = "Tipos Certificado"
+
+class ElaboraPlanes(models.Model):
+    nombre = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return self.nombre
+
+    class Meta:
+        verbose_name_plural = "Elabora Planes"
+
 class Mitigacion(models.Model):
     monitoreo_plagas = models.IntegerField('¿Realiza monitoreo de plagas y enfermedades?', 
                                                                 choices=CHOICE_SI_NO,null=True, blank=True)
@@ -311,7 +329,10 @@ class Mitigacion(models.Model):
                                                                 choices=CHOICE_SI_NO,null=True, blank=True)
     contrato = models.IntegerField('¿Cuenta con un contrato para la venta de café?', choices=CHOICE_SI_NO,null=True, blank=True)
     certificado = models.IntegerField('¿Esta certificado los cafetales?', choices=CHOICE_SI_NO,null=True, blank=True)
-    tipo_certificado = models.IntegerField('¿Qué tipo de certificación?', choices=CHOICES_CERTIFICACION,null=True, blank=True)
+    #tipo_certificado = models.IntegerField('¿Qué tipo de certificación?', choices=CHOICES_CERTIFICACION,null=True, blank=True)
+    tipos_certificados = models.ManyToManyField(TiposCertificados, 
+                                                                                    verbose_name=u'¿Qué tipo de certificación?',
+                                                                                    null=True, blank=True)
     reconocida = models.IntegerField('¿La calidad de su café en reconocida y monitoreada?', 
                                                                 choices=CHOICES_RECONOCIDA_MONITOREADA,null=True, blank=True)
     puntaje = models.FloatField('Puntaje de la calidad SCAA',null=True, blank=True)
@@ -322,8 +343,11 @@ class Mitigacion(models.Model):
                                                                 choices=CHOICE_SI_NO,null=True, blank=True)
     plan_inversion = models.IntegerField('¿Cuenta con un plan de inversión para el cultivo de café?',
                                                                 choices=CHOICE_SI_NO,null=True, blank=True)
-    elaborar = models.IntegerField('¿Quién apoyo para elaborar estos planes?', 
-                                                                choices=CHOICES_ELABORAR_PLANES,null=True, blank=True)
+    #elaborar = models.IntegerField('¿Quién apoyo para elaborar estos planes?', 
+     #                                                           choices=CHOICES_ELABORAR_PLANES,null=True, blank=True)
+    elabora = models.ManyToManyField(ElaboraPlanes, 
+                                                                verbose_name=u'¿Quién apoyo para elaborar estos planes?',
+                                                                null=True, blank=True)
 
     encuesta = models.ForeignKey(Encuesta)
 

@@ -392,6 +392,7 @@ CHOICES_DESPULPAR = (
             (2, 'Agua de pozo'),
             (3, 'Agua de montaña'),
             (4, 'Agua potable'),
+            (5, 'Ojo de agua'),
     )
 CHOICES_FERMENTAN = (
             (1, 'Saco'),
