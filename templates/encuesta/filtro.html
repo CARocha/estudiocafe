@@ -42,7 +42,7 @@
 
 
 <div id="filtrosbar">
-        <span class="variables">Ubicación Geográfica</span>
+        <span class="variables">Datos Precisos</span>
         {% if request.session.departamento%}
         <span class="variables_filtro"><b>Departamento:</b> {% for a in request.session.departamento.all %}{{a}},{%endfor%}</span>
         {%else%}

@@ -589,35 +589,35 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
 }
 
 #conocimiento{
-    background:url(/static/img/conocimiento.jpg) no-repeat;
+    /*background:url(/static/img/conocimiento.jpg) no-repeat;*/
     background-position:bottom right;
     padding-bottom:10px;
     height:180px;
 }
 
 #practica{
-    background:url(/static/img/practica.jpg) no-repeat;
+    /*background:url(/static/img/practica.jpg) no-repeat;*/
     background-position:bottom right;
     padding-bottom:10px;
     height:160px; 
 }
 
 #estado{
-    background:url(/static/img/estado.jpg) no-repeat;
+    /*background:url(/static/img/estado.jpg) no-repeat;*/
     background-position:bottom right;
     padding-bottom:10px;
     height:160px; 
 }
 
 #actitud{
-    background:url(/static/img/actitud.jpg) no-repeat;
+    /*background:url(/static/img/actitud.jpg) no-repeat;*/
     background-position:bottom right;
     padding-bottom:10px;
     height:180px;
 }
 
 #percepcion{
-    background:url(/static/img/percepcion.jpg) no-repeat;
+    /*background:url(/static/img/percepcion.jpg) no-repeat;*/
     background-position:bottom right;
     padding-bottom:10px;
     height:260px; 

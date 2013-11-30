@@ -4,22 +4,22 @@
 {% block extrahead %}
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
-<script src="/files/js/cufon-yui.js" type="text/javascript"></script>
-<script src="/files/js/libel.font.js" type="text/javascript"></script>
+<script src="/static/js/cufon-yui.js" type="text/javascript"></script>
+<script src="/static/js/libel.font.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function($) {
         Cufon.replace('.titulo');
     });
 </script>
-<script src="/files/js/jquery.multiselect.min.js" type="text/javascript"></script>
-<script src="/files/js/jquery.multiselect.filter.js" type="text/javascript"></script>
-<link href="/files/css/jquery.multiselect.css" rel="stylesheet" type="text/css"/>
+<script src="/static/js/jquery.multiselect.min.js" type="text/javascript"></script>
+<script src="/static/js/jquery.multiselect.filter.js" type="text/javascript"></script>
+<link href="/static/css/jquery.multiselect.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript">
     var organizacion;
     var comunidad;
     var municipio;
     $(document).ready(function(){
-        $("#id_organizacion, #id_municipio, #id_comunidad").html('');
+        $("#id_empresa, #id_municipio, #id_comunidad").html('');
         comunidad = $("#id_comunidad").multiselect({
             noneSelectedText: 'Seleccione elementos',
             selectedText: '# seleccionados',
@@ -27,14 +27,14 @@
             uncheckAllText: 'Quitar seleccion',
             minWidth: 200
         });
-           organizacion = $("#id_organizacion").multiselect({
+           organizacion = $("#id_empresa").multiselect({
             noneSelectedText: 'Seleccione la organizacion',
             selectedText: '# seleccionados',
             checkAllText: 'Todos',
             uncheckAllText: 'Quitar seleccion',
             minWidth: 200,
             beforeclose: function(event, ui){
-                var selectos = $("#id_organizacion").multiselect("getChecked").map(function(){
+                var selectos = $("#id_empresa").multiselect("getChecked").map(function(){
                     return this.value;
                 }).get();
                 if(selectos.length!=0){
@@ -125,7 +125,7 @@
 
     function filtrarOrganizacion(selectos){
         $.getJSON('/ajax/organi/?ids='+selectos.join(","), function(data){
-            $("#id_organizacion").html('');
+            $("#id_empresa").html('');
             if(data){
                 $.each(data, function(i, item){
                     $('<option></option>').val(item.id).html(item.nombre_corto).appendTo(organizacion)
@@ -148,40 +148,39 @@
     <form method="POST" action="." id="consultar-form">{% csrf_token %}
         <div class="general">
             <div class="titulo">Generales <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/static/img/generales.jpg"></a></div>
-            <div class="label">{{form.anio.label}}</div>
-            <div class="filtros">{{form.anio}}<br>{{form.anio.errors}}</div>
-            <div class="clean"></div>
-
-            <div class="label">{{form.sexo.label}}</div>
-            <div class="filtros">{{form.sexo}}<br>{{form.sexo.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.edad.label}}</div>
-            <div class="filtros">{{form.edad}}<br>{{form.edad.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.escolaridad.label}}</div>
-            <div class="filtros">{{form.escolaridad}}<br>{{form.escolaridad.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.estado_civil.label}}</div>
-            <div class="filtros">{{form.estado_civil}}<br>{{form.estado_civil.errors}}</div>
-            <div class="clean"></div>
-            
-        </div>
-        <div class="lugar">
-            <div class="titulo">Ubicación Geográfica</div>
-            <div class="label">Área</div>
-            <div class="filtros">{{form.residencia}}<br>{{form.residencia.errors}}</div>
-            <div class="clean"></div>
             <div class="label">{{form.departamento.label}}</div>
             <div class="filtros">{{form.departamento}}<br>{{form.departamento.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.organizacion.label}}</div>
-            <div class="filtros">{{form.organizacion}}<br>{{form.organizacion.errors}} </div>
             <div class="clean"></div>
             <div class="label">{{form.municipio.label}}</div>
             <div class="filtros">{{form.municipio}}<br>{{form.municipio.errors}}</div>
             <div class="clean"></div>
             <div class="label">{{form.comunidad.label}}</div>
             <div class="filtros">{{form.comunidad}}<br>{{form.comunidad.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.empresa.label}}</div>
+            <div class="filtros">{{form.empresa}}<br>{{form.empresa.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.altitud.label}}</div>
+            <div class="filtros">{{form.altitud}}<br>{{form.altitud.errors}}</div>
+            <div class="clean"></div>
+            
+        </div>
+        <div class="lugar">
+            <div class="titulo">Datos precisos</div>
+            <div class="label">Área finca desde</div>
+            <div class="filtros">{{form.area_desde}}<br>{{form.area_desde.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">Área finca hasta</div>
+            <div class="filtros">{{form.area_hasta}}<br>{{form.area_hasta.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">Área cafe desde</div>
+            <div class="filtros">{{form.area_cafe_desde}}<br>{{form.area_cafe_desde.errors}} </div>
+            <div class="clean"></div>
+            <div class="label">Área finca hasta</div>
+            <div class="filtros">{{form.area_cafe_hasta}}<br>{{form.area_cafe_hasta.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.escolaridad.label}}</div>
+            <div class="filtros">{{form.escolaridad}}<br>{{form.escolaridad.errors}}</div>
             <div class="clean"></div>
            
         </div>
