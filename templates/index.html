@@ -2,8 +2,8 @@
 {% block extratitle %}Home{% endblock %}
 
 {% block extrahead %}
-<script src="/files/js/cufon-yui.js" type="text/javascript"></script>
-<script src="/files/js/cholla.font.js" type="text/javascript"></script>
+<script src="/static/js/cufon-yui.js" type="text/javascript"></script>
+<script src="/static/js/cholla.font.js" type="text/javascript"></script>
 <script type="text/javascript">
     $(document).ready(function($) {
         Cufon.replace('.cantidad');
@@ -16,11 +16,11 @@
 </style>
     <!-- Older IE stylesheet, to reposition navigation arrows, added AFTER the theme stylesheet above -->
     <!--[if lte IE 7]>
-    <link type="text/css" rel="stylesheet"  href="/files/css/anythingslider-ie.css">
+    <link type="text/css" rel="stylesheet"  href="/static/css/anythingslider-ie.css">
     <![endif]-->
-    <script src="/files/js/jquery.anythingslider.js" type="text/javascript"></script>
-    <link type="text/css" rel="stylesheet"  href="/files/css/anythingslider.css">
-    <link type="text/css" rel="stylesheet"  href="/files/css/theme-metallic.css">
+    <script src="/static/js/jquery.anythingslider.js" type="text/javascript"></script>
+    <link type="text/css" rel="stylesheet"  href="/static/css/anythingslider.css">
+    <link type="text/css" rel="stylesheet"  href="/static/css/theme-metallic.css">
    <script>
         // Set up Sliders
         // **************
@@ -57,40 +57,39 @@
  <ul id="slider1" style="margin-left:">
      <li class="panel1">
          <div class="textSlide">
-         <span class="rightside" style="padding-right: 0px;"><img src="/files/img/fotos/portada.jpg" alt="" /></span>
+         <span class="rightside" style="padding-right: 0px;"><img src="/static/img/fotos/portada1.jpg" alt="" /></span>
              <div class="info">
-               <b style ="font-size:17px;">Sistema de Monitoreo del Movimiento contra el Abuso Sexual <br> NICARAGUA</b><br><br>
-El MCAS Nicaragua presenta este Estudio que abre una ventana sobre la percepción del abuso sexual en Nicaragua. Información recopilada a 1920 personas en su ambiente familiar en 11 departamentos del país. Todo el trabajo de campo fue realizado por las promotoras/es de 16 organizaciones del MCAS
+               <b style ="font-size:17px;">Finca xxxxx con problema de roya<br> NICARAGUA</b><br><br>
+ Mid ultrices! A vut aliquam! Augue dignissim pid et duis lundium, ut! Purus magnis cursus et ridiculus, montes. Tortor dictumst a, nec! Et ultrices? Aliquam risus rhoncus pid, aenean facilisis parturient sit lundium! Augue rhoncus pellentesque. Ridiculus et. Integer etiam et parturient ac lacus, vel tristique ultricies augue.
                 <p>
-                Podes escribirnos a hablemosde.abusosexual@gmail.com
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 </p>
-                 <a class="botonaprende" href="/files/manual.pdf"></a>
+                 
             </div>
          </div>
      </li>
      <li class="panel2">
          <div class="textSlide">
-         <span class="rightside" style="padding-right: 0px;"><img src="/files/img/fotos/portada1.jpg" alt="" /></span>
+         <span class="rightside" style="padding-right: 0px;"><img src="/static/img/fotos/portada2.jpg" alt="" /></span>
              <div class="info">
-               <b style ="font-size:17px;">Sistema de Monitoreo del Movimiento contra el Abuso Sexual<br> NICARAGUA</b><br><br>
-The MCAS Nicaragua presents this study that opens a window on the perception of sexual abuse in Nicaragua.  Information gathered 1920 people in their home environment in 11 departments.  All fieldwork was done by the promoters of 16 organizations that belong to the MCAS
-                <p>
-                You can write to us: hablemosde.absusosexual@gmail.com
+               <b style ="font-size:17px;">Finca xxxxx con problema de roya<br> NICARAGUA</b><br><br>
+Sed pid eu dolor mid velit vut, penatibus, parturient, ultrices ultricies facilisis porttitor rhoncus nec elementum etiam. Amet dapibus lectus! Dictumst, purus placerat augue mid ut nec, ac mid enim placerat tincidunt massa, scelerisque ac.                <p>
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 </p>
-                 <a class="botonaprende" href="/files/manual.pdf"></a>
+                
             </div>
          </div>
      </li>
      <li class="panel2">
          <div class="textSlide">
-         <span class="rightside" style="padding-right: 0px;"><img src="/files/img/fotos/portada2.jpg" alt="" /></span>
+         <span class="rightside" style="padding-right: 0px;"><img src="/static/img/fotos/portada3.jpg" alt="" /></span>
              <div class="info">
-               <b style ="font-size:17px;">Sistema de Monitoreo del Movimiento contra el Abuso Sexual <br> NICARAGUA</b><br><br>
-El MCAS Nicaragua presenta este Estudio que abre una ventana sobre la percepción del abuso sexual en Nicaragua. Información recopilada a 1920 personas en su ambiente familiar en 11 departamentos del país. Todo el trabajo de campo fue realizado por las promotoras/es de 16 organizaciones del MCAS
+               <b style ="font-size:17px;">Finca xxxxx con problema de roya<br> NICARAGUA</b><br><br>
+Aenean phasellus integer nascetur sociis, mus, ultrices hac pulvinar natoque in, diam? Pulvinar rhoncus pulvinar amet phasellus. Diam, ac, magna phasellus, proin diam placerat pid porta arcu lundium mauris. Ac vut. Integer magnis magnis sociis placerat. 
                 <p>
-                Podes escribirnos a hablemosde.abusosexual@gmail.com
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 </p>
-                 <a class="botonaprende" href="/files/manual.pdf"></a>
+                 
             </div>
          </div>
      </li>
@@ -101,8 +100,9 @@ El MCAS Nicaragua presenta este Estudio que abre una ventana sobre la percepció
 <!--</div>-->
 <div class="clean"></div>
 <div class="info-bar">
-    <div class="cantidad familias">{{total_encuesta}}</div>
-    <div class="cantidad orgs">{{total_organizacion}}</div>
+    <h6> Cantidad de encuestas: </h6>
+    <div class="cantidad familias">{{familias}}</div>
+    
     <a href="/consultar/" class="consultar2">Consultar</a>
 </div>
 {% endblock %}

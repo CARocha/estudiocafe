@@ -1,7 +1,8 @@
 body{
     padding: 0;
     height: 0;
-    background-color: #f5f5ee;
+    /*background-color: #f5f5ee;*/
+    background-image: url(/static/img/fondo.jpg);
     font-family: "Trebuchet MS", sans-serif;
 }
 .wrapper{
@@ -20,7 +21,9 @@ a{
 #header{
     height: 104px;
     width: 100%;
-    background: url(/files/img/line-back.png) repeat-x bottom;
+    /*background: url(/static/img/line-back.png) repeat-x bottom;*/
+    border-bottom-style: double;
+    border-color: #ececde;
 }
 #header .nav{
     float: left;
@@ -29,7 +32,7 @@ a{
     float: left;
 }
 .nav a{
-    background: url(/files/img/sprite.png) no-repeat;
+    background: url(/static/img/sprite.png) no-repeat;
     text-indent: -9999px;
     display: block;
     height: 14px;
@@ -43,7 +46,7 @@ a{
     margin-right: 10px;
 }
 .nav .inicio{
-    background: url(/files/img/sprite.png) no-repeat 0px -29px;
+    background: url(/static/img/sprite.png) no-repeat 0px -29px;
     padding-left: 27px;
     padding-top: 3px;
     height: 17px;
@@ -55,7 +58,7 @@ a{
     background-position: 0px -14px;
 }
 .nav .consultas{
-    background: url(/files/img/sprite.png) no-repeat 0px -48px;
+    background: url(/static/img/sprite.png) no-repeat 0px -48px;
     padding-left: 27px;
     padding-top: 4px;
     height: 20px;
@@ -68,7 +71,7 @@ a{
     background-position: -44px -14px;
 }
 .nav .entrar{
-    background: url(/files/img/sprite.png) no-repeat 0px -72px;
+    background: url(/static/img/sprite.png) no-repeat 0px -72px;
     padding-left: 23px;
     padding-top: 4px;
     height: 18px;
@@ -82,7 +85,11 @@ a{
 }
 #header .wrapper .logo{
     float: right;
+    margin-top: 55px;
     margin-right: 15px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #871812;
 }
 .portada{
     float: left;
@@ -102,7 +109,7 @@ a{
 
 .ui-helper-reset a{font-size:9px !important;}
 .botonaprende{
-    background: url(/files/img/botonaprende.jpg) no-repeat;
+    background: url(/static/img/botonaprende.jpg) no-repeat;
     display:block;
     width:285px;
     height:33px;
@@ -115,14 +122,19 @@ a{
     float: left;
     width: 231px;
     height: 239px;
-    background: url(/files/img/help.png) no-repeat;
+    background: url(/static/img/help.png) no-repeat;
     margin-top: 10px;
 }
 .info-bar{
     margin-top: 20px;
-    background: url(/files/img/info-bar.png) no-repeat;
+    /*background: url(/static/img/info-bar.png) no-repeat;*/
+    background-color: #ececde;
     height: 69px;
     width: 100%;
+}
+.info-bar h6 {
+    position: absolute;
+    margin: 1px 2px 3px 4px;
 }
 .info-bar .cantidad{
     font-size: 30px;
@@ -142,7 +154,7 @@ a{
     margin-top: 13px;
     margin-right: 30px;
     display: block;
-    background: url(/files/img/spriteboton.png) no-repeat;
+    background: url(/static/img/spriteboton.png) no-repeat;
     width: 303px;
     height: 54px;
     text-indent: -9999px;
@@ -159,7 +171,7 @@ a{
     margin-top: 13px;
     margin-right: 30px;
     display: block;
-    background: url(/files/img/sprite.png) no-repeat 0px -94px;
+    background: url(/static/img/sprite.png) no-repeat 0px -94px;
     width: 138px;
     height: 44px;
     text-indent: -9999px;
@@ -173,7 +185,7 @@ a{
     margin-top: 25px;
 }
 #footer .wrapper{
-    background: #6A8A21;
+    background: #871812;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
@@ -189,7 +201,7 @@ a{
 #footer .creditos{
     height: 42px;
     width: 100%;
-    background: #accd63;
+    background: #8f3328;
     /*bordes*/
     -webkit-border-bottom-left-radius: 5px;
     -webkit-border-bottom-right-radius: 5px;
@@ -202,21 +214,21 @@ a{
     float: left;
     margin-left: 10px;
     line-height: 42px;
-    color: #161616;
+    color: #fff;
     font-size: 12px;
     font-family: "Arial", sans-serif;
 }
 #footer .creditos .datos a{
-    color: #161616;
+    color: #fff;
     text-decoration: none;
     font-weight: bold;
 }
 #footer .creditos .datos a:hover{
-    color: #FFFFFF;
+    color: #161616;
 }
 #footer .ultimas .datos{
     padding-right: 60px;
-    background: url(/files/img/logo-black.png) no-repeat right;
+    background: url(/static/img/logo-black.png) no-repeat right;
 }
 #footer .ultimas .datos a{
     color: #FFFFFF;
@@ -236,7 +248,7 @@ a{
 .general .titulo, .lugar .titulo, .extras .titulo, .indicadores .titulo{
     font-size: 23px;
     color: #a1a79f;
-    background: url(/files/img/arrow-back.png) no-repeat center left;
+    background: url(/static/img/arrow-back.png) no-repeat center left;
     padding-left: 23px;
     margin-bottom: 10px;
 }
@@ -315,7 +327,7 @@ a{
     border-radius-topright: 10px;
     border-radius-topleft: 10px;
     height: 35px;
-    background: url(/files/img/back-tabla.png) repeat-x;
+    background: url(/static/img/back-tabla.png) repeat-x;
     line-height: 35px;
     padding-left: 15px;
 }
@@ -352,19 +364,19 @@ caption {
     text-align: left;
     font-size:16px;
     color:#48311a;
-    background:url(/files/img/caption-tabla.png) no-repeat;
+    background:url(/static/img/caption-tabla.png) no-repeat;
 
 }
 
 .caption2{
-    background:url(/files/img/caption-tabla2.png) no-repeat !important;
+    background:url(/static/img/caption-tabla2.png) no-repeat !important;
 }
 
 #mensaje{
     width:900px;
     margin:8px 0px 8px 0px;
     border:#d8843e 1px solid;
-    background:#f1edaf url(/files/img/mensaje.png) no-repeat;
+    background:#f1edaf url(/static/img/mensaje.png) no-repeat;
     background-position:center left;
     color:#42423b;
     font-size:15px;
@@ -441,7 +453,7 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
 
 .menu_indicadores ul li a{
     display:block;
-    background: url(/files/img/flechamenu.png) no-repeat;
+    background: url(/static/img/flechamenu.png) no-repeat;
     background-position:center right;
     text-decoration:none;
     font-size:12px;
@@ -451,13 +463,13 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
 }
 
 .menu_indicadores ul li a:hover{
-    background: url(/files/img/flechamenu2.png) no-repeat;
+    background: url(/static/img/flechamenu2.png) no-repeat;
     background-position:center right;
 }
 
 .titulo_menu {
     height: 30px;
-    background: url(/files/img/bg_header.png) repeat-x;
+    background: url(/static/img/bg_header.png) repeat-x;
     line-height: 35px;
     padding-left: 4px;
     font-size: 17px;
@@ -472,7 +484,7 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
     margin-right:5px;
     width:85px;
     height:24px;
-    background:url(/files/img/regresar.png) no-repeat;
+    background:url(/static/img/regresar.png) no-repeat;
     background-position: top;
     margin-top:3px;
 }
@@ -497,12 +509,12 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
 
 }
 .indicadores ul{
-    list-style-image:url(/files/img/bullet-white.png) !important;
+    list-style-image:url(/static/img/bullet-white.png) !important;
     list-style-position:inside;
 }
 
 .indicadores ul li:hover{
-    list-style-image:url(/files/img/bullet-green.png) !important;
+    list-style-image:url(/static/img/bullet-green.png) !important;
     text-decoration:underline;
 }
 
@@ -570,42 +582,42 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
 }
 
 #familia{
-    /*background:url(/files/img/familia.jpg) no-repeat;*/
+    /*background:url(/static/img/familia.jpg) no-repeat;*/
     background-position:bottom right;
     padding-bottom:10px;
     height:100px;  
 }
 
 #conocimiento{
-    background:url(/files/img/conocimiento.jpg) no-repeat;
+    background:url(/static/img/conocimiento.jpg) no-repeat;
     background-position:bottom right;
     padding-bottom:10px;
     height:180px;
 }
 
 #practica{
-    background:url(/files/img/practica.jpg) no-repeat;
+    background:url(/static/img/practica.jpg) no-repeat;
     background-position:bottom right;
     padding-bottom:10px;
     height:160px; 
 }
 
 #estado{
-    background:url(/files/img/estado.jpg) no-repeat;
+    background:url(/static/img/estado.jpg) no-repeat;
     background-position:bottom right;
     padding-bottom:10px;
     height:160px; 
 }
 
 #actitud{
-    background:url(/files/img/actitud.jpg) no-repeat;
+    background:url(/static/img/actitud.jpg) no-repeat;
     background-position:bottom right;
     padding-bottom:10px;
     height:180px;
 }
 
 #percepcion{
-    background:url(/files/img/percepcion.jpg) no-repeat;
+    background:url(/static/img/percepcion.jpg) no-repeat;
     background-position:bottom right;
     padding-bottom:10px;
     height:260px; 

@@ -39,10 +39,10 @@ div.anythingSlider .start-stop:hover, div.anythingSlider .start-stop.hover {
 
 /* Active State */
 div.anythingSlider.activeSlider .anythingWindow {
-    border-color: #7C9127;
+    border-color: #871812;
 }
 div.anythingSlider.activeSlider .thumbNav a.cur, div.anythingSlider.activeSlider .thumbNav a {
-    background-color: #7C9127;
+    background-color: #871812;
 }
 div.anythingSlider .start-stop {
     background-color: #080;

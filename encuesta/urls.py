@@ -4,5 +4,5 @@ from django.conf import settings
 
 urlpatterns = patterns('encuesta.views',
     url(r'^$', 'index', name="index"),
-    #url(r'^proyecto/$', 'proyecto'),
+    url(r'^consultar/$', 'consultar', name="consultar"),
     )

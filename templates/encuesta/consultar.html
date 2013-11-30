@@ -147,7 +147,7 @@
 <div>
     <form method="POST" action="." id="consultar-form">{% csrf_token %}
         <div class="general">
-            <div class="titulo">Generales <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/files/img/generales.jpg"></a></div>
+            <div class="titulo">Generales <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/static/img/generales.jpg"></a></div>
             <div class="label">{{form.anio.label}}</div>
             <div class="filtros">{{form.anio}}<br>{{form.anio.errors}}</div>
             <div class="clean"></div>
@@ -164,13 +164,7 @@
             <div class="label">{{form.estado_civil.label}}</div>
             <div class="filtros">{{form.estado_civil}}<br>{{form.estado_civil.errors}}</div>
             <div class="clean"></div>
-            <div class="titulo" style ='margin-top:6px; margin-bottom:6px;'>Religión</div>
-            <div class="label">Asiste a Iglesia</div>
-            <div class="filtros">{{form.iglesia}}<br>{{form.iglesia.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.importancia_religion.label}}</div>
-            <div class="filtros">{{form.importancia_religion}}<br>{{form.importancia_religion.errors}}</div>
-            <div class="clean"></div>
+            
         </div>
         <div class="lugar">
             <div class="titulo">Ubicación Geográfica</div>
@@ -189,15 +183,7 @@
             <div class="label">{{form.comunidad.label}}</div>
             <div class="filtros">{{form.comunidad}}<br>{{form.comunidad.errors}}</div>
             <div class="clean"></div>
-            <div class="label"></div>
-            <div class="filtros"></div>
-            <div class="clean"></div>
-            <div class="label"></div>
-            <div class="filtros"></div>
-            <div class="clean"></div>
-            <div class="label"></div>
-            <div class="filtros"></div>
-            <div class="clean"></div>
+           
         </div>
             {% if nono %}
         <div class="clean"></div>
