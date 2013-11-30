@@ -1,0 +1,77 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{% block title %}Hoja spss{% endblock %}</title>
+</head>
+		{% block content %}
+<table border=1>
+	<caption>Tabla completa</caption>
+	<tr>
+        <th>User</th>
+        <th>organizacion</th>
+        <th>Codigo</th>
+        <th>fecha</th>
+        <th>area reside</th>
+        <th>municipio</th>
+        <th>comunidad</th>
+        <th>sexo</th>
+        <th>edad</th>
+        <th>escolaridad</th>
+        <th>estado civil</th>
+        <th>Hijas</th>
+        <th>Hijos</th>
+        <th>iglesia</th>
+        <th>importancio religiosa</th>
+        <th>Jefe de familia</th>
+        <th>Vive con usted</th>
+        <th>Personas adultas en la vivienda</th>
+        <th>Personas de 1-7 años</th>
+        <th>Personas de 8-16 años</th>
+        <th>¿Qué es para usted abuso sexual?</th>
+        <th>¿Sabe en que lugares puede ocurrir el abuso sexual?</th>
+        <th>¿Usted sabe quienes son los que abusan sexualmente de niñas, niños y adolescentes?</th>
+        <th>¿Sabe usted que se puede hacer para prevenir el abuso sexual?</th>
+        <th>¿Conoce sobre leyes que castigan a las personas que abusan sexualmente de los niños, niñas y adolescentes?</th>
+        <th>Mencione cuales leyes conoce?</th>
+        <th>¿Dónde aprendió usted sobre abuso sexual?</th>
+        <th>¿Dónde cree que podría informarse sobre el tema?</th>
+        <th>¿Por qué cree que se da el abuso sexual?</th>
+        <th>¿Qué piensa usted sobre las personas que abusan sexualmente de los niños?</th>
+        <th>¿Qué piensa sobre las personas que han sido víctimas de abuso sexual?</th>
+        <th>¿Estaría usted de acuerdo que en la Familia se enseña a los niños, niñas y adolescentes a prevenir el abuso sexual?</th>
+        <th>¿Estaría usted de acuerdo que en la Escuela se enseña a los niños, niñas y adolescentes a prevenir el abuso sexual?</th>
+        <th>¿Qué haría usted si conociera de una situacion de abuso sexual?</th>
+        <th>¿Qué hace usted para prevenir el abuso sexual?</th>
+        <th>¿Usted participa o ha participado en algún tipo de organización que previene el abuso sexual?</th>
+        <th>¿Cómo participa?</th>
+        <th>¿Usted considera que el abuso sexual es un problema en su comunidad?</th>
+        <th>¿Usted considera que el abuso sexual es un problema en el país?</th>
+        <th>¿Sabe si hay lugares o personas en esta comunidad que atienden a niños/as, adolescentes que vivieron abuso sexual?</th>
+        <th>¿En qué lugares de su comunidad se atienden a niños/as, adolescentes que vivieron abuso sexual?</th>
+        <th>¿Usted sabe que tipo de atención brindan en esos lugares?</th>
+        <th>¿Si no hay ningún lugar en su comunidad donde se atiende a las personas víctimas de abuso sexual a dónde van para recibir atención?</th>
+        <th>¿Ha conocido de niños, niñas o adolescentes que hayan sido abusados sexualmente?</th>
+        <th>¿En cuál de las siguientes familias se da más frecuentemente el abuso sexual?</th>
+        <th>¿Según usted, quiénes deben ser los encargados de aplicar medidas de prevención y atención sobre abuso sexual?</th>
+        <th>¿Cuál de los siguientes mensajes cree que las personas adultas les transmiten a las niñas, niños y adolescentes?</th>
+        <th>¿Cree usted que si la población se organizará para defender los derechos humanos, de niños/as y adolescentes, el abuso se disminuiría?</th>
+        <th>¿Qué piensa sobre el rol de los medios de comunicación en cuanto al abuso sexual?</th>
+        <th>¿Qué piensa sobre el rol de la iglesia en cuanto al abuso sexual?</th>
+        <th>¿Qué piensa sobre el rol del estado en cuanto al abuso sexual?</th>
+        <th>¿Qué piensa sobre el rol de las organizaciones no gubernamentales en cuanto al abuso sexual?</th>
+        <th>¿Qué piensa sobre el rol de las empresas privadas en cuanto al abuso sexual?</th>
+    </tr>
+
+		{% for fila in resultados %}
+		<tr>
+			{% for algo in fila %}
+				<td>{{ algo }} </td>
+            {% endfor %}
+		</tr>
+		{% endfor %}
+</table>
+
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,400 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{% block title %}Hoja de identificadores{% endblock %}</title>
+</head>
+{% block content %}
+<table border=1>
+	<caption>¿Con quien vive usted?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in viven %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué es para usted abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in abuso %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Sabe en que lugares puede ocurrir el abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in lugarabuso %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Usted sabe quienes son los que abusan sexualmente de niñas, niños y adolescentes?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in quieabusa %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Sabe usted que se puede hacer para prevenir el abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in quehacer %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Dónde aprendió usted sobre abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in dondeaprendio %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Dónde cree que podría informarse sobre el tema?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in dondeinformar %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>Por qué cree que se da el abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in porqueabuso %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa usted sobre las personas que abusan sexualmente de los niños?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in quepiensa %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa sobre las personas que han sido víctimas de abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in quepiensavictima %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué haría usted si conociera de una situacion de abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in queharia %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué hace usted para prevenir el abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in hagoprevenir %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Cómo participa?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in como %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿En qué lugares de su comunidad se atienden a niños/as, adolescentes que vivieron abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in lugares %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Usted sabe que tipo de atención brindan en esos lugares?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in tipoatencion %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿En cuál de las siguientes familias se da más frecuentemente el abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in quefamilia %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Según usted, quiénes deben ser los encargados de aplicar medidas de prevención y atención sobre abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in quiedebe %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Cuál de los siguientes mensajes cree que las personas adultas les transmiten a las niñas, niños y adolescentes?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in mensaje %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa sobre el rol de los medios de comunicación en cuanto al abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in medios %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa sobre el rol de la iglesia en cuanto al abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in iglesia %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa sobre el rol del estado en cuanto al abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in estado %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa sobre el rol de las organizaciones no gubernamentales en cuanto al abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in ong %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<table border=1>
+	<caption>¿Qué piensa sobre el rol de las empresas privadas en cuanto al abuso sexual?</caption>
+	<thead>
+	    <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+        </tr>
+    <thead>
+    <tbody>
+        {% for a in empresa %}
+		    <tr>
+		        <td>{{ a.0 }} </td>
+		        <td>{{ a.1 }} </td>
+            </tr>
+         {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+</body>
+</html>

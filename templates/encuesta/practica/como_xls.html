@@ -1,0 +1,27 @@
+{% extends "base_xls.html" %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<table>
+        <caption>¿Cómo participa? <span class="numencuestas">Encuestas {{numero_si}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+         <tr>
+		    <td>Asisto a charlas que brindan en la comunidad</td>
+            <td>{{primer}}</td>
+            <td>{{ por_primer }}</td>
+        </tr>   
+        <tr>
+		    <td>Promotoría/Capacitación/Acompañamiento</td>
+            <td>{{segundo}}</td>
+            <td>{{ por_segundo }}</td>
+        </tr>
+        
+</table>
+    </table>
+{% endblock %}

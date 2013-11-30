@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block extratitle %}Estado Actual{% endblock %}
+
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart1;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container1',
+         defaultSeriesType: 'pie',
+         plotBackgroundColor: null,
+         plotBorderWidth: null,
+         plotShadow: false
+      },
+      title: {
+         text: '¿Usted considera que el abuso sexual es un problema en su comunidad?'
+      },
+      tooltip: {
+         formatter: function() {
+            return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+         }
+      },
+      plotOptions: {
+         pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+               enabled: true,
+               color: Highcharts.theme.textColor || '#000000',
+               connectorColor: Highcharts.theme.textColor || '#000000',
+               formatter: function() {
+                  return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+               }
+            }
+         }
+      },
+       series: [{data: [{% for value in dicc2 %}
+                    ['{{value.0}}',
+                    {{value.1}}],
+                {% endfor %}]
+                
+                }]
+   });
+});
+   
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Estado Actual</div><div class="titulo" style="float:left;">Problema de la comunidad</div>
+<div class="botones-descarga"><a href="/estado_problema.xls"><img src="/files/img/doc.png"></a><a href="/estado_problema.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/estado.html" %} 
+<table>
+        <caption>¿Usted considera que el abuso sexual es un problema en su comunidad? <span class="numencuestas">Encuestas {{numero}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in dicc2 %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{numero}}</span></div>
+    <div id="container1">
+
+    </div>
+</div>
+{% endblock %}

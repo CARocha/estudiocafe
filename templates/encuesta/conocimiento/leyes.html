@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block extratitle %}Conocimientos{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Conocimiento</div><div class="titulo" style="float:left;">¿Como Prevenir?</div>
+<div class="botones-descarga"><a href="/conocimiento_leyes.xls"><img src="/files/img/doc.png"></a><a href="/conocimiento_leyes.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/conocimiento.html" %}
+<table>
+        <caption>¿Conoce sobre las leyes que castigan a las personas que abusan? <span class="numencuestas">Encuestas {{numero}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in dicc2 %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <div class="contenedor">
+     <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{numero}}</span></div>
+<img src="{{grafo_url}}" alt="¿Conoce leyes que castigan a los abusadores?" title="¿Conoce leyes que castigan a los abusadores?">
+    </div>
+{% endblock %}
