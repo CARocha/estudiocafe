@@ -78,7 +78,7 @@ class SocioOrganizacion(models.Model):
     nombre = models.CharField(max_length=200)
 
     class Meta:
-        verbose_name_plural = "Organizaciones"
+        verbose_name_plural = "Socios organizaciones"
 
     def __unicode__(self):
         return self.nombre

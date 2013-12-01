@@ -19,7 +19,7 @@
     var comunidad;
     var municipio;
     $(document).ready(function(){
-        $("#id_empresa, #id_municipio, #id_comunidad").html('');
+        $("#id_municipio, #id_comunidad").html('');
         comunidad = $("#id_comunidad").multiselect({
             noneSelectedText: 'Seleccione elementos',
             selectedText: '# seleccionados',
@@ -33,19 +33,7 @@
             checkAllText: 'Todos',
             uncheckAllText: 'Quitar seleccion',
             minWidth: 200,
-            beforeclose: function(event, ui){
-                var selectos = $("#id_empresa").multiselect("getChecked").map(function(){
-                    return this.value;
-                }).get();
-                if(selectos.length!=0){
-                    filtrarMunicipio(selectos, 2);
-                }else{
-                    var depas = $("#id_departamento").multiselect("getChecked").map(function(){
-                        return this.value;
-                    }).get();
-                    filtrarMunicipio(depas, 1);
-                }
-            }
+         
         });
 
         $("#id_departamento").multiselect({
@@ -60,9 +48,9 @@
                 }).get();
                 if(selectos.length!=0){
                     filtrarMunicipio(selectos, 1);
-                    filtrarOrganizacion(selectos);
+                    //filtrarOrganizacion(selectos);
                 }else{
-                    organizacion.multiselect("disable");
+                    //organizacion.multiselect("disable");
                     municipio.multiselect("disable");
                 }
             }
@@ -96,7 +84,7 @@
             }
         });
         municipio.multiselect("disable");
-        organizacion.multiselect("disable");
+        //organizacion.multiselect("disable");
         comunidad.multiselect("disable");
     });
     function filtrarMunicipio(selectos, opcion){
@@ -147,7 +135,7 @@
 <div>
     <form method="POST" action="." id="consultar-form">{% csrf_token %}
         <div class="general">
-            <div class="titulo">Generales <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/static/img/generales.jpg"></a></div>
+            <div class="titulo">Generales <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/static/img/generales1.jpg"></a></div>
             <div class="label">{{form.departamento.label}}</div>
             <div class="filtros">{{form.departamento}}<br>{{form.departamento.errors}}</div>
             <div class="clean"></div>
