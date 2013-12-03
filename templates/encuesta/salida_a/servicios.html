@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block extratitle %}Servicios basicos{% endblock %}
+{%load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+<script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: '¿Con quién vive Usted en la casa?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (%)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 30,
+                    minPointLength : 1
+                }
+            },
+            series: [{% for value in dicc2 %}
+                {
+                    name: '{{value.0}}',
+                    data: [{{value.1}}],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#632D00',
+                        align: 'center',
+                        x: -3,
+                        y: 0,
+                            formatter: function() {
+                                return this.y + '%';
+                                                  },
+                        style: {
+                            font: 'normal 13px Verdana, sans-serif'
+                                }
+                                }
+                },
+                {% endfor %}]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas A</div><div class="titulo" style="float:left;">Servicios basicos</div>
+<div class="botones-descarga"><a href="/vive.xls"><img src="/files/img/doc.png"></a><a href="/vive.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/familia.html" %}
+<table>
+        <caption>Relacion finca vivienda de la familia<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  relacion.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br><br><br><br><br><br> <br> <br> <br>
+
+    <table>
+        <caption>Disponibiliada de electricidad en la fincas<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  electricidad.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<br>
+    <table>
+        <caption>Uso de combustible en la finca<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  combustible.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<br>
+    <table>
+        <caption>Agua trabajo en la finca<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  agua_trabajo.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<br>
+    <table>
+        <caption>Agua para consumo humano<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  agua_consumo.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+ <!--<div class="contenedor">
+   <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{numero}}</span></div> -->
+
+</div>
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% block extratitle %}Informacion general{% endblock %}
+{% load ayudar%}
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas A</div><div class="titulo" style="float:left;">general</div>
+<div class="botones-descarga"><a href="/jefe.xls"><img src="/files/img/doc.png"></a><a href="/jefe.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/familia.html" %}
+<table>
+        <caption>Numero de fincas <span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>numero de fincas</td>
+                <td>{{conteo}}</td>    
+                <td>{{conteo|porcentaje:total}}</td> 
+            </tr>
+        </tbody>
+    </table>
+   <br> <br><br><br><br><br>
+    <table>
+        <caption>Sexo dueño de las fincas <span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Hombres</td>
+                <td>{{hombre}}</td>    
+                <td>{{hombre|porcentaje:conteo}}</td> 
+            </tr>
+            <tr>
+                <td>Mujeres</td>
+                <td>{{mujer}}</td>    
+                <td>{{mujer|porcentaje:conteo}}</td> 
+            </tr>
+            <tr>
+                <td>Mancomunado</td>
+                <td>{{mancumudado}}</td>    
+                <td>{{mancumudado|porcentaje:conteo}}</td> 
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Nivel de educacion de dueño de fincas <span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  educacion.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Tenencia de la parcela <span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  tenencia.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Documento legal de la parcela<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  documento.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<br>
+<!-- <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{numero}}</span></div>
+<img src="{{grafo_url}}" alt="¿Quiés es el jefa/e de familia?" title="¿Quién es el jefa/e de familia?"> -->
+{% endblock %}
+

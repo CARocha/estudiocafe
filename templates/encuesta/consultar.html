@@ -135,46 +135,43 @@
 <div>
     <form method="POST" action="." id="consultar-form">{% csrf_token %}
         <div class="general">
-            <div class="titulo">Generales <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/static/img/generales1.jpg"></a></div>
+            <div class="titulo">Filtro1 <a href="/generales"><img  style ="margin-right:5px;margin-top:-5px;"align='right' src="/static/img/generales1.jpg"></a></div>
             <div class="label">{{form.departamento.label}}</div>
             <div class="filtros">{{form.departamento}}<br>{{form.departamento.errors}}</div>
             <div class="clean"></div>
             <div class="label">{{form.municipio.label}}</div>
             <div class="filtros">{{form.municipio}}<br>{{form.municipio.errors}}</div>
             <div class="clean"></div>
-            <div class="label">{{form.comunidad.label}}</div>
-            <div class="filtros">{{form.comunidad}}<br>{{form.comunidad.errors}}</div>
+             <div class="label">{{form.altitud.label}}</div>
+            <div class="filtros">{{form.altitud}}<br>{{form.altitud.errors}}</div>
             <div class="clean"></div>
             <div class="label">{{form.empresa.label}}</div>
             <div class="filtros">{{form.empresa}}<br>{{form.empresa.errors}}</div>
             <div class="clean"></div>
-            <div class="label">{{form.altitud.label}}</div>
-            <div class="filtros">{{form.altitud}}<br>{{form.altitud.errors}}</div>
+            <div class="label">{{form.area_finca.label}}</div>
+            <div class="filtros">{{form.area_finca}}<br>{{form.area_finca.errors}}</div>
             <div class="clean"></div>
-            <div class="label">{{form.variedad_viviero.label}}</div>
-            <div class="filtros">{{form.variedad_viviero}}<br>{{form.variedad_viviero.errors}}</div>
+            <div class="label">{{form.area_cafe.label}}</div>
+            <div class="filtros">{{form.area_cafe}}<br>{{form.area_cafe.errors}}</div>
             <div class="clean"></div>
             
         </div>
         <div class="lugar">
-            <div class="titulo">Datos precisos</div>
-            <div class="label">Área finca desde</div>
-            <div class="filtros">{{form.area_desde}}<br>{{form.area_desde.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">Área finca hasta</div>
-            <div class="filtros">{{form.area_hasta}}<br>{{form.area_hasta.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">Área cafe desde</div>
-            <div class="filtros">{{form.area_cafe_desde}}<br>{{form.area_cafe_desde.errors}} </div>
-            <div class="clean"></div>
-            <div class="label">Área finca hasta</div>
-            <div class="filtros">{{form.area_cafe_hasta}}<br>{{form.area_cafe_hasta.errors}}</div>
-            <div class="clean"></div>
-            <div class="label">{{form.escolaridad.label}}</div>
-            <div class="filtros">{{form.escolaridad}}<br>{{form.escolaridad.errors}}</div>
+            <div class="titulo">Datos Filtro2</div>
+            <div class="label">{{form.nivel_educacion.label}}</div>
+            <div class="filtros">{{form.nivel_educacion}}<br>{{form.nivel_educacion.errors}}</div>
             <div class="clean"></div>
             <div class="label">{{form.variedad_predominate.label}}</div>
             <div class="filtros">{{form.variedad_predominate}}<br>{{form.variedad_predominate.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.variedad_viviero.label}}</div>
+            <div class="filtros">{{form.variedad_viviero}}<br>{{form.variedad_viviero.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.reduccion_cosecha.label}}</div>
+            <div class="filtros">{{form.reduccion_cosecha}}<br>{{form.reduccion_cosecha.errors}}</div>
+            <div class="clean"></div>
+            <div class="label">{{form.credito.label}}</div>
+            <div class="filtros">{{form.credito}}<br>{{form.credito.errors}}</div>
             <div class="clean"></div>
            
         </div>

@@ -247,7 +247,7 @@ a{
 }
 .general .titulo, .lugar .titulo, .extras .titulo, .indicadores .titulo{
     font-size: 23px;
-    color: #a1a79f;
+    color: #000;
     background: url(/static/img/arrow-back.png) no-repeat center left;
     padding-left: 23px;
     margin-bottom: 10px;

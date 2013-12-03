@@ -11,16 +11,18 @@
 <div class="botones-descarga"><a href="/descargar/ident"><img src="/static/img/identificadores1.png"></a><a href="/descargar/spss"><img src="/static/img/xls1.png"></a>
 </div>
 {% endif %}
-            <div class="titulo" style="float:left;">Indicadores</div><br><br>
+            <div class="titulo" style="float:left;">Indicadores (#encuestas encontradas {{encuestas}})</div><br><br>
     <div id="dashboard">
 
         <ul id="familia">
-            <b>Información de la familia</b>
-            <li><a href="/familia/jefe/">Jefa/e</a></li>
-            <li><a href="/familia/vivecon/">¿Con quién vive?</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="/familia/miembros/">Miembros/as del hogar</a></li>
-            {% endif %}
+            <b>Salidas A</b>
+            <li><a href="/a/informacion/">Informacion General</a></li>
+            <li><a href="/a/ubicacion/">Ubicacion</a></li>
+            <li><a href="/a/servicios/">Servicios basicos</a></li>
+            <li><a href="/a/dependietes/">Dependientes</a></li>
+            <li><a href="/a/conexion/">Conexiones</a></li>
+            <li><a href="/a/servicios/">Servicios basicos</a></li>
+            <li><a href="/a/recursos/">Los recursos naturales</a></li>
         </ul>
         <ul id="conocimiento">
             <b>Conocimiento</b>

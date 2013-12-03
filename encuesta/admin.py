@@ -271,7 +271,9 @@ class EncuestaAdmin(admin.ModelAdmin):
                     CapacitacionesSocialesInline,SiLeGustaInline,NoLeGustaInline,DetalleIncidenciaRoyaInline,
                     FotosInline]
 
-    list_display = ('nombre','dueno','sexo',)
+    list_display = ('nombre','dueno','sexo','altitud')
+    list_filter = ['pais', 'departamento','beneficiarios','composicion__educacion_dueno',
+                        'produccionvivero__variedad_predomindante','quienfinancia__tiene_credito']
     search_fields = ['nombre']
     date_hierarchy = 'fecha'
 

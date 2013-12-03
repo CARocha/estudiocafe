@@ -64,7 +64,7 @@ class Encuesta(models.Model):
     municipio = models.ForeignKey(Municipio)
     comunidad = models.ForeignKey(Comunidad)
     position = position = GeopositionField(null=True, blank=True)
-    altitud = models.CharField('altitud promedio',max_length=50, null=True, blank=True)
+    altitud = models.IntegerField('altitud promedio',null=True, blank=True)
     beneficiarios = models.ManyToManyField(Organizacion, null=True, blank=True)
 
 
