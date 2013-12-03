@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block extratitle %}Recursos{% endblock %}
+{%load ayudar%}
+{%block extrahead%}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+<script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+var chart;
+$(document).ready(function() {
+   chart = new Highcharts.Chart({
+      chart: {
+         renderTo: 'container',
+         defaultSeriesType: 'bar'
+      },
+      title: {
+         text: 'Distribución de las familias según números de personas que viven en las casas'
+      },
+      subtitle: {
+         text: ''
+      },
+      xAxis: {
+         categories: ['Adultos', 'Niños/as 1 a 7', 'Jóvenes 8 a 16'],
+         title: {
+            text: null
+         }
+      },
+      yAxis: {
+         min: 0,
+         title: {
+            text: 'Cantidad',
+            align: 'high'
+         }
+      },
+      tooltip: {
+         formatter: function() {
+            return ''+
+                this.series.name +': '+ this.y +'';
+         }
+      },
+      plotOptions: {
+         bar: {
+            dataLabels: {
+               enabled: true
+            }
+         }
+      },
+      legend: {
+         layout: 'vertical',
+         align: 'right',
+         verticalAlign: 'top',
+         x: -100,
+         y: 100,
+         floating: true,
+         borderWidth: 1,
+         //backgroundColor: Highcharts.theme.legendBackgroundColor || '#FFFFFF',
+         shadow: true
+      },
+      credits: {
+         enabled: false
+      },
+           series: [{
+         name: 'De 0 - 2 personas',
+         data: [{{adultos1}}, {{uno_siete1}}, {{ocho_1}} ]
+      }, {
+         name: 'De 3 - 5 personas',
+         data: [{{adultos2}},  {{uno_siete2}}, {{ocho_2}}]
+      }, {
+         name: 'Más de 6 personas',
+         data: [{{adultos3}}, {{uno_siete3}},  {{ocho_3}}]
+      }]
+   });
+   
+   
+});
+</script>
+{%endblock%}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas A</div><div class="titulo" style="float:left;">Recursos</div>
+<div class="botones-descarga"><a href="/miembros.xls"><img src="/files/img/doc.png"></a><a href="/miembros.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/familia.html" %}
+<table>
+        <caption>Uso de tierra en la fincas<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  tierra.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.total}}</td>    
+                <td>{{v.total|porcentaje:totalicimo.total}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+  <table>
+        <caption>Actividades de reforestación en el ultimo año<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  reforestacion.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{numero}}</span></div> 
+    <div id="container">
+
+    </div>
+</div>-->
+
+{% endblock %}

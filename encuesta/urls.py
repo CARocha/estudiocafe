@@ -10,4 +10,5 @@ urlpatterns = patterns('encuesta.views',
     url(r'^ajax/munis/$', 'get_munis'),
     url(r'^ajax/comunies/$', 'get_comunies'),
     (r'^a/(?P<vista>[-\w]+)/$', '_get_view'),
+    (r'^b/(?P<vista>[-\w]+)/$', '_get_view'),
     )

@@ -11,6 +11,7 @@ class EstadoActual(models.Model):
 
     class Meta:
         verbose_name_plural = 'Estado Actual'
+        ordering = ('nombre',)
 
     def __unicode__(self):
         return self.nombre
@@ -26,6 +27,7 @@ class AreaCafe(models.Model):
 
     class Meta:
         verbose_name_plural = '3.1 Área de café'
+
 
     def __unicode__(self):
         pass

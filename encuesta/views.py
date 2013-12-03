@@ -6,6 +6,13 @@ from .models import *
 from .forms import ConsultarForm
 import json
 from lugar.models import Departamento, Comunidad
+from django.db.models import Avg, Sum
+from produccion_finca.models import *
+from produccion_cafe_finca.models import *
+from roya.models import *
+from vulnerabilidades_finca.models import *
+import collections
+
 
 def index(request):
     familias = Encuesta.objects.all().count()
@@ -200,9 +207,101 @@ def salida3(request, template='encuesta/salida_a/servicios.html'):
         valor = ServiciosBasicos.objects.filter(encuesta__in=encuestas, agua_consumo_humano=obj).count()
         agua_consumo[obj.nombre] = valor
 
-
     return render(request, template, locals())
 
+def salida4(request, template='encuesta/salida_a/dependientes.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    adultos = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('adultos'))
+    adultas = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('adultas'))
+    j_varones = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('jovenes_varones'))
+    j_mujeres = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('jovenes_mujeres'))
+    ninos = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('ninos'))
+    ninas = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('ninas'))
+
+    h_permanentes = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('permanente_hombres'))
+    m_permanentes = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('permanente_mujeres'))
+    h_temporal = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('temporales_hombres'))
+    m_temporal = Composicion.objects.filter(encuesta__in=encuestas).aggregate(cuanto=Avg('temporales_mujeres'))
+    
+    return render(request, template, locals())
+
+def salida5(request, template='encuesta/salida_a/conexion.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    gremial = {}
+    for obj in SocioOrganizacion.objects.all():
+        valor = QuienFinancia.objects.filter(encuesta__in=encuestas, socio=obj).count()
+        gremial[obj.nombre] = valor
+
+    credito = {}
+    for obj in CreditoE.objects.all():
+        valor = QuienFinancia.objects.filter(encuesta__in=encuestas, tiene_credito=obj).count()
+        credito[obj.nombre] = valor
+
+    dequien = {}
+    for obj in DeQuien.objects.all():
+        valor = QuienFinancia.objects.filter(encuesta__in=encuestas, de_quien=obj).count()
+        dequien[obj.nombre] = valor
+
+    comercializan = {}
+    for obj in Organizacion.objects.all():
+        valor = encuestas.filter(beneficiarios=obj).count()
+        comercializan[obj.nombre] = valor
+    
+    return render(request, template, locals())
+
+def salida6(request, template='encuesta/salida_a/recursos.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    totalicimo = UsoTierra.objects.filter(encuesta__in=encuestas, tierra__id=1).aggregate(total=Sum('area'))
+    
+    tierra = {}
+    for obj in Uso.objects.all():
+        valor = UsoTierra.objects.filter(encuesta__in=encuestas, tierra=obj).aggregate(total=Sum('area'))
+        tierra[obj.nombre] = valor
+
+    reforestacion = {}
+    for obj in Actividad.objects.all():
+        valor = Reforestacion.objects.filter(encuesta__in=encuestas, reforestacion=obj,respuesta=1).count()
+        reforestacion[obj.nombre] = valor
+    
+    return render(request, template, locals())
+
+def salida7(request, template='encuesta/salida_b/produccion.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    produccion = collections.OrderedDict()
+    for obj in EstadoActual.objects.all():
+        doce = AreaCafe.objects.filter(encuesta__in=encuestas, estado=obj).aggregate(total=Sum('doce'))
+        trece = AreaCafe.objects.filter(encuesta__in=encuestas, estado=obj).aggregate(total=Sum('trece'))
+        catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado=obj).aggregate(total=Sum('catorse'))
+        produccion[obj.nombre] = doce,trece,catorce
+    #areas totales
+    area_total_doce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=1).aggregate(doce=Sum('doce'))
+    area_total_trece = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=1).aggregate(trece=Sum('trece'))
+    area_total_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=1).aggregate(catorse=Sum('catorse'))
+    #producciones
+    p_total_doce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=4).aggregate(doce=Sum('doce'))
+    p_total_trece = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=4).aggregate(trece=Sum('trece'))
+    p_total_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=4).aggregate(catorse=Sum('catorse'))
+    #pergamino
+    pergamino_doce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=6).aggregate(doce=Sum('doce'))
+    pergamino_trece = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=6).aggregate(trece=Sum('trece'))
+    pergamino_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=6).aggregate(catorse=Sum('catorse'))
+    #oro
+    oro_doce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(doce=Sum('doce'))
+    oro_trece = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(trece=Sum('trece'))
+    oro_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(catorse=Sum('catorse'))
+    return render(request, template, locals())
 
 def _get_view(request, vista):
     if vista in VALID_VIEWS:
@@ -214,6 +313,10 @@ VALID_VIEWS = {
     'informacion': salida1,
     'ubicacion': salida2,
     'servicios': salida3,
+    'dependientes': salida4,
+    'conexion': salida5,
+    'recursos': salida6,
+    'produccion': salida7,
     }
 
 

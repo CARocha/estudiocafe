@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block extratitle %}Prácticas{% endblock %}
-
+{% block extratitle %}Sistema de producción de café{% endblock %}
+{% load ayudar%}
 {% block extrahead %}
 <script type="text/javascript" src="/files/js/highcharts.js"></script>
 <script type="text/javascript" src="/files/js/exporting.js"></script>
@@ -71,38 +71,53 @@
 {% include "encuesta/filtro.html"%}
 <br>
 <div class="indicadores">
-<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Práctica</div><div class="titulo" style="float:left;">¿Cómo participa? </div>
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas B</div><div class="titulo" style="float:left;">sistema producción café </div>
 <div class="botones-descarga"><a href="/practica_como.xls"><img src="/files/img/doc.png"></a><a href="/practica_como.pdf"><img src="/files/img/pdf.png"></a></div>
 <div class="clean"></div>
 </div>
 {% include "encuesta/practica.html" %} 
 <table>
-        <caption>¿Cómo participa? <span class="numencuestas">Encuestas si {{numero_si}}</span></caption>
+        <caption>Sistema de producción de café<span class="numencuestas">Encuestas{{conteo}}</span></caption>
         <thead>
             <tr>
                 <th>Categoria</th>
-                <th>Frecuencia</th>
-                <th>porcentajes(%)</th>
+                <th>2011-12</th>
+                <th>2012-13</th>
+                <th>2013-14</th>
             </tr>
         </thead>
-         <tr>
-		    <td>Asisto a charlas que brindan en la comunidad</td>
-            <td>{{primer}}</td>
-            <td>{{ por_primer }}</td>
-        </tr>   
+        {% for k,v in produccion.items %}
+            <tr>
+                <td>{{k}}</td>
+                {% for a in v %}
+                    <td>{{a.total}}</td>
+                {% endfor %}
+            </tr>  
+        {% endfor %}
         <tr>
-		    <td>Promotoría/Capacitación/Acompañamiento</td>
-            <td>{{segundo}}</td>
-            <td>{{ por_segundo }}</td>
+            <td>% Area producción</td>
+            <td>{{p_total_doce.doce|porcentaje:area_total_doce.doce}}</td>
+            <td>{{p_total_trece.trece|porcentaje:area_total_trece.trece}}</td>
+            <td>{{p_total_catorce.catorse|porcentaje:area_total_catorce.catorse}}</td>
         </tr>
-        
+        <tr>
+            <td>Productividad promedio de las fincas en qq pergamino/mz</td>
+            <td>{{pergamino_doce.doce|dividir:p_total_doce.doce}}</td>
+            <td>{{pergamino_trece.trece|dividir:p_total_trece.trece}}</td>
+            <td>{{pergamino_catorce.catorse|dividir:p_total_catorce.catorse}}</td>
+        </tr>
+        <tr>
+            <td>Productividad promedio de las fincas en qq oro/mz</td>
+            <td>{{oro_doce.doce|dividir:p_total_doce.doce}}</td>
+            <td>{{oro_trece.trece|dividir:p_total_trece.trece}}</td>
+            <td>{{oro_catorce.catorse|dividir:p_total_catorce.catorse}}</td>
+        </tr>   
 </table>
-    </table>
 <div class="clean"></div>
-<div class="contenedor">
+<!--<div class="contenedor">
     <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas si {{numero_si}}</span></div>
     <div id="container" >
 
     </div>
-</div>
+</div> -->
 {% endblock %}

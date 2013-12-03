@@ -5,5 +5,12 @@ register = template.Library()
 def porcentaje(fraccion, relleno):    
     try:  
         return "%.2f%%" % ((float(fraccion) / float(relleno)) * 100)  
-    except ValueError:  
+    except ValueError: 
+        return ''
+
+@register.filter
+def dividir(valor1, valor2):    
+    try:  
+        return "%.2f" % ( float(valor1) / float(valor2) )  
+    except ValueError:
         return ''
