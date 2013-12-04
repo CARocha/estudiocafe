@@ -640,3 +640,8 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
     border:0;
     display:block;
 }
+
+.active {
+    pointer-events: none;
+    cursor: default;
+}

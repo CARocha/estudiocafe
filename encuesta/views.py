@@ -344,7 +344,7 @@ def salida8(request, template='encuesta/salida_b/vivero.html'):
 
     vivero_cafe = {}
     for obj in CHOICE_SI_NO:
-        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, variedad_predomindante=obj[0]).count()
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, vivero_finca=obj[0]).count()
         vivero_cafe[obj[1]] = valor
 
     min_planta = ProduccionVivero.objects.filter(encuesta__in=encuestas).aggregate(minimo=Min('plantas_vivero'))['minimo']
@@ -573,6 +573,7 @@ def salida12(request, template='encuesta/salida_b/agroecologicas.html'):
         finca = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=4).count()
 
         plantaciones[obj.nombre] = (no, pequena, mayor, finca)
+    print plantaciones
 
     fortalecimiento = {}
     for obj in Opciones.objects.filter(id__in=cultivo):
@@ -604,6 +605,100 @@ def salida12(request, template='encuesta/salida_b/agroecologicas.html'):
     
     return render(request, template, locals())
 
+def salida15(request, template='encuesta/salida_d/precio.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    comercializacion = {}
+    for obj in CHOICES_ANIOS_comercializacion:
+        prod = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(prod=Sum('p_total'))['prod']
+        i_venta = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(i_venta=Sum('i_venta_cafe'))['i_venta']
+        i_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(i_precio=Avg('i_precio'))['i_precio']
+        c_venta = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(c_venta=Sum('c_venta'))['c_venta']
+        c_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(c_precio=Avg('c_precio'))['c_precio']
+        e_venta = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(e_venta=Sum('e_venta'))['e_venta']
+        e_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(e_precio=Avg('e_precio'))['e_precio']
+
+        comercializacion[obj[1]] = (prod,i_venta,i_precio,c_venta,c_precio,e_venta,e_precio)
+    produccion_11_12 = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=1).aggregate(produccion=Sum('p_total'))['produccion']
+    precio_11_12 = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=1).aggregate(precio=Avg('i_precio'))['precio']
+    ingreso_11_12 = produccion_11_12 * precio_11_12
+
+    cambio_volumen = {}
+    for obj in CHOICES_ANIOS_comercializacion:
+        prod = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(prod=Sum('p_total'))['prod']
+        porcentaje_12 = (produccion_11_12 - prod)*100 / produccion_11_12
+        i_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
+                        fecha=obj[0]).aggregate(i_precio=Avg('i_precio'))['i_precio']
+        precio_porcentaje_12 = (precio_11_12 - i_precio)*100 / precio_11_12
+        ingreso = prod * i_precio
+        porcentaje_ingreso = (ingreso_11_12 - ingreso)*100 / ingreso_11_12
+
+        cambio_volumen[obj[1]] = (prod, porcentaje_12,i_precio,precio_porcentaje_12, 
+                                  ingreso, porcentaje_ingreso)
+
+
+    return render(request, template, locals())
+
+def salida16(request, template='encuesta/salida_d/credito.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    CHOICES_ANIOS_CREDITO_MODELO = (
+            (3, '2013-14'),      
+    )
+
+    credito_corto = {}
+    for obj in CHOICES_ANIOS_CREDITO_MODELO:
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('monto'))['monto']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_max=Max('monto'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_min=Min('monto'))['monto_min']
+        
+        credito_corto[obj[1]] = (numero,monto,monto_min,monto_max)
+
+    credito_mediano = {}
+    for obj in CHOICES_ANIOS_CREDITO_MODELO:
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_mediano'))['monto']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_max=Sum('credito_mediano'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_min=Sum('credito_mediano'))['monto_min']
+        
+        credito_mediano[obj[1]] = (numero,monto,monto_min,monto_max)
+
+    credito_largo = {}
+    for obj in CHOICES_ANIOS_CREDITO_MODELO:
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_largo'))['monto']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_max=Sum('credito_largo'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_min=Sum('credito_largo'))['monto_min']
+        
+        credito_largo[obj[1]] = (numero,monto,monto_min,monto_max)
+
+    facilidad = {}
+    for obj in CHOICES_ANIOS_FACILIDAD:
+        valor = Credito.objects.filter(encuesta__in=encuestas,fecha=3,facilidad=obj[0]).count()
+        
+        facilidad[obj[1]] = valor
+
+    #cobertura
+    
+
+    return render(request, template, locals())
+
+
 def _get_view(request, vista):
     if vista in VALID_VIEWS:
         return VALID_VIEWS[vista](request)
@@ -624,6 +719,9 @@ VALID_VIEWS = {
     'momentos': salida10,
     'insumos': salida11,
     'agroecologicos': salida12,
+    #faltan las salidas 13,14
+    'precio': salida15,
+    'credito': salida16,
     }
 
 

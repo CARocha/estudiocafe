@@ -338,7 +338,7 @@ class Opciones(models.Model):
 
     class Meta:
         verbose_name = 'Opciones'
-        verbose_name_plural = 'Opciones'
+        verbose_name_plural = 'Opcioness'
 
     def __unicode__(self):
         return self.nombre
@@ -512,7 +512,7 @@ class Comercializacion(models.Model):
 CHOICES_ANIOS_CREDITO = (
             (1, '2010-11'),
             (2, '2011-12'),
-            (3, '2012-13'), 
+            (4, '2012-13'), 
             (3, '2013-14'),      
     )
 

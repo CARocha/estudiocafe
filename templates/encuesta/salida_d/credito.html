@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block extratitle %}Conocimientos{% endblock %}
-
+{% block extratitle %}Monto crédito{% endblock %}
+{%load ayudar%}
 {% block extrahead %}
 <script type="text/javascript" src="/files/js/highcharts.js"></script>
 <script type="text/javascript" src="/files/js/exporting.js"></script>
@@ -77,35 +77,111 @@
 {% include "encuesta/filtro.html"%}
 <br>
 <div class="indicadores">
-<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Conocimiento</div><div class="titulo" style="float:left;">¿Que es abuso sexual?</div>
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salida D</div><div class="titulo" style="float:left;">Monto de crédito</div>
 <div class="botones-descarga"><a href="/conocimiento_abuso.xls"><img src="/files/img/doc.png"></a><a href="/conocimiento_abuso.pdf"><img src="/files/img/pdf.png"></a></div>
 <div class="clean"></div>
 </div>
-{% include "encuesta/conocimiento.html" %} 
+{% include "encuesta/conocimiento.html" %}
+<h4>Monto de crédito</h4>
 <table>
-        <caption>¿Qué es para usted abuso sexual? <span class="numencuestas">Encuestas {{numero}}</span></caption>
+        <caption>Crédito a corto plazo US$<span class="numencuestas">Encuestas {{conteo}}</span></caption>
         <thead>
             <tr>
-                <th>Categoria</th>
-                <th>Frecuencia</th>
-                <th>porcentajes(%)</th>
+                <th>Años</th>
+                <th>Número de casos</th>
+                <th>Monto total</th>
+                <th>Valor minimo</th>
+                <th>Valor máximo</th>
             </tr>
         </thead>
         <tbody>
-            {%for key, value in dicc2 %}
+            {%for key, value in credito_corto.items %}
             <tr>
                 <td>{{key}}</td>
                 {%for i in value%}
                     <td>{{i|floatformat}}</td>    
                 {%endfor%}
+            </tr>
            {%endfor%}
         </tbody>
     </table>
     <div class="clean"></div>
-<div class="contenedor">
-    <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{numero}}</span></div>
+    <br>
+<table>
+        <caption>Crédito a corto mediano plazo US$<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Años</th>
+                <th>Número de casos</th>
+                <th>Monto total</th>
+                <th>Valor minimo</th>
+                <th>Valor máximo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in credito_mediano.items %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<br><br>
+<table>
+        <caption>Crédito a largo plazo US$<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Años</th>
+                <th>Número de casos</th>
+                <th>Monto total</th>
+                <th>Valor minimo</th>
+                <th>Valor máximo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in credito_largo.items %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><br>
+<table>
+        <caption>Facilidad de pago 2013-14<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Número</th>
+                <th>Porcentajes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in facilidad.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <h4>Cobertura de crédito</h4>
+
+
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{conteo}}</span></div>
     <div id="container">
 
     </div>
-</div>
+</div> -->
 {% endblock %}
