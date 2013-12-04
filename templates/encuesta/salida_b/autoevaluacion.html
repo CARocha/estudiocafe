@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% block extratitle %}Auto evaluacion de manejo de los cafetales{% endblock %}
+{%load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: '¿Qué hace usted para prevenir el abuso sexual?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (Que dijeron Si)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 55,
+                    minPointLength : 1
+                }
+            },
+            series: [{% for value in dicc2 %}
+                {
+                    name: '{{value.0}}',
+                    data: [{{value.1}}],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#632D00',
+                        align: 'center',
+                        x: -3,
+                        y: 0,
+                            formatter: function() {
+                                return this.y+'%';
+                                                  },
+                        style: {
+                            font: 'normal 13px Verdana, sans-serif'
+                                }
+                                }
+                },
+                {% endfor %}]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas B</div><div class="titulo" style="float:left;">Auto evaluacion manejo cafetales</div>
+<div class="botones-descarga"><a href="/practica_prevenir.xls"><img src="/files/img/doc.png"></a><a href="/practica_prevenir.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/practica.html" %} 
+<table>
+        <caption>Manejo de tejido o poda de cafetos<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  cafeto.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+   <div class="clean"></div>
+   <table>
+        <caption>Manejo de maleza<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  maleza.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<table>
+        <caption>Manejo o posa de sombra<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  sombra.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<table>
+        <caption>Aplicacion de fertilizante en suelo<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  suelo.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<table>
+        <caption>Aplicacion de fertilizantes foliares<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  foliares.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<table>
+        <caption>Aplicacion de fungicidas<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  fungicida.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<table>
+        <caption>Aplicaciones de insecticidas<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  insecticida.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<table>
+        <caption>Aplicaciones de nematicidas<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for k,v in  nematicida.items%}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:conteo}}</td> 
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  personas encuestas =  {{numero}}</div>
+    <div id="container">
+
+    </div>
+</div> -->
+{% endblock %}

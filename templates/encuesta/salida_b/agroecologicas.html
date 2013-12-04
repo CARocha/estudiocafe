@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block extratitle %}Uso de  opciones agroecologicas{% endblock %}
+{% load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'bar'
+            },
+            title: {
+                text: '¿Cómo participa?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (Que dijeron si)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 55,
+                    minPointLength : 1
+                },
+                bar: {
+                        dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+         name: 'Promotoría/Capacitación/Acompañamiento',
+         data: [{{por_segundo}}]
+         
+      }, {
+         name: 'Asisto a charlas que brindan en la comunidad',
+         data: [{{por_primer}}]
+      }]
+      
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas B</div><div class="titulo" style="float:left;">Uso de opciones agroecologicas </div>
+<div class="botones-descarga"><a href="/practica_como.xls"><img src="/files/img/doc.png"></a><a href="/practica_como.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/practica.html" %} 
+<table>
+        <caption>Plantaciones sanas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Opciones</th>
+                <th>No utiliza</th>
+                <th>Utiliza en pequeña escala</th>
+                <th>Utiliza en mayor escala</th>
+                <th>Utiliza en toda la finca</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in plantaciones.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}({{v.0|porcentaje:conteo}})</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<div class="clean"></div>
+<table>
+        <caption>Fortalecimiento de cultivos<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Opciones</th>
+                <th>No utiliza</th>
+                <th>Utiliza en pequeña escala</th>
+                <th>Utiliza en mayor escala</th>
+                <th>Utiliza en toda la finca</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in fortalecimiento.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}({{v.0|porcentaje:conteo}})</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Mejorar el ambiente<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Opciones</th>
+                <th>No utiliza</th>
+                <th>Utiliza en pequeña escala</th>
+                <th>Utiliza en mayor escala</th>
+                <th>Utiliza en toda la finca</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in mejorar.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}({{v.0|porcentaje:conteo}})</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Supresión de plagas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Opciones</th>
+                <th>No utiliza</th>
+                <th>Utiliza en pequeña escala</th>
+                <th>Utiliza en mayor escala</th>
+                <th>Utiliza en toda la finca</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in supresion.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}-({{v.0|porcentaje:conteo}})</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+
+
+
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas si {{No utiliza_si}}</span></div>
+    <div id="container" >
+
+    </div>
+</div> -->
+{% endblock %}

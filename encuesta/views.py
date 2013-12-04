@@ -6,10 +6,9 @@ from .models import *
 from .forms import ConsultarForm
 import json
 from lugar.models import Departamento, Comunidad
-from django.db.models import Avg, Sum
+from django.db.models import Avg, Sum, Max, Min
 from produccion_finca.models import *
 from produccion_cafe_finca.models import *
-from roya.models import *
 from vulnerabilidades_finca.models import *
 import collections
 
@@ -301,6 +300,308 @@ def salida7(request, template='encuesta/salida_b/produccion.html'):
     oro_doce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(doce=Sum('doce'))
     oro_trece = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(trece=Sum('trece'))
     oro_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(catorse=Sum('catorse'))
+    
+    return render(request, template, locals())
+
+def salida75(request, template='encuesta/salida_b/incidencia.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    incidencias = collections.OrderedDict()
+    for obj in Variedades.objects.all():
+        plantio = VariedadEdadRoya.objects.filter(encuesta__in=encuestas, variedades=obj).count()
+        area = VariedadEdadRoya.objects.filter(encuesta__in=encuestas, variedades=obj).aggregate(area=Sum('area'))['area']
+        edad = VariedadEdadRoya.objects.filter(encuesta__in=encuestas, variedades=obj).aggregate(edad=Sum('edad'))['edad']
+        try:
+            promedio_edad = round(float(edad) / float(plantio),2)
+        except:
+            promedio_edad = 0
+        produccion = VariedadEdadRoya.objects.filter(encuesta__in=encuestas, variedades=obj).aggregate(prod=Sum('produccion_2014'))['prod']
+        incidencia = VariedadEdadRoya.objects.filter(encuesta__in=encuestas, variedades=obj).aggregate(incidencia=Sum('nivel_roya'))['incidencia']
+        try:
+            promedio_incidencia = round(float(incidencia) / float(plantio),2)
+        except:
+            promedio_incidencia = 0
+        try:
+            productividad = round(float(produccion) / float(area),2)
+        except:
+            productividad = 0
+        if plantio != 0:
+            incidencias[obj.nombre] = (plantio,area,promedio_edad,produccion,promedio_incidencia,productividad)
+
+    return render(request, template, locals())
+
+def salida8(request, template='encuesta/salida_b/vivero.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    predominante = collections.OrderedDict()
+    for obj in VariedadPredominante.objects.all():
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, variedad_predomindante=obj).count()
+        predominante[obj.nombre] = valor
+
+    vivero_cafe = {}
+    for obj in CHOICE_SI_NO:
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, variedad_predomindante=obj[0]).count()
+        vivero_cafe[obj[1]] = valor
+
+    min_planta = ProduccionVivero.objects.filter(encuesta__in=encuestas).aggregate(minimo=Min('plantas_vivero'))['minimo']
+    max_planta = ProduccionVivero.objects.filter(encuesta__in=encuestas).aggregate(maximo=Max('plantas_vivero'))['maximo']
+    total_planta = round(ProduccionVivero.objects.filter(encuesta__in=encuestas).aggregate(total=Avg('plantas_vivero'))['total'],2)
+    promedio_sembrar = round(float(total_planta) / float(3500),2)
+    area_total_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=1).aggregate(catorse=Sum('catorse'))['catorse']
+    area_representa = round(promedio_sembrar / float(area_total_catorce),2)
+
+    variedads = {}
+    for obj in Variedades.objects.all():
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, variedad=obj).count()
+        variedads[obj.nombre] = valor
+
+    semilla = {}
+    for obj in Semilla.objects.all():
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, consigue_semilla=obj).count()
+        semilla[obj.nombre] = valor
+
+    decide_sembrar = {}
+    for obj in DecideSembrar.objects.all():
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, decide=obj).count()
+        decide_sembrar[obj.nombre] = valor
+
+    criterios = {}
+    for obj in Criterios.objects.all():
+        valor = ProduccionVivero.objects.filter(encuesta__in=encuestas, criterio=obj).count()
+        criterios[obj.nombre] = valor
+
+    
+    return render(request, template, locals())
+
+def salida9(request, template='encuesta/salida_b/autoevaluacion.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    cafeto = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, manejo_cafeto=obj).count()
+        cafeto[obj.nombre] = valor
+
+    maleza = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, manejo_maleza=obj).count()
+        maleza[obj.nombre] = valor
+
+    sombra = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, manejo_sombra=obj).count()
+        sombra[obj.nombre] = valor
+
+    suelo = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, fertilizante_suelo=obj).count()
+        suelo[obj.nombre] = valor
+
+    foliares = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, fertilizante_foliares=obj).count()
+        foliares[obj.nombre] = valor
+
+    fungicida = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, fungicidas=obj).count()
+        fungicida[obj.nombre] = valor
+
+    insecticida = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, insecticidas=obj).count()
+        insecticida[obj.nombre] = valor
+
+    nematicida = collections.OrderedDict()
+    for obj in Manejos.objects.all():
+        valor = ManejoCafetales.objects.filter(encuesta__in=encuestas, fecha=3, nematicidas=obj).count()
+        nematicida[obj.nombre] = valor
+       
+    return render(request, template, locals())
+
+def salida10(request, template='encuesta/salida_b/momentos.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    cafeto = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_manejo_cafeto=obj).count()
+        cafeto[obj.nombre] = valor
+
+    maleza = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_manejo_maleza=obj).count()
+        maleza[obj.nombre] = valor
+
+    sombra = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_manejo_sombra=obj).count()
+        sombra[obj.nombre] = valor
+
+    suelo = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_fertilizante_suelo=obj).count()
+        suelo[obj.nombre] = valor
+
+    foliares = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_fertilizante_foliares=obj).count()
+        foliares[obj.nombre] = valor
+
+    fungicida = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_fungicidas=obj).count()
+        fungicida[obj.nombre] = valor
+
+    insecticida = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_insecticidas=obj).count()
+        insecticida[obj.nombre] = valor
+
+    nematicida = collections.OrderedDict()
+    for obj in Meses.objects.all():
+        valor = MesesManejoCafe.objects.filter(encuesta__in=encuestas, fecha=4, mes_nematicidas=obj).count()
+        nematicida[obj.nombre] = valor
+       
+    return render(request, template, locals())
+
+def salida11(request, template='encuesta/salida_b/insumos.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    fungicida = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=1, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=1, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=1, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=1, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=1, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=1, nombre=obj):
+            fungicida[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+
+    herbicida = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=3, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=3, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=3, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=3, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=3, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=3, nombre=obj):
+            herbicida[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+
+    insecticidas = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=2, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=2, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=2, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=2, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=2, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=2, nombre=obj):
+            insecticidas[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+
+    fer_suelo = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=5, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=5, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=5, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=5, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=5, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=5, nombre=obj):
+            fer_suelo[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+
+    nematicida = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=4, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=4, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=4, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=4, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=4, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=4, nombre=obj):
+            nematicida[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+
+    abono = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=6, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=6, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=6, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=6, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=6, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=6, nombre=obj):
+            abono[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+
+    foliares = {}
+    for obj in NombreTipos.objects.all():
+        valor = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=7, nombre=obj).count()
+        minimo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=7, nombre=obj).aggregate(minimo=Min('aplicaciones'))['minimo']
+        maximo = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=7, nombre=obj).aggregate(maximo=Max('aplicaciones'))['maximo']
+        cant_min = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=7, nombre=obj).aggregate(cant_min=Min('cantidad'))['cant_min']
+        cant_max = UsoInsumos.objects.filter(encuesta__in=encuestas, tipo=7, nombre=obj).aggregate(cant_max=Max('cantidad'))['cant_max']
+        
+        if UsoInsumos.objects.filter(tipo=7, nombre=obj):
+            foliares[obj.nombre] = (valor, minimo, maximo, cant_min, cant_max)
+       
+    return render(request, template, locals())
+
+def salida12(request, template='encuesta/salida_b/agroecologicas.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    total = Encuesta.objects.all().count()
+
+    sanas = [14,9,20,21]
+    cultivo = [1,2,8,3,15,17]
+    ambiente = [6,7,10,11,12,13]
+    plagas = [4,5,16,18,19]
+
+    plantaciones = {}
+    for obj in Opciones.objects.filter(id__in=sanas):
+        no = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=1).count()
+        pequena = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=2).count()
+        mayor = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=3).count()
+        finca = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=4).count()
+
+        plantaciones[obj.nombre] = (no, pequena, mayor, finca)
+
+    fortalecimiento = {}
+    for obj in Opciones.objects.filter(id__in=cultivo):
+        no = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=1).count()
+        pequena = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=2).count()
+        mayor = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=3).count()
+        finca = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=4).count()
+        
+        fortalecimiento[obj.nombre] = (no, pequena, mayor, finca)
+
+    mejorar = {}
+    for obj in Opciones.objects.filter(id__in=ambiente):
+        no = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=1).count()
+        pequena = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=2).count()
+        mayor = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=3).count()
+        finca = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=4).count()
+       
+        mejorar[obj.nombre] = (no, pequena, mayor, finca)
+
+    supresion = {}
+    for obj in Opciones.objects.filter(id__in=plagas):
+        no = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=1).count()
+        pequena = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=2).count()
+        mayor = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=3).count()
+        finca = UsoOpcionesAgroecologica.objects.filter(encuesta__in=encuestas, opcion=obj, nivel=4).count()
+        
+        supresion[obj.nombre] = (no, pequena, mayor, finca)
+
+    
     return render(request, template, locals())
 
 def _get_view(request, vista):
@@ -317,6 +618,12 @@ VALID_VIEWS = {
     'conexion': salida5,
     'recursos': salida6,
     'produccion': salida7,
+    'incidencia':salida75,
+    'vivero': salida8,
+    'autoevaluacion': salida9,
+    'momentos': salida10,
+    'insumos': salida11,
+    'agroecologicos': salida12,
     }
 
 

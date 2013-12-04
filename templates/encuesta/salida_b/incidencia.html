@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block extratitle %}Prácticas{% endblock %}
+{% block extratitle %}Variedad, edad, produccion y incidencia de  roya{% endblock %}
 
 {% block extrahead %}
 <script type="text/javascript" src="/files/js/highcharts.js"></script>
@@ -14,7 +14,7 @@
                 defaultSeriesType: 'column'
             },
             title: {
-                text: '¿Qué hace usted para prevenir el abuso sexual?'
+                text: '¿Qué haría Usted si conociera de una situación de abuso sexual?'
             },
             subtitle: {
                 text: ''
@@ -77,35 +77,39 @@
 {% include "encuesta/filtro.html"%}
 <br>
 <div class="indicadores">
-<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Práctica</div><div class="titulo" style="float:left;">¿Qué hace Usted para prevenir?</div>
-<div class="botones-descarga"><a href="/practica_prevenir.xls"><img src="/files/img/doc.png"></a><a href="/practica_prevenir.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas B</div><div class="titulo" style="float:left;">incidencia roya</div>
+<div class="botones-descarga"><a href="/practica_situacion.xls"><img src="/files/img/doc.png"></a><a href="/practica_situacion.pdf"><img src="/files/img/pdf.png"></a></div>
 <div class="clean"></div>
 </div>
 {% include "encuesta/practica.html" %} 
 <table>
-        <caption>¿Qué hace Usted para prevenir el abuso sexual? <span class="numencuestas">Encuestas {{numero}}</span></caption>
+        <caption>Variedad, edad,produccion y incidencia de roya <span class="numencuestas">Encuestas {{conteo}}</span></caption>
         <thead>
             <tr>
-                <th>Categoria</th>
-                <th>Frecuencia</th>
-                <th>porcentajes(%)</th>
+                <th>Combinacion variedades</th>
+                <th>Numero de plantios</th>
+                <th>Area total mz</th>
+                <th>Edad promedio</th>
+                <th>Produccion total en qq pergamino</th>
+                <th>Promedio incidencia roya hojas afectadas</th>
+                <th>Productividad en qq pergamino mz</th>
             </tr>
         </thead>
         <tbody>
-            {%for key, value in dicc2 %}
+            {%for key, value in incidencias.items %}
             <tr>
                 <td>{{key}}</td>
                 {%for i in value%}
-                    <td>{{i|floatformat}}</td>    
+                    <td>{{i}}</td>    
                 {%endfor%}
            {%endfor%}
         </tbody>
     </table>
-   <div class="clean"></div>
-<div class="contenedor">
-    <div class="grafico-title">Gr&aacute;fico  personas encuestas =  {{numero}}</div>
+    <div class="clean"></div>
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{numero}}</span></div>
     <div id="container">
 
     </div>
-</div>
+</div> -->
 {% endblock %}

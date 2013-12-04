@@ -338,7 +338,7 @@ class Opciones(models.Model):
 
     class Meta:
         verbose_name = 'Opciones'
-        verbose_name_plural = 'Opcioness'
+        verbose_name_plural = 'Opciones'
 
     def __unicode__(self):
         return self.nombre

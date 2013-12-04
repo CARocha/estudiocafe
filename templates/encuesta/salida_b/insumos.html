@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% block extratitle %}Uso de insumos{% endblock %}
+{% load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'bar'
+            },
+            title: {
+                text: '¿Cómo participa?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (Que dijeron si)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 55,
+                    minPointLength : 1
+                },
+                bar: {
+                        dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+         name: 'Promotoría/Capacitación/Acompañamiento',
+         data: [{{por_segundo}}]
+         
+      }, {
+         name: 'Asisto a charlas que brindan en la comunidad',
+         data: [{{por_primer}}]
+      }]
+      
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas B</div><div class="titulo" style="float:left;">Uso de insumos </div>
+<div class="botones-descarga"><a href="/practica_como.xls"><img src="/files/img/doc.png"></a><a href="/practica_como.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/practica.html" %} 
+<table>
+        <caption>Fungicidas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in fungicida.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<div class="clean"></div>
+<table>
+        <caption>Herbicidas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in herbicida.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Insecticidas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in insecticidas.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Fertilizante en suelo<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in fer_suelo.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Nematicidas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in nematicida.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Abono organicos<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in abono.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<table>
+        <caption>Fertilizante foliares<span class="numencuestas">Encuestas{{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Fungicidas</th>
+                <th>Numero</th>
+                <th>%</th>
+                <th>Minimo aplicacion</th>
+                <th>Maximo aplicacion</th>
+                <th>Minimo dosis</th>
+                <th>Maximo dosis</th>
+                
+            </tr>
+        </thead>
+        {% for k,v in foliares.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v.0}}</td>
+                <td>{{v.0|porcentaje:conteo}}</td>
+                <td>{{v.1}}</td>
+                <td>{{v.2}}</td>
+                <td>{{v.3}}</td>
+                <td>{{v.4}}</td>             
+            </tr>  
+        {% endfor %}
+</table>
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas si {{numero_si}}</span></div>
+    <div id="container" >
+
+    </div>
+</div> -->
+{% endblock %}
