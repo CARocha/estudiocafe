@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% block extratitle %}Incidencia de enfermedades{% endblock %}
+{%load ayudar%}
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas E</div><div class="titulo" style="float:left;">Incidencia de enfermedades</div>
+<div class="botones-descarga"><a href="/estado_atencion.xls"><img src="/files/img/doc.png"></a><a href="/estado_atencion.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/estado.html" %}
+<table>
+        <caption>Ojo de gallo<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in ojo_gallo.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+        <div class="clean"></div>
+<table>
+        <caption>La roya<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in la_roya.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+        <div class="clean"></div>
+        <br>
+<table>
+        <caption>Mancha de hierro<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in mancha.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+        <div class="clean"></div>
+        <br>
+<table>
+        <caption>Antracnosis<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in antracnosi.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+        <div class="clean"></div>
+        <br>
+<table>
+        <caption>Broca de fruto<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in fruto.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+        <div class="clean"></div>
+        <br>
+<table>
+        <caption>Nematodos<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in nematodo.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+        <div class="clean"></div>
+  <!--  <div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{conteo}}</span></div>
+<img src="{{grafo_url}}" alt="¿Personas que atienden a abusados sexuales?" title="¿Personas que atienden a abusados sexuales?">
+</div> -->
+{% endblock %}

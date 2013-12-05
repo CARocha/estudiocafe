@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% block extratitle %}Estado actual{% endblock %}
-
+{% block extratitle %}Cambio de recepo{% endblock %}
+{%load ayudar%}
 {% block extrahead %}
 <script type="text/javascript" src="/files/js/highcharts.js"></script>
 <script type="text/javascript" src="/files/js/exporting.js"></script>
@@ -77,35 +77,35 @@
 {% include "encuesta/filtro.html"%}
 <br>
 <div class="indicadores">
-<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Estado Actual</div><div class="titulo" style="float:left;">No hay lugares de Atención</div>
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas E</div><div class="titulo" style="float:left;">Cambo de recepo</div>
 <div class="botones-descarga"><a href="/estado_donde.xls"><img src="/files/img/doc.png"></a><a href="/estado_donde.pdf"><img src="/files/img/pdf.png"></a></div>
 <div class="clean"></div>
 </div>
 {% include "encuesta/estado.html" %} 
 <table>
-        <caption>¿Si no hay ningún lugar en su comunidad donde van para recibir atención? <span class="numencuestas">Encuestas {{numero}}</span></caption>
+        <caption>Cambio de recepo<span class="numencuestas">Encuestas {{conteo}}</span></caption>
         <thead>
             <tr>
                 <th>Categoria</th>
-                <th>Frecuencia</th>
-                <th>porcentajes(%)</th>
+                <th>Antes de la crisis</th>
+                <th>Despues de la crisis</th>
             </tr>
         </thead>
         <tbody>
-            {%for key, value in dicc2 %}
+            {%for key, v in recepo.items %}
             <tr>
                 <td>{{key}}</td>
-                {%for i in value%}
-                    <td>{{i|floatformat}}</td>    
-                {%endfor%}
+                <td>{{v.0}} -- ({{v.0|porcentaje:conteo}})</td>
+                <td>{{v.1}} -- ({{v.1|porcentaje:conteo}})</td>
+            </tr>
            {%endfor%}
         </tbody>
     </table>
     <div class="clean"></div>
-<div class="contenedor">
-    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{numero}}</span></div>
+<!--<div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{conteo}}</span></div>
     <div id="container">
 
     </div>
-</div>
+</div> -->
 {% endblock %}

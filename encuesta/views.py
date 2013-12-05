@@ -694,6 +694,37 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
         facilidad[obj[1]] = valor
 
     #cobertura
+    area_total_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=1).aggregate(catorse=Sum('catorse'))['catorse']
+    oro_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(catorse=Sum('catorse'))['catorse']
+    c_credito_corto = {}
+    for obj in CHOICES_ANIOS_CREDITO_MODELO:
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('monto'))['monto']
+        cobertura = round(float(numero) / float(conteo),2)
+        monto_cafe = round(float(monto) / float(area_total_catorce),2)
+        monto_oro = round(float(monto) / float(oro_catorce),2)
+        
+        c_credito_corto[obj[1]] = (numero,cobertura,monto_cafe,monto_oro)
+
+    c_credito_mediano = {}
+    for obj in CHOICES_ANIOS_CREDITO_MODELO:
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_mediano'))['monto']
+        cobertura = round(float(numero) / float(conteo),2)
+        monto_cafe = round(float(monto) / float(area_total_catorce),2)
+        monto_oro = round(float(monto) / float(oro_catorce),2)
+
+        c_credito_mediano[obj[1]] = (numero,cobertura,monto_cafe,monto_oro)
+
+    c_credito_largo = {}
+    for obj in CHOICES_ANIOS_CREDITO_MODELO:
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_largo'))['monto']
+        cobertura = round(float(numero) / float(conteo),2)
+        monto_cafe = round(float(monto) / float(area_total_catorce),2)
+        monto_oro = round(float(monto) / float(oro_catorce),2)
+
+        c_credito_largo[obj[1]] = (numero,cobertura,monto_cafe,monto_oro)
     
 
     return render(request, template, locals())
@@ -723,38 +754,6 @@ VALID_VIEWS = {
     'precio': salida15,
     'credito': salida16,
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 #utilitario
 def get_munis(request):

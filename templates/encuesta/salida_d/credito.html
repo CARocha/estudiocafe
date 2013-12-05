@@ -177,7 +177,79 @@
     <div class="clean"></div>
     <h4>Cobertura de crédito</h4>
 
-
+<table>
+        <caption>Crédito a corto plazo US$<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Años</th>
+                <th>Número de casos</th>
+                <th>% cobertura</th>
+                <th>Monto US$/mz de cafe</th>
+                <th>Monto US$/mz por oro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in c_credito_corto.items %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>Crédito a corto mediano plazo US$<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Años</th>
+                <th>Número de casos</th>
+                <th>% cobertura</th>
+                <th>Monto US$/mz de cafe</th>
+                <th>Monto US$/mz por oro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in c_credito_mediano.items %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<br><br>
+<table>
+        <caption>Crédito a largo plazo US$<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                 <th>Años</th>
+                <th>Número de casos</th>
+                <th>% cobertura</th>
+                <th>Monto US$/mz de cafe</th>
+                <th>Monto US$/mz por oro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in c_credito_largo.items %}
+            <tr>
+                <td>{{key}}</td>
+                {%for i in value%}
+                    <td>{{i|floatformat}}</td>    
+                {%endfor%}
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><br>
+<table>
 <!--<div class="contenedor">
     <div class="grafico-title">Gr&aacute;fico <span class="numencuestas">Encuestas {{conteo}}</span></div>
     <div id="container">
