@@ -7,9 +7,10 @@ from .forms import ConsultarForm
 import json
 from lugar.models import Departamento, Comunidad
 from django.db.models import Avg, Sum, Max, Min
+from vulnerabilidades_finca.models import *
 from produccion_finca.models import *
 from produccion_cafe_finca.models import *
-from vulnerabilidades_finca.models import *
+
 import collections
 
 
