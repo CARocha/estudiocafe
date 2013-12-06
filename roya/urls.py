@@ -4,5 +4,6 @@ from django.conf import settings
 
 urlpatterns = patterns('roya.views',
     (r'^e/(?P<vista>[-\w]+)/$', '_get_view'),
+     (r'^f/(?P<vista>[-\w]+)/$', '_get_view'),
   
     )

@@ -156,6 +156,69 @@ def salida177(request, template='encuesta/salida_e/fungicidas.html'):
 
     return render(request, template, locals())
 
+def salida18(request, template='encuesta/salida_f/asistencia.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    
+    combatir = collections.OrderedDict()
+    for obj in Combatir.objects.all():
+        valor = Oriento.objects.filter(encuesta__in=encuestas, opcion=obj).count()        
+        combatir[obj.nombre] = valor
+
+    capacitaciones = collections.OrderedDict()
+    for obj in TipoCapacitaciones.objects.all():
+        valor = CapacitacionesTecnicas.objects.filter(encuesta__in=encuestas, tipo=obj).count()        
+        capacitaciones[obj.nombre] = valor
+
+    profe = collections.OrderedDict()
+    for obj in Capacitor.objects.all():
+        valor = CapacitacionesTecnicas.objects.filter(encuesta__in=encuestas, profesor=obj).count()        
+        profe[obj.nombre] = valor
+
+    metodologias_si = collections.OrderedDict()
+    for obj in Metodologia.objects.all():
+        valor = SiLeGusta.objects.filter(encuesta__in=encuestas, metodologia=obj).count()        
+        metodologias_si[obj.nombre] = valor
+    
+    metodologias_no = collections.OrderedDict()
+    for obj in Metodologia.objects.all():
+        valor = NoLeGusta.objects.filter(encuesta__in=encuestas, metodologia=obj).count()        
+        metodologias_no[obj.nombre] = valor
+
+    return render(request, template, locals())
+
+
+def salida19(request, template='encuesta/salida_f/futuro.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+    
+    area_finca = collections.OrderedDict()
+    for obj in CHOICES_NIVEL:
+        valor = NivelFinca.objects.filter(encuesta__in=encuestas, area=obj[0]).count()        
+        area_finca[obj[1]] = valor
+
+    variedad = collections.OrderedDict()
+    for obj in CHOICES_VARIEDAD:
+        valor = NivelFinca.objects.filter(encuesta__in=encuestas, variedades=obj[0]).count()        
+        variedad[obj[1]] = valor
+
+    cuales = collections.OrderedDict()
+    for obj in Variedades.objects.all():
+        valor = NivelFinca.objects.filter(encuesta__in=encuestas, cuales=obj).count()        
+        cuales[obj.nombre] = valor
+
+    produccion = collections.OrderedDict()
+    for obj in CHOICES_NIVEL:
+        valor = NivelFinca.objects.filter(encuesta__in=encuestas, produccion=obj[0]).count()        
+        produccion[obj[1]] = valor
+
+    mas = collections.OrderedDict()
+    for obj in Mas.objects.all():
+        valor = NivelFinca.objects.filter(encuesta__in=encuestas, mas=obj).count()        
+        mas[obj.nombre] = valor
+
+    return render(request, template, locals())
+
 def _get_view(request, vista):
     if vista in VALID_VIEWS:
         return VALID_VIEWS[vista](request)
@@ -171,4 +234,6 @@ VALID_VIEWS = {
     'manejo-sombra': salida175,
     'fertilizacion': salida176,
     'fungicidas': salida177,
+    'asistencia': salida18,
+    'futuro': salida19,
     }

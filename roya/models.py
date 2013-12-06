@@ -218,7 +218,7 @@ class Oriento(models.Model):
     encuesta = models.ForeignKey(Encuesta)
 
     class Meta:
-        verbose_name_plural = '5.3 ¿ Quién le orientó sobre como combatir la roya?'
+        verbose_name_plural = '5.3 ¿Quién le orientó sobre como combatir la roya?'
 
     def __unicode__(self):
         pass

@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block extratitle %}Beneficiado 1{% endblock %}
+{%load ayudar%}
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">salidas C</div><div class="titulo" style="float:left;">Beneficiado 1</div>
+<div class="botones-descarga"><a href="/practica_participa_prevenir.xls"><img src="/files/img/doc.png"></a><a href="/practica_participa_prevenir.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/actitud.html" %}
+<table>
+        <caption>¿Cómo realizaron los cortes?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in corte.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><br>
+<table>
+        <caption>¿Separan sobre maduros y granos negros?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in separan.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+    <br><br>
+<table>
+        <caption>¿Dónde despulpan y fermentan el café?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+             <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in despulpan.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><br>
+    <table>
+        <caption>¿Cómo es el estado de su beneficio húmedo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in estado.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><br>
+    <table>
+        <caption>¿Cada cuanto calibran la maquina para despulpar café?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in calibra.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><br>
+    <table>
+        <caption>¿Cada cuánto revisan la camisa y pechero?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in revisa.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table><br><br><br>
+
+ <!--   <div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{numero}}</span></div>
+<img src="{{grafo_url}}" alt="¿Participa para prevenir?" title="¿Participa para prevenir?">
+    </div> -->
+{% endblock %}
