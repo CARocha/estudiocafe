@@ -645,3 +645,13 @@ pre { font-size: 130%; background: #f7f7f7; padding: 10px 10px; font-weight: bol
     pointer-events: none;
     cursor: default;
 }
+/*ocultar porcentajes*/
+.doce_1 {
+    display: none;
+}
+.trece_1 {
+    display: none;
+}
+.catorse_1 {
+    display: none;
+}

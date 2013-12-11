@@ -478,9 +478,9 @@ class Beneficiado(models.Model):
         
 #3.7 la comercializacion
 CHOICES_ANIOS_comercializacion = (
-            (1, '2011-12'),
-            (2, '2012-13'),
-            (3, '2013-14'),       
+            (1, '1. 2011-12'),
+            (2, '2. 2012-13'),
+            (3, '3. 2013-14'),       
     )
 
 class Comercializacion(models.Model):

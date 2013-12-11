@@ -81,7 +81,7 @@
         <thead>
             <tr>
                 <th>Opciones</th>
-                <th>No utiliza</th>
+                <!-- <th>No utiliza</th> -->
                 <th>Utiliza en pequeña escala</th>
                 <th>Utiliza en mayor escala</th>
                 <th>Utiliza en toda la finca</th>
@@ -91,10 +91,10 @@
         {% for k,v in plantaciones.items %}
             <tr>
                 <td>{{k}}</td>
-                <td>{{v.0}}({{v.0|porcentaje:conteo}})</td>
-                <td>{{v.1}}</td>
-                <td>{{v.2}}</td>
-                <td>{{v.3}}</td>             
+                <!-- <td>{{v.0}}({{v.0|porcentaje:conteo}})</td> -->
+                <td>{{v.1}}  ({{v.1|porcentaje:conteo}})</td>
+                <td>{{v.2}}  ({{v.2|porcentaje:conteo}})</td>
+                <td>{{v.3}}  ({{v.3|porcentaje:conteo}})</td>             
             </tr>  
         {% endfor %}
 </table>
@@ -104,7 +104,7 @@
         <thead>
             <tr>
                 <th>Opciones</th>
-                <th>No utiliza</th>
+                <!--<th>No utiliza</th> -->
                 <th>Utiliza en pequeña escala</th>
                 <th>Utiliza en mayor escala</th>
                 <th>Utiliza en toda la finca</th>
@@ -114,19 +114,21 @@
         {% for k,v in fortalecimiento.items %}
             <tr>
                 <td>{{k}}</td>
-                <td>{{v.0}}({{v.0|porcentaje:conteo}})</td>
-                <td>{{v.1}}</td>
-                <td>{{v.2}}</td>
-                <td>{{v.3}}</td>             
+                <!--<td>{{v.0}}({{v.0|porcentaje:conteo}})</td>-->
+                <td>{{v.1}} ({{v.1|porcentaje:conteo}})</td>
+                <td>{{v.2}} ({{v.2|porcentaje:conteo}})</td>
+                <td>{{v.3}} ({{v.3|porcentaje:conteo}})</td>             
             </tr>  
         {% endfor %}
 </table>
+<div class="clean"></div>
+<br>
 <table>
         <caption>Mejorar el ambiente<span class="numencuestas">Encuestas{{conteo}}</span></caption>
         <thead>
             <tr>
                 <th>Opciones</th>
-                <th>No utiliza</th>
+                <!--<th>No utiliza</th> -->
                 <th>Utiliza en pequeña escala</th>
                 <th>Utiliza en mayor escala</th>
                 <th>Utiliza en toda la finca</th>
@@ -136,19 +138,21 @@
         {% for k,v in mejorar.items %}
             <tr>
                 <td>{{k}}</td>
-                <td>{{v.0}}({{v.0|porcentaje:conteo}})</td>
-                <td>{{v.1}}</td>
-                <td>{{v.2}}</td>
-                <td>{{v.3}}</td>             
+                <!--<td>{{v.0}}({{v.0|porcentaje:conteo}})</td> -->
+                <td>{{v.1}} ({{v.1|porcentaje:conteo}})</td>
+                <td>{{v.2}} ({{v.2|porcentaje:conteo}})</td>
+                <td>{{v.3}} ({{v.3|porcentaje:conteo}})</td>             
             </tr>  
         {% endfor %}
 </table>
+<div class="clean"></div>
+<br>
 <table>
         <caption>Supresión de plagas<span class="numencuestas">Encuestas{{conteo}}</span></caption>
         <thead>
             <tr>
                 <th>Opciones</th>
-                <th>No utiliza</th>
+                <!-- <th>No utiliza</th> -->
                 <th>Utiliza en pequeña escala</th>
                 <th>Utiliza en mayor escala</th>
                 <th>Utiliza en toda la finca</th>
@@ -158,10 +162,10 @@
         {% for k,v in supresion.items %}
             <tr>
                 <td>{{k}}</td>
-                <td>{{v.0}}-({{v.0|porcentaje:conteo}})</td>
-                <td>{{v.1}}</td>
-                <td>{{v.2}}</td>
-                <td>{{v.3}}</td>             
+                <!--<td>{{v.0}}-({{v.0|porcentaje:conteo}})</td> -->
+                <td>{{v.1}} ({{v.1|porcentaje:conteo}})</td>
+                <td>{{v.2}} ({{v.2|porcentaje:conteo}})</td>
+                <td>{{v.3}} ({{v.3|porcentaje:conteo}})</td>             
             </tr>  
         {% endfor %}
 </table>

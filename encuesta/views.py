@@ -6,7 +6,7 @@ from .models import *
 from .forms import ConsultarForm
 import json
 from lugar.models import Departamento, Comunidad
-from django.db.models import Avg, Sum, Max, Min
+from django.db.models import Avg, Sum, Max, Min, Count
 from vulnerabilidades_finca.models import *
 from produccion_finca.models import *
 from produccion_cafe_finca.models import *
@@ -611,42 +611,72 @@ def salida15(request, template='encuesta/salida_d/precio.html'):
     conteo = encuestas.count()
     total = Encuesta.objects.all().count()
 
-    comercializacion = {}
+    comercializacion = collections.OrderedDict()
     for obj in CHOICES_ANIOS_comercializacion:
         prod = Comercializacion.objects.filter(encuesta__in=encuestas,
                         fecha=obj[0]).aggregate(prod=Sum('p_total'))['prod']
         i_venta = Comercializacion.objects.filter(encuesta__in=encuestas,
                         fecha=obj[0]).aggregate(i_venta=Sum('i_venta_cafe'))['i_venta']
         i_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
-                        fecha=obj[0]).aggregate(i_precio=Avg('i_precio'))['i_precio']
+                        fecha=obj[0],i_precio__gt=0).aggregate(i_precio=Avg('i_precio'))['i_precio']
         c_venta = Comercializacion.objects.filter(encuesta__in=encuestas,
                         fecha=obj[0]).aggregate(c_venta=Sum('c_venta'))['c_venta']
         c_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
-                        fecha=obj[0]).aggregate(c_precio=Avg('c_precio'))['c_precio']
+                        fecha=obj[0],c_precio__gt=0).aggregate(c_precio=Avg('c_precio'))['c_precio']
         e_venta = Comercializacion.objects.filter(encuesta__in=encuestas,
                         fecha=obj[0]).aggregate(e_venta=Sum('e_venta'))['e_venta']
         e_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
-                        fecha=obj[0]).aggregate(e_precio=Avg('e_precio'))['e_precio']
+                        fecha=obj[0],e_precio__gt=0).aggregate(e_precio=Avg('e_precio'))['e_precio']
 
         comercializacion[obj[1]] = (prod,i_venta,i_precio,c_venta,c_precio,e_venta,e_precio)
+
+
     produccion_11_12 = Comercializacion.objects.filter(encuesta__in=encuestas,
                         fecha=1).aggregate(produccion=Sum('p_total'))['produccion']
-    precio_11_12 = Comercializacion.objects.filter(encuesta__in=encuestas,
-                        fecha=1).aggregate(precio=Avg('i_precio'))['precio']
+
+    precio1 = Comercializacion.objects.filter(encuesta__in=encuestas,
+        fecha=1,i_precio__gt=0).aggregate(precio1=Avg('i_precio'))['precio1']
+    precio2 = Comercializacion.objects.filter(encuesta__in=encuestas,
+    fecha=1,c_precio__gt=0).aggregate(precio2=Avg('c_precio'))['precio2']
+    precio3 = Comercializacion.objects.filter(encuesta__in=encuestas,
+    fecha=1,e_precio__gt=0).aggregate(precio3=Avg('e_precio'))['precio3']
+    if precio1 == None:
+        precio1 = 0
+    if precio2 == None:
+        precio2 = 0
+    if precio3 == None:
+        precio3 = 0
+
+    precio_11_12 = (precio1 + precio2 + precio3) / 3
     ingreso_11_12 = produccion_11_12 * precio_11_12
 
-    cambio_volumen = {}
+    cambio_volumen = collections.OrderedDict()
     for obj in CHOICES_ANIOS_comercializacion:
         prod = Comercializacion.objects.filter(encuesta__in=encuestas,
                         fecha=obj[0]).aggregate(prod=Sum('p_total'))['prod']
         porcentaje_12 = (produccion_11_12 - prod)*100 / produccion_11_12
+
+        
         i_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
-                        fecha=obj[0]).aggregate(i_precio=Avg('i_precio'))['i_precio']
-        precio_porcentaje_12 = (precio_11_12 - i_precio)*100 / precio_11_12
-        ingreso = prod * i_precio
+        fecha=obj[0],i_precio__gt=0).aggregate(i_precio=Avg('i_precio'))['i_precio']
+        c_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
+        fecha=obj[0],c_precio__gt=0).aggregate(c_precio=Avg('c_precio'))['c_precio']
+        e_precio = Comercializacion.objects.filter(encuesta__in=encuestas,
+        fecha=obj[0],e_precio__gt=0).aggregate(e_precio=Avg('e_precio'))['e_precio']
+        if i_precio == None:
+            i_precio = 0
+        if c_precio == None:
+            c_precio = 0
+        if e_precio == None:
+            e_precio = 0
+
+        precio = (i_precio + c_precio + e_precio) / 3
+        
+        precio_porcentaje_12 = (precio_11_12 - precio)*100 / precio_11_12
+        ingreso = prod * precio
         porcentaje_ingreso = (ingreso_11_12 - ingreso)*100 / ingreso_11_12
 
-        cambio_volumen[obj[1]] = (prod, porcentaje_12,i_precio,precio_porcentaje_12, 
+        cambio_volumen[obj[1]] = (prod, porcentaje_12,precio,precio_porcentaje_12, 
                                   ingreso, porcentaje_ingreso)
 
 
@@ -663,28 +693,28 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
 
     credito_corto = {}
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
-        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
-        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('monto'))['monto']
-        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_max=Max('monto'))['monto_max']
-        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_min=Min('monto'))['monto_min']
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],monto__gt=0).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],monto__gt=0).aggregate(monto=Sum('monto'))['monto']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],monto__gt=0).aggregate(monto_max=Max('monto'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],monto__gt=0).aggregate(monto_min=Min('monto'))['monto_min']
         
         credito_corto[obj[1]] = (numero,monto,monto_min,monto_max)
 
     credito_mediano = {}
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
-        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
-        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_mediano'))['monto']
-        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_max=Sum('credito_mediano'))['monto_max']
-        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_min=Sum('credito_mediano'))['monto_min']
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto=Sum('credito_mediano'))['monto']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto_max=Sum('credito_mediano'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto_min=Sum('credito_mediano'))['monto_min']
         
         credito_mediano[obj[1]] = (numero,monto,monto_min,monto_max)
 
     credito_largo = {}
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
-        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
-        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_largo'))['monto']
-        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_max=Sum('credito_largo'))['monto_max']
-        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto_min=Sum('credito_largo'))['monto_min']
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto=Sum('credito_largo'))['monto']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto_max=Sum('credito_largo'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto_min=Sum('credito_largo'))['monto_min']
         
         credito_largo[obj[1]] = (numero,monto,monto_min,monto_max)
 
@@ -699,9 +729,9 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
     oro_catorce = AreaCafe.objects.filter(encuesta__in=encuestas, estado__id=7).aggregate(catorse=Sum('catorse'))['catorse']
     c_credito_corto = {}
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
-        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
-        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('monto'))['monto']
-        cobertura = round(float(numero) / float(conteo),2)
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],monto__gt=0).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],monto__gt=0).aggregate(monto=Sum('monto'))['monto']
+        cobertura = round(float(numero) / float(conteo),2) * 100
         monto_cafe = round(float(monto) / float(area_total_catorce),2)
         monto_oro = round(float(monto) / float(oro_catorce),2)
         
@@ -709,9 +739,9 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
 
     c_credito_mediano = {}
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
-        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
-        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_mediano'))['monto']
-        cobertura = round(float(numero) / float(conteo),2)
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto=Sum('credito_mediano'))['monto']
+        cobertura = round(float(numero) / float(conteo),2) * 100
         monto_cafe = round(float(monto) / float(area_total_catorce),2)
         monto_oro = round(float(monto) / float(oro_catorce),2)
 
@@ -719,9 +749,11 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
 
     c_credito_largo = {}
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
-        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).count()
-        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0]).aggregate(monto=Sum('credito_largo'))['monto']
-        cobertura = round(float(numero) / float(conteo),2)
+        numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).count()
+        monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto=Sum('credito_largo'))['monto']
+        if monto == None:
+            monto = 0
+        cobertura = round(float(numero) / float(conteo),2) * 100
         monto_cafe = round(float(monto) / float(area_total_catorce),2)
         monto_oro = round(float(monto) / float(oro_catorce),2)
 

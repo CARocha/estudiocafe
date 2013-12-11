@@ -96,9 +96,9 @@
             {%for key, v in roya.items %}
             <tr>
                 <td>{{key}}</td>
-                <td>{{v.0}} ({{v.0|porcentaje:area_total_doce}})</td>
-                <td>{{v.1}} ({{v.1|porcentaje:area_total_trece}})</td>
-                <td>{{v.2}} ({{v.2|porcentaje:area_total_catorce}})</td>
+                <td>{{v.0}} <span class="doce_{{forloop.counter}}">({{v.0|porcentaje:area_total_doce}})</span></td>
+                <td>{{v.1}} <span class="trece_{{forloop.counter}}">({{v.1|porcentaje:area_total_trece}})</span></td>
+                <td>{{v.2}} <span class="catorse_{{forloop.counter}}">({{v.2|porcentaje:area_total_catorce}})</span></td>
             </tr>
            {%endfor%}
         </tbody>
