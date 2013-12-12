@@ -704,8 +704,8 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
         numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).count()
         monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto=Sum('credito_mediano'))['monto']
-        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto_max=Sum('credito_mediano'))['monto_max']
-        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto_min=Sum('credito_mediano'))['monto_min']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto_max=Max('credito_mediano'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto_min=Min('credito_mediano'))['monto_min']
         
         credito_mediano[obj[1]] = (numero,monto,monto_min,monto_max)
 
@@ -713,8 +713,8 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
         numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).count()
         monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto=Sum('credito_largo'))['monto']
-        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto_max=Sum('credito_largo'))['monto_max']
-        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto_min=Sum('credito_largo'))['monto_min']
+        monto_max = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto_max=Max('credito_largo'))['monto_max']
+        monto_min = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto_min=Min('credito_largo'))['monto_min']
         
         credito_largo[obj[1]] = (numero,monto,monto_min,monto_max)
 
