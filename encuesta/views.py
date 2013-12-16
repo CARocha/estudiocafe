@@ -741,9 +741,18 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
     for obj in CHOICES_ANIOS_CREDITO_MODELO:
         numero = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).count()
         monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_mediano__gt=0).aggregate(monto=Sum('credito_mediano'))['monto']
-        cobertura = round(float(numero) / float(conteo),2) * 100
-        monto_cafe = round(float(monto) / float(area_total_catorce),2)
-        monto_oro = round(float(monto) / float(oro_catorce),2)
+        try:
+            cobertura = round(float(numero) / float(conteo),2) * 100
+        except:
+            cobertura = 0
+        try:
+            monto_cafe = round(float(monto) / float(area_total_catorce),2)
+        except:
+            monto_cafe = 0
+        try:
+            monto_oro = round(float(monto) / float(oro_catorce),2)
+        except:
+            monto_oro = 0
 
         c_credito_mediano[obj[1]] = (numero,cobertura,monto_cafe,monto_oro)
 
@@ -753,9 +762,18 @@ def salida16(request, template='encuesta/salida_d/credito.html'):
         monto = Credito.objects.filter(encuesta__in=encuestas,fecha=obj[0],credito_largo__gt=0).aggregate(monto=Sum('credito_largo'))['monto']
         if monto == None:
             monto = 0
-        cobertura = round(float(numero) / float(conteo),2) * 100
-        monto_cafe = round(float(monto) / float(area_total_catorce),2)
-        monto_oro = round(float(monto) / float(oro_catorce),2)
+        try:
+            cobertura = round(float(numero) / float(conteo),2) * 100
+        except:
+            cobertura = 0
+        try:
+            monto_cafe = round(float(monto) / float(area_total_catorce),2)
+        except:
+            monto_cafe = 0
+        try:
+            monto_oro = round(float(monto) / float(oro_catorce),2)
+        except:
+            monto_oro = 0
 
         c_credito_largo[obj[1]] = (numero,cobertura,monto_cafe,monto_oro)
     
