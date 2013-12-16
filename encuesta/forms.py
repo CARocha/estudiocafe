@@ -63,9 +63,9 @@ class ConsultarForm(forms.Form):
     area_finca = forms.ChoiceField(choices=CHOICE_AREA_FINCA, required=False)
     area_cafe = forms.ChoiceField(choices=CHOICE_AREA_CAFE, required=False)
     nivel_educacion = forms.ChoiceField(choices=CHOICE_EDUCACION, required=False)
-    variedad_predominate = forms.ModelChoiceField(queryset=VariedadPredominante.objects.order_by('nombre'), 
+    variedad_predominate = forms.ModelMultipleChoiceField(queryset=VariedadPredominante.objects.order_by('nombre'), 
                                                 required=False)
-    variedad_viviero = forms.ModelChoiceField(queryset=Variedades.objects.order_by('nombre'),
+    variedad_viviero = forms.ModelMultipleChoiceField(queryset=Variedades.objects.order_by('nombre'),
                                                 required=False)
     reduccion_cosecha = forms.ChoiceField(choices=CHOICE_REDUCCION,required=False)
     credito = forms.ModelChoiceField(queryset=CreditoE.objects.all(),required=False)

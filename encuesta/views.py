@@ -67,11 +67,11 @@ def _query_set_filtrado(request):
         params['composicion__educacion_dueno'] = request.session['nivel_educacion']
 
     if request.session['variedad_predominate']:
-        params['produccionvivero__variedad_predomindante'] = request.session['variedad_predominate']
+        params['produccionvivero__variedad_predomindante__in'] = request.session['variedad_predominate']
 
 
     if request.session['variedad_viviero']:
-        params['produccionvivero__variedad'] = request.session['variedad_viviero']
+        params['produccionvivero__variedad__in'] = request.session['variedad_viviero']
 
     if request.session['reduccion_cosecha']:
         params['impactoroya__impacto__id'] = 5
