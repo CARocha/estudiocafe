@@ -261,12 +261,12 @@ def salida6(request, template='encuesta/salida_a/recursos.html'):
     total = Encuesta.objects.all().count()
 
     totalicimo = UsoTierra.objects.filter(encuesta__in=encuestas, tierra__id=1).aggregate(total=Sum('area'))
-    
+
     tierra = {}
     for obj in Uso.objects.all():
-        valor = UsoTierra.objects.filter(encuesta__in=encuestas, tierra=obj).aggregate(total=Sum('area'))
+        valor = UsoTierra.objects.filter(encuesta__in=encuestas, tierra=obj).aggregate(total=Sum('area'))['total']
         tierra[obj.nombre] = valor
-
+    
     reforestacion = {}
     for obj in Actividad.objects.all():
         valor = Reforestacion.objects.filter(encuesta__in=encuestas, reforestacion=obj,respuesta=1).count()
