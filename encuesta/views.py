@@ -260,7 +260,7 @@ def salida6(request, template='encuesta/salida_a/recursos.html'):
     conteo = encuestas.count()
     total = Encuesta.objects.all().count()
 
-    totalicimo = UsoTierra.objects.filter(encuesta__in=encuestas, tierra__id=1).aggregate(total=Sum('area'))
+    totalicimo = UsoTierra.objects.filter(encuesta__in=encuestas, tierra__id=1).aggregate(total=Sum('area'))['total']
 
     tierra = {}
     for obj in Uso.objects.all():

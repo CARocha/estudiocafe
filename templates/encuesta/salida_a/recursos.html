@@ -98,13 +98,14 @@ $(document).ready(function() {
             {% for k,v in  tierra.items%}
             <tr>
                 <td>{{k}}</td>
-                <td>{{v.total}}</td>    
-                <td>{{v.total|porcentaje:totalicimo.total}}</td> 
+                <td>{{v}}</td>    
+                <td>{{v|porcentaje:totalicimo}}</td> 
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <div class="clean"></div>
+    <br>
   <table>
         <caption>Actividades de reforestación en el ultimo año<span class="numencuestas">Encuestas {{conteo}}</span></caption>
         <thead>
