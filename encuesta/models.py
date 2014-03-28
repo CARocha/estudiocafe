@@ -271,7 +271,6 @@ class Tenecia(models.Model):
     
 
 #1.6
-
 CHOICE_ALIMENTOS_COMPRA = (
             (1, 'Todo'),
             (2, 'Más de la Mitad'),

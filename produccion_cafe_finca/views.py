@@ -2,13 +2,14 @@
 
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-from encuesta.models import Encuesta
+from encuesta.models import Encuesta, CHOICE_ALIMENTOS_COMPRA, NecesidadAlimento, Meses, TiemposCrisis, Seguridad
 from .models import *
 from django.db.models import Avg, Sum, Max, Min
 import collections
 from encuesta.views import _query_set_filtrado
+from vulnerabilidades_finca.models import TipoClima, TipoYear, ElClima
 
-
+#3.7
 def salida131(request, template='encuesta/salida_c/corte.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
@@ -46,7 +47,7 @@ def salida131(request, template='encuesta/salida_c/corte.html'):
 
     return render(request, template, locals())
 
-
+#3.7
 def salida132(request, template='encuesta/salida_c/cortes.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
@@ -85,6 +86,61 @@ def salida132(request, template='encuesta/salida_c/cortes.html'):
 
     return render(request, template, locals())
 
+#1.6
+def salida17(request, template='encuesta/salida_g/seguridad.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+
+    alimentos = {}
+    for obj in CHOICE_ALIMENTOS_COMPRA:
+        valor = Seguridad.objects.filter(encuesta__in=encuestas, compra_alimento=obj[0]).count()
+        alimentos[obj[1]] = valor
+
+    necesidad_basica = {}
+    for obj in CHOICE_SI_NO:
+        valor = Seguridad.objects.filter(encuesta__in=encuestas, cubrir_necesidades=obj[0]).count()
+        necesidad_basica[obj[1]] = valor
+
+    motivos_cubre_necesidad = {}
+    for obj in NecesidadAlimento.objects.all():
+        valor = Seguridad.objects.filter(encuesta__in=encuestas, porque_no_cubre=obj).count()
+        motivos_cubre_necesidad[obj.nombre] = valor
+
+    meses_sin_alimento = {}
+    for obj in Meses.objects.all():
+        valor = Seguridad.objects.filter(encuesta__in=encuestas, meses_dificiles=obj).count()
+        meses_sin_alimento[obj.nombre] = valor
+
+    mitigar_falta_alimento = {}
+    for obj in TiemposCrisis.objects.all():
+        valor = Seguridad.objects.filter(encuesta__in=encuestas, soluciones_crisis=obj).count()
+        mitigar_falta_alimento[obj.nombre] = valor
+
+    return render(request, template, locals())
+
+#Clima 4.1
+def salida18(request, template='encuesta/salida_g/elclima.html'):
+    encuestas = _query_set_filtrado(request)
+    conteo = encuestas.count()
+
+    clima_opcines = {}
+    for obj in TipoClima.objects.all():
+        valor = ElClima.objects.filter(encuesta__in=encuestas, clima=obj).count()
+        clima_opcines[obj.nombre] = valor
+
+    clima_fechas = {}
+    for obj in TipoClima.objects.all():
+        for x in TipoYear.objects.all():
+            valor = ElClima.objects.filter(encuesta__in=encuestas, clima=obj, fecha=x).count()
+            clima_fechas[obj.nombre] = {x.nombre:valor}
+    print clima_fechas
+
+
+    return render(request, template, locals())
+
+
+
+
 
 def _get_view(request, vista):
     if vista in VALID_VIEWS:
@@ -95,4 +151,6 @@ def _get_view(request, vista):
 VALID_VIEWS = {
     'beneficiados': salida131,
     'beneficiado': salida132,
+    'seguridad': salida17,
+    'elclima': salida18,
     }
