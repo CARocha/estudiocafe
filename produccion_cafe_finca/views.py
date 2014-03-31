@@ -129,23 +129,31 @@ def salida17(request, template='encuesta/salida_g/seguridad.html'):
 def salida18(request, template='encuesta/salida_g/elclima.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
+    total_sistema = Encuesta.objects.all().count()
 
     clima_opciones = {}
+    suma_opciones = 0
+    cantidad_items = 0
     for obj in TipoClima.objects.all():
         valor = ElClima.objects.filter(encuesta__in=encuestas, clima=obj).count()
+        suma_opciones += valor
+        cantidad_items += 1
         clima_opciones[obj.nombre] = valor
 
+    valor_divisor = round((total_sistema * 5),4)
+    valor_relativo = round(float(suma_opciones) / float(valor_divisor),4)
+
     clima_fechas = {}
-    for x in TipoYear.objects.all():
-        clima_fechas[x.nombre] = {}
-        for obj in TipoClima.objects.all():
+    for obj in TipoClima.objects.all():
+        clima_fechas[obj.nombre] = {}
+        for x in TipoYear.objects.all():
             valor = ElClima.objects.filter(encuesta__in=encuestas, clima=obj, fecha=x).count()
-            clima_fechas[x.nombre][obj.nombre] = (valor)
+            clima_fechas[obj.nombre][x.nombre] = (valor)
     
 
     return render(request, template, locals())
 
-#Clima 4.2
+# 4.2
 def salida19(request, template='encuesta/salida_g/elsuelo.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
@@ -220,7 +228,7 @@ def salida19(request, template='encuesta/salida_g/elsuelo.html'):
 
     return render(request, template, locals())
 
-#Clima 4.4
+# 4.4
 def salida20(request, template='encuesta/salida_g/otrosriesgos.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
@@ -234,7 +242,7 @@ def salida20(request, template='encuesta/salida_g/otrosriesgos.html'):
 
     return render(request, template, locals())
 
-#Clima 4.5
+# 4.5
 def salida21(request, template='encuesta/salida_g/mitigacion.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
