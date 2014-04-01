@@ -158,73 +158,105 @@ def salida19(request, template='encuesta/salida_g/elsuelo.html'):
     encuestas = _query_set_filtrado(request)
     conteo = encuestas.count()
    
-    textura = {}
-    for obj in CHOICES_TEXTURA:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, textura=obj[0]).count()
-        textura[obj[1]] = valor
+    #textura 
+    arcilloso = SueloFertilidad.objects.filter(encuesta__in=encuestas,textura=1).count()
+    limoso = SueloFertilidad.objects.filter(encuesta__in=encuestas,textura=2).count()
+    arenoso = SueloFertilidad.objects.filter(encuesta__in=encuestas,textura=3).count()
+    francoarenoso = SueloFertilidad.objects.filter(encuesta__in=encuestas,textura=4).count()
+    francolimoso = SueloFertilidad.objects.filter(encuesta__in=encuestas,textura=5).count()
+    total_textura = round(((arcilloso*5) + (arenoso*4) + (limoso*2)) / conteo,4) 
+    
 
-    profundidad = {}
-    for obj in CHOICES_PROFUNDIDAD:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, profundidad=obj[0]).count()
-        profundidad[obj[1]] = valor
+    #profundidad = {}
+    muy_profunda = SueloFertilidad.objects.filter(encuesta__in=encuestas, profundidad=1).count()
+    media_profunda = SueloFertilidad.objects.filter(encuesta__in=encuestas, profundidad=2).count()
+    poca_profunda = SueloFertilidad.objects.filter(encuesta__in=encuestas, profundidad=3).count()
+    total_profundidad = round(((muy_profunda*0) + (media_profunda*3) + (poca_profunda*5)) / conteo,4) 
+    
 
-    presencia = {}
-    abundancia = {}
-    materia = {}
-    for obj in CHOICES_PRESENCIA:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, presencia=obj[0]).count()
-        valor1 = SueloFertilidad.objects.filter(encuesta__in=encuestas, abundancia=obj[0]).count()
-        valor2 = SueloFertilidad.objects.filter(encuesta__in=encuestas, materia_organica=obj[0]).count()
-        presencia[obj[1]] = valor
-        abundancia[obj[1]] = valor1
-        materia[obj[1]] = valor2
+    #presencia lombrices
+    lombrice_alta =SueloFertilidad.objects.filter(encuesta__in=encuestas, presencia=1).count()
+    lombrice_media =SueloFertilidad.objects.filter(encuesta__in=encuestas, presencia=2).count()
+    lombrice_baja =SueloFertilidad.objects.filter(encuesta__in=encuestas, presencia=3).count()
+    total_lombrice = round(((lombrice_alta*0) + (lombrice_media*3) + (lombrice_baja*5)) / conteo,4) 
+    
+    #abundancia
+    abundancia_alta =SueloFertilidad.objects.filter(encuesta__in=encuestas, abundancia=1).count()
+    abundancia_media =SueloFertilidad.objects.filter(encuesta__in=encuestas, abundancia=2).count()
+    abundancia_baja =SueloFertilidad.objects.filter(encuesta__in=encuestas, abundancia=3).count()
+    total_abundancia = round(((abundancia_alta*5) + (abundancia_media*3) + (abundancia_baja*0)) / conteo,4) 
 
-    pendiente = {}
-    for obj in CHOICES_PENDIENTE:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, pendiente=obj[0]).count()
-        pendiente[obj[1]] = valor
+    #materia
+    materia_alta =SueloFertilidad.objects.filter(encuesta__in=encuestas, materia_organica=1).count()
+    materia_media =SueloFertilidad.objects.filter(encuesta__in=encuestas, materia_organica=2).count()
+    materia_baja =SueloFertilidad.objects.filter(encuesta__in=encuestas, materia_organica=3).count()
+    total_materia = round(((materia_alta*0) + (materia_media*3) + (materia_baja*5)) / conteo,4) 
 
-    drenaje = {}
-    for obj in CHOICES_DRENAJE:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, drenaje=obj[0]).count()
-        drenaje[obj[1]] = valor
+    #pendiente = {}
+    plana = SueloFertilidad.objects.filter(encuesta__in=encuestas, pendiente=1).count()
+    inclinada = SueloFertilidad.objects.filter(encuesta__in=encuestas, pendiente=2).count()
+    muy_inclinada =SueloFertilidad.objects.filter(encuesta__in=encuestas, pendiente=3).count()
+    total_pendiente = round(((plana*0) + (inclinada*3) + (muy_inclinada*5)) / conteo,4) 
 
-    preparan = {}
-    for obj in CHOICES_PREPARAN:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, preparan=obj[0]).count()
-        preparan[obj[1]] = valor
-        
-    fertilidad = {}
-    foliar = {}
-    conservacion = {}
-    for obj in CHOICE_SI_NO:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, foliar=obj[0]).count()
-        valor1 = SueloFertilidad.objects.filter(encuesta__in=encuestas, conservacion=obj[0]).count()
-        valor2 = SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilidad=obj[0]).count()
-        foliar[obj[1]] = valor
-        conservacion[obj[1]] = valor1
-        fertilidad[obj[1]] = valor2
+    #drenaje = {}
+    bueno = SueloFertilidad.objects.filter(encuesta__in=encuestas, drenaje=1).count()
+    regular =SueloFertilidad.objects.filter(encuesta__in=encuestas, drenaje=2).count()
+    malo =SueloFertilidad.objects.filter(encuesta__in=encuestas, drenaje=3).count()
+    total_drenaje = round(((bueno*0) + (regular*3) + (malo*5)) / conteo,4) 
 
-    fertilizacion = {}
-    for obj in CHOICES_FERTILIZACION:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilizacion=obj[0]).count()
-        fertilizacion[obj[1]] = valor
-        
+    #preparan = {}
+    quema = SueloFertilidad.objects.filter(encuesta__in=encuestas, preparan=1).count()
+    trabaja_en_crudo = SueloFertilidad.objects.filter(encuesta__in=encuestas, preparan=2).count()
+    uso_de_herbicidas = SueloFertilidad.objects.filter(encuesta__in=encuestas, preparan=3).count()
+    usa_cobertura =SueloFertilidad.objects.filter(encuesta__in=encuestas, preparan=4).count()
+    total_preparan = round(((quema*5) + (trabaja_en_crudo*3) + (uso_de_herbicidas*5) + (usa_cobertura*0)) / conteo,4) 
 
-    obra = {}
-    for obj in CHOICES_OBRA_CONSERVACION:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, obra_conservacion=obj[0]).count()
-        obra[obj[1]] = valor
+    #fertilidad = {}
+    fertilidad_si =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilidad=1).count()
+    fertilidad_no = SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilidad=2).count()
+    total_fertilidad = round(((fertilidad_si*0) + (fertilidad_no*5)) / conteo,4) 
 
-    fertil = {}
-    for obj in CHOICES_SUELO_FERTIL:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, fertil=obj[0]).count()
-        fertil[obj[1]] = valor
+    #foliar = {}
+    foliar_si =SueloFertilidad.objects.filter(encuesta__in=encuestas, foliar=1).count()
+    foliar_no =SueloFertilidad.objects.filter(encuesta__in=encuestas, foliar=2).count()
+    total_foliar = round(((foliar_si*0) + (foliar_no*5)) / conteo,4) 
 
-    degrados = {}
-    for obj in CHOICES_CAFETALES_DEGRADADOS:
-        valor = SueloFertilidad.objects.filter(encuesta__in=encuestas, degrados=obj[0]).count()
-        degrados[obj[1]] = valor
+    #conservacion = {}
+    conservacion_si =SueloFertilidad.objects.filter(encuesta__in=encuestas, conservacion=1).count()
+    conservacion_no =SueloFertilidad.objects.filter(encuesta__in=encuestas, conservacion=2).count()
+    total_conservacion = round(((conservacion_si*0) + (conservacion_no*5)) / conteo,4) 
+
+    #fertilizacion = {}
+    quimica =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilizacion=1).count()
+    organica =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilizacion=2).count()
+    ambos =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilizacion=3).count()
+    ninguna =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertilizacion=4).count()
+    total_fertilizacion = round(((quimica*5) + (ambos*3) + (ninguna*5)) / conteo,4) 
+
+    #obra = {}
+    barrera_viva =SueloFertilidad.objects.filter(encuesta__in=encuestas, obra_conservacion=1).count()
+    barrera_muerta =SueloFertilidad.objects.filter(encuesta__in=encuestas, obra_conservacion=2).count()
+    terraza =SueloFertilidad.objects.filter(encuesta__in=encuestas, obra_conservacion=3).count()
+    acequia =SueloFertilidad.objects.filter(encuesta__in=encuestas, obra_conservacion=4).count()
+    curvas_a_nivel = SueloFertilidad.objects.filter(encuesta__in=encuestas, obra_conservacion=5).count()
+    #total_obra = round(((barrera_viva*0) + (barrera_muerta*0) + (terraza*0)) / conteo,4) 
+
+    #fertil = {}
+    si_es_fertil =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertil=1).count()
+    en_parte_fertil =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertil=2).count()
+    no_es_fertil =SueloFertilidad.objects.filter(encuesta__in=encuestas, fertil=3).count()
+    total_fertil = round(((si_es_fertil*0) + (en_parte_fertil*3) + (no_es_fertil*5)) / conteo,4) 
+
+    #degrados = {}
+    si_esta_degradado=SueloFertilidad.objects.filter(encuesta__in=encuestas, degrados=1).count()
+    en_parte_esta_degradado=SueloFertilidad.objects.filter(encuesta__in=encuestas, degrados=2).count()
+    no_esta_degradado = SueloFertilidad.objects.filter(encuesta__in=encuestas, degrados=3).count()
+    total_degrados = round(((si_esta_degradado*5) + (en_parte_esta_degradado*3) + (no_esta_degradado*0)) / conteo,4) 
+
+    total_riesgos = (total_textura+total_profundidad+total_lombrice+\
+        total_abundancia+total_materia+total_pendiente+total_drenaje+\
+        total_preparan+total_fertilidad+total_foliar+total_conservacion+\
+        total_fertilizacion+total_fertil+total_degrados) / 14
 
     return render(request, template, locals())
 

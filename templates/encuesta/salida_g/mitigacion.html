@@ -1,0 +1,437 @@
+{% extends "base.html" %}
+{% block extratitle %}Mitigación de los riesgos{% endblock %}
+{% load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: '¿Qué piensa sobre el rol de las empresas privadas en cuanto al abuso sexual?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (Que dijeron Si)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 55,
+                    minPointLength : 1
+                }
+            },
+            series: [{% for value in dicc2 %}
+                {
+                    name: '{{value.0}}',
+                    data: [{{value.1}}],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#632D00',
+                        align: 'center',
+                        x: -3,
+                        y: 0,
+                            formatter: function() {
+                                return this.y+'%';
+                                                  },
+                        style: {
+                            font: 'normal 13px Verdana, sans-serif'
+                                }
+                                }
+                },
+                {% endfor %}]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas G</div><div class="titulo" style="float:left;">Mitigación</div>
+<div class="botones-descarga"><a href="/percepcion_empresa.xls"><img src="/files/img/doc.png"></a><a href="/percepcion_empresa.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/seguridades.html" %} 
+<table>
+        <caption>¿Realiza monitoreo de plagas y enfermedades?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in plagas.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<table>
+        <caption>¿Cada cuanto realiza monitoreo de plagas y enfermedades?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in frecuencia.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<br>
+<table>
+        <caption>¿Cómo realiza monitoreo de plagas y enfermedades?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in como_realiza.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<br>
+<table>
+        <caption>¿Si lleva registro de  monitoreo de plagas y enfermedades?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in registro_monitoreo.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+<br>
+<table>
+        <caption>¿Cuenta con suficiente recursos para manejo de finca?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in recursos.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Para que cosas hace falta los recursos?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in faltarecurso.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Cuenta con obras para almacenamiento de agua?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in almacenamiento.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Vende su Café en forma organizada a través de una asociación o cooperativa o grupo o Empresa?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in formaorganica.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Cuenta con un contrato para la venta de café?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in contrato.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Esta certificado los cafetales?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in certificado.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Qué tipo de certificación?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in tipocertificado.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿La calidad de su café en reconocida y monitoreada?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in reconocido.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Dispone infraestructura para beneficio húmedo  y almacenamiento de cosecha?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in infraestructura.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Cuenta con plan de manejo de la finca?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in planmanejo.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Cuenta con un plan de negocio para el cultivo de café?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in plannegocio.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Cuenta con un plan de inversión para el cultivo de café?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in planinversion.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div><br>
+<table>
+        <caption>¿Quién apoyo para elaborar estos planes?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Frecuencia</th>
+                <th>porcentajes(%)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in elaboraplanes.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>{{value}}</td>
+                <td>{{value|porcentaje:conteo}}</td>    
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+<div class="clean"></div>
+
+
+<!-- <div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{conteo}}</span></div>
+    <div id="container" >
+
+    </div>
+</div> -->
+
+{% endblock %}

@@ -78,13 +78,13 @@
 {% include "encuesta/filtro.html"%}
 <br>
 <div class="indicadores">
-<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas G</div><div class="titulo" style="float:left;">Seguridad y riesgos</div>
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas G</div><div class="titulo" style="float:left;">Suelo</div>
 <div class="botones-descarga"><a href="/percepcion_empresa.xls"><img src="/files/img/doc.png"></a><a href="/percepcion_empresa.pdf"><img src="/files/img/pdf.png"></a></div>
 <div class="clean"></div>
 </div>
 {% include "encuesta/seguridades.html" %} 
 <table>
-        <caption>El clima<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <caption>¿Cuál es el tipo de textura del suelo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
         <thead>
             <tr>
                 <th>Categoria</th>
@@ -94,44 +94,596 @@
             </tr>
         </thead>
         <tbody>
-            {%for key, value in textura.items %}
             <tr>
-                <td>{{key}}</td>
+                <td>Arcilloso</td>
                 <td>5</td>
-                <td>{{value}}</td>
-                <td>total</td>  
+                <td>{{arcilloso}}</td>
+                <td>{{arcilloso|multiplicar:5}}</td>  
             </tr>
-           {%endfor%}
+            <tr>
+                <td>Limoso</td>
+                <td>2</td>
+                <td>{{limoso}}</td>
+                <td>{{limoso|multiplicar:2}}</td>  
+            </tr>
+            <tr>
+                <td>Arenoso</td>
+                <td>4</td>
+                <td>{{arenoso}}</td>
+                <td>{{arenoso|multiplicar:4}}</td>  
+            </tr>
+            <tr>
+                <td>Francoarenoso</td>
+                <td>0</td>
+                <td>{{francoarenoso}}</td>
+                <td>{{francoarenoso|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Francolimoso</td>
+                <td>0</td>
+                <td>{{francolimoso}}</td>
+                <td>{{francolimoso|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_textura}}</td>  
+            </tr>
         </tbody>
     </table>
     <div class="clean"></div> 
     <br>
-   
-<div class="clean"></div>
-<br>
-
-<div class="clean"></div>
-
+    <table>
+        <caption>¿Cuál es la profundidad de suelo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Muy profunda</td>
+                <td>0</td>
+                <td>{{muy_profunda}}</td>
+                <td>{{muy_profunda|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Media profunda</td>
+                <td>3</td>
+                <td>{{media_profunda}}</td>
+                <td>{{media_profunda|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Poca profunda</td>
+                <td>5</td>
+                <td>{{poca_profunda}}</td>
+                <td>{{poca_profunda|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_profundidad}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>¿Cómo es la presencia de lombrices en el suelo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Alta</td>
+                <td>0</td>
+                <td>{{lombrice_alta}}</td>
+                <td>{{lombrice_alta|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Media</td>
+                <td>3</td>
+                <td>{{lombrice_media}}</td>
+                <td>{{lombrice_media|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Baja</td>
+                <td>5</td>
+                <td>{{lombrice_baja}}</td>
+                <td>{{lombrice_baja|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_lombrice}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Cómo es la abundancia de los raíces en los primeros 6 pulgadas de suelo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Alta</td>
+                <td>5</td>
+                <td>{{abundancia_alta}}</td>
+                <td>{{abundancia_alta|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>Media</td>
+                <td>3</td>
+                <td>{{abundancia_media}}</td>
+                <td>{{abundancia_media|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Baja</td>
+                <td>0</td>
+                <td>{{abundancia_baja}}</td>
+                <td>{{abundancia_baja|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_abundancia}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Cómo es el contenido de materia orgánica?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Alta</td>
+                <td>0</td>
+                <td>{{materia_alta}}</td>
+                <td>{{materia_alta|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Media</td>
+                <td>3</td>
+                <td>{{materia_media}}</td>
+                <td>{{materia_media|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Baja</td>
+                <td>5</td>
+                <td>{{materia_baja}}</td>
+                <td>{{materia_baja|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_materia}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Cuál es el pendiente del terreno?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Plana</td>
+                <td>0</td>
+                <td>{{plana}}</td>
+                <td>{{plana|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Inclinada</td>
+                <td>3</td>
+                <td>{{inclinada}}</td>
+                <td>{{inclinada|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Muy inclinada</td>
+                <td>5</td>
+                <td>{{muy_inclinada}}</td>
+                <td>{{muy_inclinada|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_pendiente}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Cómo es el drenaje del suelo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Bueno</td>
+                <td>0</td>
+                <td>{{bueno}}</td>
+                <td>{{bueno|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Regular</td>
+                <td>3</td>
+                <td>{{regular}}</td>
+                <td>{{regular|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Malo</td>
+                <td>5</td>
+                <td>{{malo}}</td>
+                <td>{{malo|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_drenaje}}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Cómo preparan el terreno para la siembra?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Quema</td>
+                <td>5</td>
+                <td>{{quema}}</td>
+                <td>{{quema|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>Trabaja en crudo</td>
+                <td>3</td>
+                <td>{{trabaja_en_crudo}}</td>
+                <td>{{trabaja_en_crudo|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Uso de herbicidas</td>
+                <td>5</td>
+                <td>{{uso_de_herbicidas}}</td>
+                <td>{{uso_de_herbicidas|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>Usa cobertura</td>
+                <td>0</td>
+                <td>{{usa_cobertura}}</td>
+                <td>{{usa_cobertura|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_preparan}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Realiza análisis de fertilidad de suelos?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Si</td>
+                <td>0</td>
+                <td>{{fertilidad_si}}</td>
+                <td>{{fertilidad_si|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>No</td>
+                <td>5</td>
+                <td>{{fertilidad_no}}</td>
+                <td>{{fertilidad_no|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_fertilidad}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Realiza análisis de foliar?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Si</td>
+                <td>0</td>
+                <td>{{foliar_si}}</td>
+                <td>{{foliar_si|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>No</td>
+                <td>5</td>
+                <td>{{foliar_no}}</td>
+                <td>{{foliar_no|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_foliar}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Realiza práctica de conservación de suelo?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Si</td>
+                <td>0</td>
+                <td>{{conservacion_si}}</td>
+                <td>{{conservacion_si|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>No</td>
+                <td>5</td>
+                <td>{{conservacion_no}}</td>
+                <td>{{conservacion_no|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_conservacion}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Qué tipo de fertilización realiza?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Quimica</td>
+                <td>5</td>
+                <td>{{quimica}}</td>
+                <td>{{quimica|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>Orgánica</td>
+                <td>0</td>
+                <td>{{organica}}</td>
+                <td>{{organica|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Ambos</td>
+                <td>3</td>
+                <td>{{ambos}}</td>
+                <td>{{ambos|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Ninguna</td>
+                <td>5</td>
+                <td>{{ninguna}}</td>
+                <td>{{ninguna|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_fertilizacion}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Qué tipo de obra para conservación de suelo REALIZA?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Barrera viva</td>
+                <td>0</td>
+                <td>{{barrera_viva}}</td>
+                <td>{{barrera_viva|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Barrera muerta</td>
+                <td>0</td>
+                <td>{{barrera_muerta}}</td>
+                <td>{{barrera_muerta|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Terraza</td>
+                <td>0</td>
+                <td>{{terraza}}</td>
+                <td>{{terraza|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Acequia</td>
+                <td>0</td>
+                <td>{{acequia}}</td>
+                <td>{{acequia|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>Curvas a nivel</td>
+                <td>0</td>
+                <td>{{curvas_a_nivel}}</td>
+                <td>{{curvas_a_nivel|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Considera el suelo de los cafetales fértil?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Si es fértil</td>
+                <td>0</td>
+                <td>{{si_es_fertil}}</td>
+                <td>{{si_es_fertil|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td>En parte fértil</td>
+                <td>3</td>
+                <td>{{en_parte_fertil}}</td>
+                <td>{{en_parte_fertil|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>No es fértil</td>
+                <td>5</td>
+                <td>{{no_es_fertil}}</td>
+                <td>{{no_es_fertil|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_fertil}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br><table>
+        <caption>¿Considera el suelo de los cafetales degrados y sin vida?<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Si esta degradado</td>
+                <td>5</td>
+                <td>{{si_esta_degradado}}</td>
+                <td>{{si_esta_degradado|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>En parte esta degradado</td>
+                <td>3</td>
+                <td>{{en_parte_esta_degradado}}</td>
+                <td>{{en_parte_esta_degradado|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>No esta degradado</td>
+                <td>0</td>
+                <td>{{no_esta_degradado}}</td>
+                <td>{{no_esta_degradado|multiplicar:0}}</td>  
+            </tr>
+            <tr>
+                <td class="rojo">Risk from Soil texture (0-5)</td>
+                <td></td>
+                <td></td>
+                <td>{{total_degrados}}</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <tr>
+            <td class="rojo">Soil risk score (0-5)</td>
+            <td>{{total_riesgos}}</td>
+        </tr>
+    </table>
 <!-- <div class="contenedor">
     <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{conteo}}</span></div>
     <div id="container" >
 
     </div>
 </div> -->
-{{textura}} <br>
-{{profundidad}} <br>
-{{presencia}} <br>
-{{abundancia}} <br>
-{{materia}} <br>
-{{pendiente}} <br>
-{{drenaje}} <br>
-{{preparan}} <br>
-{{fertilidad}} <br>
-{{foliar}} <br>
-{{conservacion}} <br>
-{{fertilizacion}} <br>
-{{obra}} <br>
-{{fertil}} <br>
-{{degrados}} <br>
-
 {% endblock %}

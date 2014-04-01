@@ -14,3 +14,10 @@ def dividir(valor1, valor2):
         return "%.2f" % ( float(valor1) / float(valor2) )  
     except ValueError:
         return ''
+
+@register.filter
+def multiplicar(valor1, valor2):    
+    try:  
+        return "%d" % ( valor1 * valor2 )  
+    except ValueError:
+        return ''
