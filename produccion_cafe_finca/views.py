@@ -131,7 +131,7 @@ def salida18(request, template='encuesta/salida_g/elclima.html'):
     conteo = encuestas.count()
     total_sistema = Encuesta.objects.all().count()
 
-    clima_opciones = {}
+    clima_opciones = collections.OrderedDict()
     suma_opciones = 0
     cantidad_items = 0
     for obj in TipoClima.objects.all():
@@ -143,9 +143,9 @@ def salida18(request, template='encuesta/salida_g/elclima.html'):
     valor_divisor = round((total_sistema * 5),4)
     valor_relativo = round(float(suma_opciones) / float(valor_divisor),4)
 
-    clima_fechas = {}
+    clima_fechas = collections.OrderedDict()
     for obj in TipoClima.objects.all():
-        clima_fechas[obj.nombre] = {}
+        clima_fechas[obj.nombre] = collections.OrderedDict()
         for x in TipoYear.objects.all():
             valor = ElClima.objects.filter(encuesta__in=encuestas, clima=obj, fecha=x).count()
             clima_fechas[obj.nombre][x.nombre] = (valor)
@@ -293,7 +293,7 @@ def salida21(request, template='encuesta/salida_g/mitigacion.html'):
 
     faltarecurso = {}
     for obj in FaltaRecurso.objects.all():
-        valor = Mitigacion.objects.filter(encuesta__in=encuestas, registro_monitoreo=obj).count()
+        valor = Mitigacion.objects.filter(encuesta__in=encuestas, falta_recurso=obj).count()
         faltarecurso[obj.nombre] = valor
 
     tipocertificado = {}

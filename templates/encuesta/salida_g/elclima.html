@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block extratitle %}Asistencia técnicas y capacitación{% endblock %}
+{% block extratitle %}El clima{% endblock %}
 {% load ayudar%}
 {% block extrahead %}
 <script type="text/javascript" src="/files/js/highcharts.js"></script>
@@ -148,46 +148,25 @@
         <thead>
             <tr>
                 <th>--</th>
-                <th>2009</th>
-                <th>2010</th>
-                <th>2011</th>
-                <th>2012</th>
-                <th>2013</th>
+                {% for k,v in clima_fechas.items|slice:":1" %}
+                    {% for key, value in v.items %}
+                            <th>{{key}}</th>
+                    {% endfor %}  
+                {% endfor %}
             </tr>
         </thead>
         <tbody>
+            
+            {% for k,v in clima_fechas.items%}
             <tr>
-                <td>lalalalal</td>
-                <td>3</td>
-                <td>4</td> 
-                <td>5</td> 
-                <td>5</td>
-                <td>5</td>     
-            </tr>
-            <tr>
-                <td>lalalalal</td>
-                <td>3</td>
-                <td>4</td> 
-                <td>5</td> 
-                <td>5</td> 
-                <td>5</td>    
-            </tr>
-            <tr>
-                <td>lalalalal</td>
-                <td>3</td>
-                <td>4</td> 
-                <td>5</td> 
-                <td>5</td> 
-                <td>5</td>    
-            </tr>
-            <tr>
-                <td>lalalalal</td>
-                <td>3</td>
-                <td>4</td> 
-                <td>5</td> 
-                <td>5</td>
-                <td>5</td>    
-            </tr>
+                <td>{{k}}</td>
+                {% for key, value in v.items %}
+                    <td>{{value}}</td>
+                {% endfor %}
+            </tr>  
+            {% endfor %}
+            
+            
         </tbody>
     </table>
 <div class="clean"></div>
@@ -198,12 +177,5 @@
 
     </div>
 </div> -->
-{{clima_fechas}} <br><br>
-{% for k,v in clima_fechas.items %}
-    {{k}} <br>
-    {% for key, value in v.items %}
-        {{key}}-->{{value}} <br>
-    {% endfor %}
-    
-{% endfor %}
+
 {% endblock %}

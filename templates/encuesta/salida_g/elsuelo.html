@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block extratitle %}Suelo{% endblock %}
+{% load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: '¿Qué piensa sobre el rol de las empresas privadas en cuanto al abuso sexual?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (Que dijeron Si)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 55,
+                    minPointLength : 1
+                }
+            },
+            series: [{% for value in dicc2 %}
+                {
+                    name: '{{value.0}}',
+                    data: [{{value.1}}],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#632D00',
+                        align: 'center',
+                        x: -3,
+                        y: 0,
+                            formatter: function() {
+                                return this.y+'%';
+                                                  },
+                        style: {
+                            font: 'normal 13px Verdana, sans-serif'
+                                }
+                                }
+                },
+                {% endfor %}]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas G</div><div class="titulo" style="float:left;">Seguridad y riesgos</div>
+<div class="botones-descarga"><a href="/percepcion_empresa.xls"><img src="/files/img/doc.png"></a><a href="/percepcion_empresa.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/seguridades.html" %} 
+<table>
+        <caption>El clima<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for key, value in textura.items %}
+            <tr>
+                <td>{{key}}</td>
+                <td>5</td>
+                <td>{{value}}</td>
+                <td>total</td>  
+            </tr>
+           {%endfor%}
+        </tbody>
+    </table>
+    <div class="clean"></div> 
+    <br>
+   
+<div class="clean"></div>
+<br>
+
+<div class="clean"></div>
+
+<!-- <div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{conteo}}</span></div>
+    <div id="container" >
+
+    </div>
+</div> -->
+{{textura}} <br>
+{{profundidad}} <br>
+{{presencia}} <br>
+{{abundancia}} <br>
+{{materia}} <br>
+{{pendiente}} <br>
+{{drenaje}} <br>
+{{preparan}} <br>
+{{fertilidad}} <br>
+{{foliar}} <br>
+{{conservacion}} <br>
+{{fertilizacion}} <br>
+{{obra}} <br>
+{{fertil}} <br>
+{{degrados}} <br>
+
+{% endblock %}
