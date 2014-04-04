@@ -1,1 +1,913 @@
-{{otros}}
+{% extends "base.html" %}
+{% block extratitle %}Otros riegos{% endblock %}
+{% load ayudar%}
+{% block extrahead %}
+<script type="text/javascript" src="/files/js/highcharts.js"></script>
+<script type="text/javascript" src="/files/js/exporting.js"></script>
+ <script type="text/javascript" src="/files/js/thema.js"></script>
+<script type="text/javascript">
+    var chart;
+    $(document).ready(function() {
+
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                defaultSeriesType: 'column'
+            },
+            title: {
+                text: '¿Qué piensa sobre el rol de las empresas privadas en cuanto al abuso sexual?'
+            },
+            subtitle: {
+                text: ''
+            },
+            xAxis: {
+                categories: [
+                    'Opciones'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Porcentajes (Que dijeron Si)'
+                }
+            },
+            
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'%';
+                }
+            },
+            plotOptions: {
+                column: {
+                    groupPadding: 0,
+                    pointPadding: 0.9,
+                    borderWidth: 0
+                },
+                series: {
+                    pointWidth: 55,
+                    minPointLength : 1
+                }
+            },
+            series: [{% for value in dicc2 %}
+                {
+                    name: '{{value.0}}',
+                    data: [{{value.1}}],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: 0,
+                        color: '#632D00',
+                        align: 'center',
+                        x: -3,
+                        y: 0,
+                            formatter: function() {
+                                return this.y+'%';
+                                                  },
+                        style: {
+                            font: 'normal 13px Verdana, sans-serif'
+                                }
+                                }
+                },
+                {% endfor %}]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+{% include "encuesta/filtro.html"%}
+<br>
+<div class="indicadores">
+<div class="titulo" style="float:left;"><a href="/indicadores">Indicadores</a></div><div class="titulo" style="float:left;">Salidas G</div><div class="titulo" style="float:left;">Otros riesgos</div>
+<div class="botones-descarga"><a href="/percepcion_empresa.xls"><img src="/files/img/doc.png"></a><a href="/percepcion_empresa.pdf"><img src="/files/img/pdf.png"></a></div>
+<div class="clean"></div>
+</div>
+{% include "encuesta/seguridades.html" %} 
+
+<h3>Riesgos agricolas</h3>
+<table>
+        <caption>Las variedades<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>No son adecuadas</td>
+                <td>5</td>
+                <td>{{no_adecuadas}}</td>
+                <td>{{no_adecuadas|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>Si son adecuadas</td>
+                <td>0</td>
+                <td>{{si_adecuadas}}</td>
+                <td>{{si_adecuadas|multiplicar:0}}</td>  
+            </tr> 
+        </tbody>
+    </table>
+    <div class="clean"></div> 
+    <br>
+    <table>
+        <caption>Hay falta de semilla<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{semilla_siempre}}</td>
+                <td>{{semilla_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{semilla_veces}}</td>
+                <td>{{semilla_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{semilla_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+        <table>
+        <caption>Mala calidad de semilla<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{calidad_semilla_siempre}}</td>
+                <td>{{calidad_semilla_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{calidad_semilla_veces}}</td>
+                <td>{{calidad_semilla_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{calidad_semilla_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Manejo de cultivo no adecuada<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{cultivos_siempre}}</td>
+                <td>{{cultivos_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{cultivos_veces}}</td>
+                <td>{{cultivos_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{cultivos_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Fertilización no adecuada<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{fertilizacion_siempre}}</td>
+                <td>{{fertilizacion_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{fertilizacion_veces}}</td>
+                <td>{{fertilizacion_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{fertilizacion_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+      <table>
+        <caption>Muchos daño de plagas<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{plaga_siempre}}</td>
+                <td>{{plaga_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{plaga_veces}}</td>
+                <td>{{plaga_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{plaga_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <tr>
+            <td class="rojo">Agricultural Risks (Scale of 0-5)</td>
+            <td>{{total_agricola}}</td>
+        </tr>
+    </table>
+    <br>
+    <h3>Riesgos productivos</h3>
+          <table>
+        <caption>Baja producción de café<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{bajaproduccion_siempre}}</td>
+                <td>{{bajaproduccion_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{bajaproduccion_veces}}</td>
+                <td>{{bajaproduccion_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{bajaproduccion_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>Poca floración<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{floracion_siempre}}</td>
+                <td>{{floracion_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{floracion_veces}}</td>
+                <td>{{floracion_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{floracion_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>Mucho aborto<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{aborto_siempre}}</td>
+                <td>{{aborto_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{aborto_veces}}</td>
+                <td>{{aborto_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{aborto_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Mucha caída de frutos<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{frutos_siempre}}</td>
+                <td>{{frutos_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{frutos_veces}}</td>
+                <td>{{frutos_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{frutos_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Marcada bianualidad<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{marcada_siempre}}</td>
+                <td>{{marcada_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{marcada_veces}}</td>
+                <td>{{marcada_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{marcada_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+ <table>
+        <caption>Mala recolección de frutos<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{recolecion_siempre}}</td>
+                <td>{{recolecion_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{recolecion_veces}}</td>
+                <td>{{recolecion_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{recolecion_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>Falta de mano de obra para el corte<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{mo_siempre}}</td>
+                <td>{{mo_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{mo_veces}}</td>
+                <td>{{mo_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{mo_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>Beneficiado húmedo no adecuado<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{humedo_siempre}}</td>
+                <td>{{humedo_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{humedo_veces}}</td>
+                <td>{{humedo_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{humedo_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <tr>
+            <td class="rojo">Production Risks (Scale of 0-5)</td>
+            <td>{{total_productivo}}</td>
+        </tr>
+    </table>
+    <br>
+    <h3>Riesgo de mercado</h3>
+<table>
+        <caption>Bajo precio de café<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{precio_siempre}}</td>
+                <td>{{precio_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{precio_veces}}</td>
+                <td>{{precio_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{precio_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <caption>Falta de venta<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{venta_siempre}}</td>
+                <td>{{venta_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{venta_veces}}</td>
+                <td>{{venta_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{venta_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Estafa de contrato<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{estafa_siempre}}</td>
+                <td>{{estafa_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{estafa_veces}}</td>
+                <td>{{estafa_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{estafa_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Mala calidad de café<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{mala_siempre}}</td>
+                <td>{{mala_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{mala_veces}}</td>
+                <td>{{mala_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{mala_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Pagos atrasados<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{pagos_siempre}}</td>
+                <td>{{pagos_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{pagos_veces}}</td>
+                <td>{{pagos_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{pagos_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Problema de traslado de cosecha<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{traslado_siempre}}</td>
+                <td>{{traslado_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{traslado_veces}}</td>
+                <td>{{traslado_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{traslado_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <tr>
+            <td class="rojo">Marketing risks (Scale of 0-5)</td>
+            <td>{{total_mercado}}</td>
+        </tr>
+    </table>
+    <br>
+    <h3>Riesgo de fianciamiento</h3>
+    <table>
+        <caption>Disponibilidad de crédito de corto plazo<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{corto_siempre}}</td>
+                <td>{{corto_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{corto_veces}}</td>
+                <td>{{corto_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{corto_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Disponibilidad de crédito mediano plazo<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{mediano_siempre}}</td>
+                <td>{{mediano_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{mediano_veces}}</td>
+                <td>{{mediano_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{mediano_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Disponibilidad de crédito de largo plazo<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{largo_siempre}}</td>
+                <td>{{largo_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{largo_veces}}</td>
+                <td>{{largo_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{largo_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+    <table>
+        <caption>Altos interes de crédito<span class="numencuestas">Encuestas {{conteo}}</span></caption>
+        <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Riesgo score</th>
+                <th>Frecuencia</th>
+                <th>Riesgo  * frecuencia</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Siempre</td>
+                <td>5</td>
+                <td>{{intereses_siempre}}</td>
+                <td>{{intereses_siempre|multiplicar:5}}</td>  
+            </tr>
+            <tr>
+                <td>A veces</td>
+                <td>3</td>
+                <td>{{intereses_veces}}</td>
+                <td>{{intereses_veces|multiplicar:3}}</td>  
+            </tr>
+            <tr>
+                <td>Nunca</td>
+                <td>0</td>
+                <td>{{intereses_nunca}}</td>
+                <td>0</td>  
+            </tr>
+        </tbody>
+    </table>
+    <div class="clean"></div>
+    <br>
+<table>
+        <tr>
+            <td class="rojo">Credit Risks (Scale of 0-5)</td>
+            <td>{{total_financiero}}</td>
+        </tr>
+    </table>
+    <br>
+
+<!-- <div class="contenedor">
+    <div class="grafico-title">Gr&aacute;fico  <span class="numencuestas">Encuestas {{conteo}}</span></div>
+    <div id="container" >
+
+    </div>
+</div> -->
+
+{% endblock %}

@@ -267,10 +267,142 @@ def salida20(request, template='encuesta/salida_g/otrosriesgos.html'):
     #Opciones,Respuestas,OtroRiesgos
     otros ={}
     for obj in Opciones.objects.all():
-        otros[obj.nombre] = {}
+        otros[obj] = {}
         for m in Respuestas.objects.all():
             valor = OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=obj, respuesta=m).count()
-            otros[obj.nombre] [m.nombre]= (valor)
+            otros[obj] [m.nombre]= (valor)
+
+
+    #Asperctos agricolas - las variedades
+    no_adecuadas = OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=1, respuesta=5).count()
+    si_adecuadas = OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=1, respuesta=4).count()
+    total_variedad = no_adecuadas * 5
+    #hay falta de semilla
+    semilla_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=2, respuesta=1).count()
+    semilla_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=2, respuesta=2).count()
+    semilla_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=2, respuesta=3).count()
+    total_semilla = (semilla_siempre * 5) + (semilla_veces * 3)
+    #mala calidad de semilla
+    calidad_semilla_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=3, respuesta=1).count()
+    calidad_semilla_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=3, respuesta=2).count()
+    calidad_semilla_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=3, respuesta=3).count()
+    total_calidad = (calidad_semilla_siempre * 5) + (calidad_semilla_veces * 3)
+    #manejo de cultivos no adecuados
+    cultivos_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=4, respuesta=1).count()
+    cultivos_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=4, respuesta=2).count()
+    cultivos_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=4, respuesta=3).count()
+    total_cultivos = (cultivos_siempre * 5) + (cultivos_veces * 3)
+    #fertiliazacion no adecuado
+    fertilizacion_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=5, respuesta=1).count()
+    fertilizacion_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=5, respuesta=2).count()
+    fertilizacion_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=5, respuesta=3).count()
+    total_fertilizacion = (fertilizacion_siempre * 5) + (fertilizacion_veces * 3)
+    #mucho danio de plaga
+    plaga_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=6, respuesta=1).count()
+    plaga_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=6, respuesta=2).count()
+    plaga_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=6, respuesta=3).count()
+    total_plaga = (plaga_siempre * 5) + (plaga_veces * 3)
+    total_agricola = round(float(total_variedad + total_semilla + total_calidad + total_cultivos + total_fertilizacion +total_plaga) / float(conteo * 6),4)
+    
+    #Riesgos productivos
+    #baja produccion de cafe
+    bajaproduccion_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=7, respuesta=1).count()
+    bajaproduccion_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=7, respuesta=2).count()
+    bajaproduccion_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=7, respuesta=3).count()
+    total_bajaproduccion = (bajaproduccion_siempre * 5) + (bajaproduccion_veces * 3)
+    #poca floracion
+    floracion_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=8, respuesta=1).count()
+    floracion_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=8, respuesta=2).count()
+    floracion_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=8, respuesta=3).count()
+    total_floracion = (floracion_siempre * 5) + (floracion_veces * 3)
+    #mucho aborto
+    aborto_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=9, respuesta=1).count()
+    aborto_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=9, respuesta=2).count()
+    aborto_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=9, respuesta=3).count()
+    total_aborto = (aborto_siempre * 5) + (aborto_veces * 3)
+    #mucha caida de frutos
+    frutos_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=10, respuesta=1).count()
+    frutos_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=10, respuesta=2).count()
+    frutos_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=10, respuesta=3).count()
+    total_frutos = (frutos_siempre * 5) + (frutos_veces * 3)
+    #marcada bianualidad
+    marcada_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=11, respuesta=1).count()
+    marcada_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=11, respuesta=2).count()
+    marcada_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=11, respuesta=3).count()
+    total_marcada = (marcada_siempre * 5) + (marcada_veces * 3)
+    #mala recoleccion de frutos
+    recolecion_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=12, respuesta=1).count()
+    recolecion_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=12, respuesta=2).count()
+    recolecion_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=12, respuesta=3).count()
+    total_recolecion = (recolecion_siempre * 5) + (recolecion_veces * 3)
+    #falta de mano de obra para el corte
+    mo_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=13, respuesta=1).count()
+    mo_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=13, respuesta=2).count()
+    mo_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=13, respuesta=3).count()
+    total_mo = (mo_siempre * 5) + (mo_veces * 3)
+    #beneficiado humedo no adecuado
+    humedo_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=14, respuesta=1).count()
+    humedo_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=14, respuesta=2).count()
+    humedo_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=14, respuesta=3).count()
+    total_humedo = (humedo_siempre * 5) + (humedo_veces * 3)
+    total_productivo = round(float(total_bajaproduccion+total_floracion+total_aborto+total_frutos+total_marcada+total_recolecion+total_mo+total_humedo)/float(conteo*8),4)
+
+    #Riesgos de mercado
+    #bajo precio de cafe
+    precio_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=15, respuesta=1).count()
+    precio_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=15, respuesta=2).count()
+    precio_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=15, respuesta=3).count()
+    total_precio = (precio_siempre * 5) + (precio_veces * 3)
+    #falta de venta
+    venta_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=16, respuesta=1).count()
+    venta_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=16, respuesta=2).count()
+    venta_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=16, respuesta=3).count()
+    total_venta = (venta_siempre * 5) + (venta_veces * 3)
+    #Estafa de contrato
+    estafa_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=17, respuesta=1).count()
+    estafa_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=17, respuesta=2).count()
+    estafa_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=17, respuesta=3).count()
+    total_estafa = (estafa_siempre * 5) + (estafa_veces * 3)
+    #mala calidad cafe
+    mala_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=18, respuesta=1).count()
+    mala_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=18, respuesta=2).count()
+    mala_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=18, respuesta=3).count()
+    total_mala = (mala_siempre * 5) + (mala_veces * 3)
+    #pagos atrasado
+    pagos_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=19, respuesta=1).count()
+    pagos_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=19, respuesta=2).count()
+    pagos_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=19, respuesta=3).count()
+    total_pagos = (pagos_siempre * 5) + (pagos_veces * 3)
+    #problema de traslado de cosecha
+    traslado_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=20, respuesta=1).count()
+    traslado_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=20, respuesta=2).count()
+    traslado_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=20, respuesta=3).count()
+    total_traslado = (traslado_siempre * 5) + (traslado_veces * 3)
+    total_mercado = round(float(total_precio+total_venta+total_estafa+total_mala+total_pagos+total_traslado)/float(conteo*6),4)
+
+    #riesgos finaciamiento
+    #disponibilidad credito a corto plazo
+    corto_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=21, respuesta=1).count()
+    corto_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=21, respuesta=2).count()
+    corto_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=21, respuesta=3).count()
+    total_corto = (corto_siempre * 5) + (corto_veces * 3)
+    #credito a mediano plazo
+    mediano_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=22, respuesta=1).count()
+    mediano_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=22, respuesta=2).count()
+    mediano_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=22, respuesta=3).count()
+    total_mediano = (mediano_siempre * 5) + (mediano_veces * 3)
+    #credito a largo plazo
+    largo_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=23, respuesta=1).count()
+    largo_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=23, respuesta=2).count()
+    largo_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=23, respuesta=3).count()
+    total_largo = (largo_siempre * 5) + (largo_veces * 3)
+    #altos intereses
+    intereses_siempre =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=24, respuesta=1).count()
+    intereses_veces =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=24, respuesta=2).count()
+    intereses_nunca =OtroRiesgos.objects.filter(encuesta__in=encuestas, motivo=24, respuesta=3).count()
+    total_intereses = (intereses_siempre * 5) + (intereses_veces * 3)
+    total_financiero = round(float(total_corto+total_mediano+total_largo+total_intereses)/float(conteo*4),4)
+    
 
     return render(request, template, locals())
 
