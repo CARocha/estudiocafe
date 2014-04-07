@@ -104,8 +104,10 @@ def salida17(request, template='encuesta/salida_g/seguridad.html'):
         alimentos[obj[1]] = valor
 
     necesidad_basica = {}
+    global_si = 0
     for obj in CHOICE_SI_NO:
         valor = Seguridad.objects.filter(encuesta__in=encuestas, cubrir_necesidades=obj[0]).count()
+        global_si = Seguridad.objects.filter(encuesta__in=encuestas, cubrir_necesidades=1).count()
         necesidad_basica[obj[1]] = valor
 
     motivos_cubre_necesidad = {}
